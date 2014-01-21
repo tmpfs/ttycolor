@@ -9,8 +9,9 @@ var ANSI_CLOSE_CODE = '0';
 var ANSI_CLOSE = ANSI_OPEN + ANSI_CLOSE_CODE + ANSI_FINAL;
 
 var codes = {
-  open: function(v) {
-    return ANSI_OPEN + v + ANSI_FINAL;
+  open: function(v, a) {
+    return a ? ANSI_OPEN + a + ';' + v + ANSI_FINAL
+      : ANSI_OPEN + v + ANSI_FINAL;
   },
   close: function() {
     return ANSI_CLOSE;
@@ -128,19 +129,26 @@ var AnsiColor = function(value, key, parent){
   this.v = value;
   this.k = key;
   this.p = parent;
+  this.a = null;
 };
 
 AnsiColor.prototype.valueOf = function(term) {
   if(!term) return this.v;
   var list = [this.t[this.k]];
-  var p = this.p;
+  var p = this.p, a;
   while(p) {
-    list.push(p.t[p.k]);
+    //console.dir(p);
+    //if(p.a) a = p.a; p = p.p; continue;
+
+    if(p.t[p.k]) list.push(p.t[p.k]);
+    //console.dir(list[list.length -1]);
     p = p.p;
   }
   list.reverse();
+  console.dir(list);
   for(var i = 0;i < list.length;i++){
-    this.v = codes.open(list[i]) + this.v + codes.close();
+    //console.dir(list[i]);
+    this.v = codes.open(list[i], this.a) + this.v + codes.close();
   }
   //console.dir(this.v);
   return this.v;
@@ -149,6 +157,18 @@ AnsiColor.prototype.valueOf = function(term) {
 AnsiColor.prototype.bg = function() {
   var ansi = new AnsiColor(this.v, this.k, this);
   ansi.t = definition.bg.colors;
+  return ansi;
+}
+
+AnsiColor.prototype.bright = function() {
+  var ansi = new AnsiColor(this.v, this.k, this);
+  ansi.a = 1;
+  return ansi;
+}
+
+AnsiColor.prototype.underline = function() {
+  var ansi = new AnsiColor(this.v, this.k, this);
+  ansi.a = 4;
   return ansi;
 }
 
