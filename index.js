@@ -140,6 +140,13 @@ AnsiColor.prototype.bright = function() {
   return ansi;
 }
 
+AnsiColor.prototype.dim = function() {
+  var ansi = new AnsiColor(this.v, this.k, this);
+  ansi.a = 2;
+  return ansi;
+}
+
+
 AnsiColor.prototype.reverse = function() {
   var ansi = new AnsiColor(this.v, this.k, this);
   ansi.a = 7;
@@ -171,5 +178,6 @@ var ansi = function(v) {
 
 module.exports = {
   console: stash,
-  ansi: ansi
+  ansi: ansi,
+  colors: Object.keys(definition.colors)
 }

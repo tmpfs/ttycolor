@@ -1,12 +1,10 @@
 #!/usr/bin/env node
 
 var ansi = require('..').ansi;
-
 console.log('console.log: TERM %s',
-  ansi(process.env.TERM).white().bg().black());
+  ansi(process.env.TERM).white().bg().black().dim());
 console.log('console.log: TERM_PROGRAM %s',
   ansi(process.env.TERM_PROGRAM).white().bg().black().reverse());
-
 console.log('console.log: %s',
   ansi('white on black looks nice in the solarized color scheme')
     .white().bg().black());
@@ -17,12 +15,16 @@ console.log('console.log: %s values draw attention to the eye',
   ansi('bright').bright().white());
 console.log('console.log: but really an %s is cleaner',
   ansi('underline').white().underline());
+var colors = require('..').colors;
+var methods = ['log', 'info', 'warn', 'error'], i = 0, method;
+methods = methods.concat(methods);
+colors.forEach(function(color) {
+  method = methods[i++];
+  console[method]('console.%s: %s color can be nice too',
+    method,  ansi(color)[color]());
+});
 
-//console.log('console.log: a %s string and a blue number %d',
-  //ansi('white').white(), ansi(3.14).blue());
-//console.info('console.info: a %s string and a green number %d',
-  //ansi('cyan').cyan(), ansi(3.14).green());
-//console.error('console.error: a %s string and a red number %d',
-  //ansi('magenta').magenta(), ansi(3.14).red());
-//console.warn('console.warn: a %s string and a black number %d',
-  //ansi('yellow').yellow(), ansi(3.14).black());
+console.log('%s', ansi('log message').white());
+console.info('%s', ansi('info message').cyan());
+console.warn('%s', ansi('warn message').magenta());
+console.error('%s', ansi('error message').red());
