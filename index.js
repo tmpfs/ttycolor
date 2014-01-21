@@ -57,13 +57,18 @@ var codes = {
   }
 }
 
+/**
+ *  Escapes replacement values.
+ *
+ *  @param term Indicates whether the stream is a tty.
+ *  @param method The console method to invoke.
+ *  @param format The format string.
+ */
 function proxy(term, method, format) {
   var re = /(%[sdj])+/g;
   var replacing = re.test(format) && arguments.length > 3;
   var replacements = [].slice.call(arguments, 3);
-  if(!replacing) {
-    return method.apply(console, replacements);
-  }
+  if(!replacing) return method.apply(console, replacements);
   var arg, i, json;
   var matches = (format && (typeof format.match == 'function')) ?
     format.match(re) : [];
@@ -75,15 +80,13 @@ function proxy(term, method, format) {
         arg.v = JSON.stringify(arg.v);
       }
       replacements[i] = arg.valueOf(term, json);
-    }else{
-      if(json) {
-        replacements[i] = JSON.stringify(replacements[i]);
-      }
+    }else if(json){
+      replacements[i] = JSON.stringify(replacements[i]);
     }
   }
   // we have already coerced to strings
   if(term) {
-    for(var i = 0;i < replacements.length;i++) {
+    for(i = 0;i < replacements.length;i++) {
       format = format.replace(/%[jd]/, '%s');
     }
   }
