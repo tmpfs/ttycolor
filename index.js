@@ -163,7 +163,7 @@ AnsiColor.prototype.bg = function() {
 Object.keys(attrs).forEach(function (k) {
   AnsiColor.prototype[k] = function () {
     var ansi = new AnsiColor(this.v, this.k, this);
-    ansi.a = 7;
+    ansi.a = attrs[k];
     return ansi;
   };
 });
