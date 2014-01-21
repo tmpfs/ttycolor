@@ -5,11 +5,18 @@ TTY ANSI Colors
 
 ```
 var ansi = require('ttycolor').ansi;
+// no colors, normal console operation
+console.log('%s', 'value');
+console.log('%d', 3.14);
+console.log('%j', {message: 'json'});
+console.log('a %s of %d with %j', 'value', 3.14, {message: 'json'});
+// colors
 console.log('%s', ansi('log message').white().bg().black());
 console.info('%s', ansi('info message').cyan());
 console.warn('%s', ansi('warn message').magenta());
 console.error('%s', ansi('error message').bright().red());
 console.log('pi %d', ansi(3.14).blue().underline());
+console.log('%j', ansi({message: 'json'}).red());
 ```
 
 ### ansi(value)
