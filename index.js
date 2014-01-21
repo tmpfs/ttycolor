@@ -81,11 +81,11 @@ function proxy(term, method, format) {
     arg = replacements[i];
     json = matches[i] == '%j';
     if(arg instanceof AnsiColor) {
-      if(json) {
+      if(json && term) {
         arg.v = JSON.stringify(arg.v);
       }
       replacements[i] = arg.valueOf(term, json);
-    }else if(json){
+    }else if(json && term){
       replacements[i] = JSON.stringify(replacements[i]);
     }
   }
@@ -97,34 +97,6 @@ function proxy(term, method, format) {
   }
   replacements.unshift(format);
   method.apply(console, replacements);
-}
-
-console.log = function(format) {
-  var term = process.stdout.isTTY;
-  var args = [term, stash.log, format];
-  args = args.concat([].slice.call(arguments, 1));
-  proxy.apply(null, args);
-}
-
-console.info = function(format) {
-  var term = process.stdout.isTTY;
-  var args = [term, stash.info, format];
-  args = args.concat([].slice.call(arguments, 1));
-  proxy.apply(null, args);
-}
-
-console.error = function(format) {
-  var term = process.stderr.isTTY;
-  var args = [term, stash.error, format];
-  args = args.concat([].slice.call(arguments, 1));
-  proxy.apply(null, args);
-}
-
-console.warn = function(format) {
-  var term = process.stderr.isTTY;
-  var args = [term, stash.warn, format];
-  args = args.concat([].slice.call(arguments, 1));
-  proxy.apply(null, args);
 }
 
 /**
@@ -163,6 +135,18 @@ AnsiColor.prototype.bg = function() {
   ansi.t = definition.bg.colors;
   return ansi;
 }
+
+// console functions
+Object.keys(stash).forEach(function (k) {
+  var stream = (k == 'info' || k == 'log') ?
+    process.stdout : process.stderr;
+  console[k] = function(format) {
+    var term = stream.isTTY;
+    var args = [term, stash[k], format];
+    args = args.concat([].slice.call(arguments, 1));
+    proxy.apply(null, args);
+  }
+});
 
 // attributes
 Object.keys(attrs).forEach(function (k) {
