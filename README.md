@@ -45,4 +45,12 @@ Array of color names.
 
 Map referencing the original `console` methods.
 
+### stringify(value, code, attr)
+
+Convert a value to an ANSI escape sequence.
+
+* `value`: The value to escape, will be coerced to a string.
+* `code`: The color code.
+* `attr`: Optional attribute code. 
+
 [node]: http://nodejs.org

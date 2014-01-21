@@ -183,7 +183,9 @@ module.exports = {
   },
   colors: Object.keys(definition.colors),
   attributes: attrs,
-  stringify: function(value, attr) {
-
+  foreground: definition.colors,
+  background: definition.bg.colors,
+  stringify: function(value, code, attr) {
+    return codes.open(code, attr) + value + codes.close();
   }
 }
