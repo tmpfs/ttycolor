@@ -46,5 +46,14 @@ console.dir(
     ttycolor.foreground.white,
     ttycolor.attributes.bright));
 
+ttycolor.console.log('%s:%s', 'foo', 'bar', 'baz');
+console.log('%s:%s', 'foo', 'bar', 'baz');
+
+ttycolor.console.log('%s:%s', 'foo');
+console.log('%s:%s', 'foo');
+
+ttycolor.console.log(1, 2, 3);
+console.log(1, 2, 3);
+
 //console.log('%j %j', ansi({message: 'json'}).red());
 //console.log('%j', ansi({message: 'json'}).underline());

@@ -67,9 +67,13 @@ var codes = {
  */
 function proxy(term, method, format) {
   var re = /(%[sdj])+/g;
-  var replacing = re.test(format) && arguments.length > 3;
+  var replacing = (typeof format == 'string')
+    && re.test(format) && arguments.length > 3;
   var replacements = [].slice.call(arguments, 3);
-  if(!replacing) return method.apply(console, replacements);
+  if(!replacing) {
+    replacements.unshift(format);
+    return method.apply(console, replacements);
+  }
   var arg, i, json;
   var matches = (format && (typeof format.match == 'function')) ?
     format.match(re) : [];
