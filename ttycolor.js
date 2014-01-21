@@ -5,7 +5,7 @@ var util = require('util');
 
 var ANSI_OPEN = '\u001b[';
 var ANSI_FINAL = 'm';
-var ANSI_CLOSE_CODE = '39';
+var ANSI_CLOSE_CODE = '0';
 var ANSI_CLOSE = ANSI_OPEN + ANSI_CLOSE_CODE + ANSI_FINAL;
 
 var codes = {
@@ -139,11 +139,10 @@ AnsiColor.prototype.valueOf = function(term) {
     p = p.p;
   }
   list.reverse();
-  //console.dir(codes);
   for(var i = 0;i < list.length;i++){
     this.v = codes.open(list[i]) + this.v + codes.close();
-    console.dir(this.v);
   }
+  //console.dir(this.v);
   return this.v;
 }
 
