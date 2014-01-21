@@ -1,5 +1,14 @@
-TTY ANSI Colors 
-===============
+ttycolor
+========
+
+Terminal colors that respect whether the `stdout` and `stderr` streams are
+`tty`.
+
+## Installation
+
+```
+npm install ttycolor
+```
 
 ## API
 
@@ -21,7 +30,7 @@ console.log('%j', ansi({message: 'json'}).red());
 
 ### ansi(value)
 
-Wrap `value` in a chainable ANSI color instance. The `value` will be coerced
+Wrap `value` in a chainable color instance, the `value` will be coerced
 to a string when passed to a `console` function.
 
 ### colors
