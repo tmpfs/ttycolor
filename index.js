@@ -18,8 +18,6 @@ var codes = {
   }
 }
 
-var re = /%[sdj]+/;
-
 var stash = {
   log: console.log,
   info: console.info,
@@ -53,18 +51,35 @@ var definition = {
 }
 
 function proxy(term, method, format) {
+  var re = /(%[sdj])+/g;
   var replacing = re.test(format) && arguments.length > 3;
   var replacements = [].slice.call(arguments, 3);
-  if(!replacing) return method.apply(console, replacements);
-  var arg, i;
+  if(!replacing) {
+    return method.apply(console, replacements);
+  }
+  var arg, i, json;
+  var matches = (format && (typeof format.match == 'function')) ?
+    format.match(re) : [];
   for(i = 0;i < replacements.length;i++) {
     arg = replacements[i];
+    json = matches[i] == '%j';
     if(arg instanceof AnsiColor) {
-      replacements[i] = arg.valueOf(term);
+      if(json) {
+        arg.v = JSON.stringify(arg.v);
+      }
+      replacements[i] = arg.valueOf(term, json);
+    }else{
+      if(json) {
+        replacements[i] = JSON.stringify(replacements[i]);
+      }
     }
   }
   // we have already coerced to strings
-  if(term) format = format.replace(/%[jd]/g, '%s');
+  if(term) {
+    for(var i = 0;i < replacements.length;i++) {
+      format = format.replace(/%[jd]/, '%s');
+    }
+  }
   replacements.unshift(format);
   method.apply(console, replacements);
 }
@@ -112,7 +127,7 @@ var AnsiColor = function(value, key, parent){
   this.a = null;
 };
 
-AnsiColor.prototype.valueOf = function(term) {
+AnsiColor.prototype.valueOf = function(term, json) {
   if(!term) return this.v;
   var list = [this.t[this.k]];
   var p = this.p, a;
