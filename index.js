@@ -63,6 +63,7 @@ var codes = {
  *  @param term Indicates whether the stream is a tty.
  *  @param method The console method to invoke.
  *  @param format The format string.
+ *  @param ... The format string arguments.
  */
 function proxy(term, method, format) {
   var re = /(%[sdj])+/g;
