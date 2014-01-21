@@ -37,6 +37,10 @@ to a string when passed to a `console` function.
 
 Map of ANSI attribute codes.
 
+### background
+
+Map of background color codes.
+
 ### colors
 
 Array of color names.
@@ -44,6 +48,10 @@ Array of color names.
 ### console
 
 Map referencing the original `console` methods.
+
+### foreground
+
+Map of foreground color codes.
 
 ### stringify(value, code, attr)
 
