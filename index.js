@@ -146,10 +146,9 @@ AnsiColor.prototype.dim = function() {
   return ansi;
 }
 
-
-AnsiColor.prototype.reverse = function() {
+AnsiColor.prototype.underline = function() {
   var ansi = new AnsiColor(this.v, this.k, this);
-  ansi.a = 7;
+  ansi.a = 4;
   return ansi;
 }
 
@@ -159,9 +158,9 @@ AnsiColor.prototype.blink = function() {
   return ansi;
 }
 
-AnsiColor.prototype.underline = function() {
+AnsiColor.prototype.reverse = function() {
   var ansi = new AnsiColor(this.v, this.k, this);
-  ansi.a = 4;
+  ansi.a = 7;
   return ansi;
 }
 
