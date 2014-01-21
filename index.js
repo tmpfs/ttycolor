@@ -38,16 +38,6 @@ var definition = {
     red             :  31,
     yellow          :  33
   },
-  bright: {
-    black           :  90,
-    red             :  91,
-    green           :  92,
-    yellow          :  93,
-    blue            :  94,
-    magenta         :  95,
-    cyan            :  96,
-    white           :  97
-  },
   bg: {
     colors: {
       black         :  40,
@@ -58,16 +48,6 @@ var definition = {
       magenta       :  45,
       cyan          :  46,
       white         :  47
-    },
-    bright: {
-      black         :  100,
-      red           :  101,
-      green         :  102,
-      yellow        :  103,
-      blue          :  104,
-      magenta       :  105,
-      cyan          :  106,
-      white         :  107
     }
   }
 }
@@ -137,17 +117,11 @@ AnsiColor.prototype.valueOf = function(term) {
   var list = [this.t[this.k]];
   var p = this.p, a;
   while(p) {
-    //console.dir(p);
-    //if(p.a) a = p.a; p = p.p; continue;
-
     if(p.t[p.k]) list.push(p.t[p.k]);
-    //console.dir(list[list.length -1]);
     p = p.p;
   }
   list.reverse();
-  //console.dir(list);
   for(var i = 0;i < list.length;i++){
-    //console.dir(list[i]);
     this.v = codes.open(list[i], this.a) + this.v + codes.close();
   }
   //console.dir(this.v);
