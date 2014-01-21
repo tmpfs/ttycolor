@@ -1,8 +1,8 @@
 ttycolor
 ========
 
-Terminal colors that respect whether the `stdout` and `stderr` streams are
-`tty`.
+Terminal colors for [node][node] that respect whether the `stdout` and `stderr` streams are
+a `tty`.
 
 ## Installation
 
@@ -40,3 +40,5 @@ Array of color names.
 ### console
 
 Map referencing the original `console` methods.
+
+[node]: http://nodejs.org
