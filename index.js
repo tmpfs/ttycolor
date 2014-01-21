@@ -1,8 +1,5 @@
 'use strict';
 
-var tty = require('tty');
-var util = require('util');
-
 var stash = {
   log: console.log,
   info: console.info,
