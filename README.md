@@ -5,10 +5,12 @@ TTY ANSI Colors
 
 ```
 var ansi = require('ttycolor').ansi;
-console.log('%s', ansi('log message').white());
+
+console.log('%s', ansi('log message').white().bg().black());
 console.info('%s', ansi('info message').cyan());
 console.warn('%s', ansi('warn message').magenta());
-console.error('%s', ansi('error message').red());
+console.error('%s', ansi('error message').bright().red());
+console.log('pi %d', ansi(3.14).blue().underline());
 ```
 
 ## ansi(value)

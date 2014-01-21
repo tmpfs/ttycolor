@@ -24,7 +24,11 @@ colors.forEach(function(color) {
     method,  ansi(color)[color]());
 });
 
-console.log('%s', ansi('log message').white());
+console.log('%s', ansi('log message').white().bg().black());
 console.info('%s', ansi('info message').cyan());
 console.warn('%s', ansi('warn message').magenta());
-console.error('%s', ansi('error message').red());
+console.error('%s', ansi('error message').bright().red());
+console.log('pi %d', ansi(3.14).blue().underline());
+//console.log(ansi('underline %j data').white(), ansi({message: 'json'}).underline());
+//console.log('%j', ansi({message: 'json'}).underline());
+//console.log('');
