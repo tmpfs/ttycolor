@@ -5,7 +5,7 @@ var ansi = require('..').ansi;
 console.log('console.log: TERM %s',
   ansi(process.env.TERM).white().bg().black());
 console.log('console.log: TERM_PROGRAM %s',
-  ansi(process.env.TERM_PROGRAM).white().bg().black());
+  ansi(process.env.TERM_PROGRAM).white().bg().black().reverse());
 
 console.log('console.log: %s',
   ansi('white on black looks nice in the solarized color scheme')

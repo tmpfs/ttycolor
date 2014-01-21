@@ -140,6 +140,12 @@ AnsiColor.prototype.bright = function() {
   return ansi;
 }
 
+AnsiColor.prototype.reverse = function() {
+  var ansi = new AnsiColor(this.v, this.k, this);
+  ansi.a = 7;
+  return ansi;
+}
+
 AnsiColor.prototype.underline = function() {
   var ansi = new AnsiColor(this.v, this.k, this);
   ansi.a = 4;
