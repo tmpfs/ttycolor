@@ -1,4 +1,11 @@
-var ansi = require('./ttycolor').ansi;
+#!/usr/bin/env node
+
+var ansi = require('..').ansi;
+
+console.log('console.log: TERM %s',
+  ansi(process.env.TERM).white().bg().black());
+console.log('console.log: TERM_PROGRAM %s',
+  ansi(process.env.TERM_PROGRAM).white().bg().black());
 
 console.log('console.log: %s',
   ansi('white on black looks nice in the solarized color scheme')
@@ -8,8 +15,8 @@ console.log('console.log: sometimes just %s a word with a background is useful',
     .black().bg().white());
 console.log('console.log: %s values draw attention to the eye',
   ansi('bright').bright().white());
-console.log('console.log: %s values draw attention to the eye',
-  ansi('bright').underline().white());
+console.log('console.log: but really an %s is cleaner',
+  ansi('underline').white().underline());
 
 //console.log('console.log: a %s string and a blue number %d',
   //ansi('white').white(), ansi(3.14).blue());

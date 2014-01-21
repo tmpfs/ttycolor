@@ -145,7 +145,7 @@ AnsiColor.prototype.valueOf = function(term) {
     p = p.p;
   }
   list.reverse();
-  console.dir(list);
+  //console.dir(list);
   for(var i = 0;i < list.length;i++){
     //console.dir(list[i]);
     this.v = codes.open(list[i], this.a) + this.v + codes.close();
