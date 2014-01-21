@@ -33,6 +33,10 @@ console.log('%j', ansi({message: 'json'}).red());
 Wrap `value` in a chainable color instance, the `value` will be coerced
 to a string when passed to a `console` function.
 
+### attributes
+
+Map of ANSI attribute codes.
+
 ### colors
 
 Array of color names.

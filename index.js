@@ -3,21 +3,6 @@
 var tty = require('tty');
 var util = require('util');
 
-var ANSI_OPEN = '\u001b[';
-var ANSI_FINAL = 'm';
-var ANSI_CLOSE_CODE = '0';
-var ANSI_CLOSE = ANSI_OPEN + ANSI_CLOSE_CODE + ANSI_FINAL;
-
-var codes = {
-  open: function(v, a) {
-    return a ? ANSI_OPEN + a + ';' + v + ANSI_FINAL
-      : ANSI_OPEN + v + ANSI_FINAL;
-  },
-  close: function() {
-    return ANSI_CLOSE;
-  }
-}
-
 var stash = {
   log: console.log,
   info: console.info,
@@ -47,6 +32,31 @@ var definition = {
       cyan          :  46,
       white         :  47
     }
+  }
+}
+
+var attrs = {
+  normal: 0,
+  bright: 1,
+  dim: 2,
+  italic: 3,
+  underline: 4,
+  blink: 5,
+  reverse: 7
+}
+
+var ANSI_OPEN = '\u001b[';
+var ANSI_FINAL = 'm';
+var ANSI_CLOSE_CODE = '0';
+var ANSI_CLOSE = ANSI_OPEN + ANSI_CLOSE_CODE + ANSI_FINAL;
+
+var codes = {
+  open: function(v, a) {
+    return a ? ANSI_OPEN + a + ';' + v + ANSI_FINAL
+      : ANSI_OPEN + v + ANSI_FINAL;
+  },
+  close: function() {
+    return ANSI_CLOSE;
   }
 }
 
@@ -149,36 +159,16 @@ AnsiColor.prototype.bg = function() {
   return ansi;
 }
 
-AnsiColor.prototype.bright = function() {
-  var ansi = new AnsiColor(this.v, this.k, this);
-  ansi.a = 1;
-  return ansi;
-}
+// attributes
+Object.keys(attrs).forEach(function (k) {
+  AnsiColor.prototype[k] = function () {
+    var ansi = new AnsiColor(this.v, this.k, this);
+    ansi.a = 7;
+    return ansi;
+  };
+});
 
-AnsiColor.prototype.dim = function() {
-  var ansi = new AnsiColor(this.v, this.k, this);
-  ansi.a = 2;
-  return ansi;
-}
-
-AnsiColor.prototype.underline = function() {
-  var ansi = new AnsiColor(this.v, this.k, this);
-  ansi.a = 4;
-  return ansi;
-}
-
-AnsiColor.prototype.blink = function() {
-  var ansi = new AnsiColor(this.v, this.k, this);
-  ansi.a = 5;
-  return ansi;
-}
-
-AnsiColor.prototype.reverse = function() {
-  var ansi = new AnsiColor(this.v, this.k, this);
-  ansi.a = 7;
-  return ansi;
-}
-
+// colors
 Object.keys(definition.colors).forEach(function (k) {
   AnsiColor.prototype[k] = function () {
     this.k = k;
@@ -186,12 +176,14 @@ Object.keys(definition.colors).forEach(function (k) {
   };
 });
 
-var ansi = function(v) {
-  return new AnsiColor(v);
-}
-
 module.exports = {
   console: stash,
-  ansi: ansi,
-  colors: Object.keys(definition.colors)
+  ansi: function(v) {
+    return new AnsiColor(v);
+  },
+  colors: Object.keys(definition.colors),
+  attributes: attrs,
+  stringify: function(value, attr) {
+
+  }
 }

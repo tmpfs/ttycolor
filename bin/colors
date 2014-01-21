@@ -36,8 +36,10 @@ console.log('%s', ansi('log message').white().bg().black());
 console.info('%s', ansi('info message').cyan());
 console.warn('%s', ansi('warn message').magenta());
 console.error('%s', ansi('error message').bright().red());
-console.log('pi %d', ansi(3.14).blue().underline());
+console.log('pi %d', ansi(3.14).underline().blue());
 console.log('%j', ansi({message: 'json'}).red());
+
+console.log('%j', ansi(colors).magenta());
 
 //console.log('%j %j', ansi({message: 'json'}).red());
 //console.log('%j', ansi({message: 'json'}).underline());
