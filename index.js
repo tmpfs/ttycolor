@@ -147,6 +147,10 @@ AnsiColor.prototype.valueOf = function(term, json) {
     p = p.p;
   }
   list.reverse();
+  // handle attribute only chains
+  if(list.length == 1 && this.a && !this.k) {
+    list[0] = definition.colors.normal;
+  }
   for(var i = 0;i < list.length;i++){
     this.v = stringify(this.v, list[i], this.a);
   }

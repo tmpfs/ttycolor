@@ -26,8 +26,10 @@ colors.forEach(function(color) {
     method,  ansi(color)[color]());
 });
 
-console.log('console.log: %s values draw attention to the eye',
-  ansi('bright').bright().normal());
+//console.log('console.log: %s values draw attention to the eye',
+  //ansi('bright').bright());
+//console.log('console.log: but really an %s is cleaner',
+  //ansi('underline').underline());
 
 // no colors, normal console operation
 //console.log('%s', 'value');
