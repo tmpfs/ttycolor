@@ -32,6 +32,8 @@ describe('ttycolor:', function() {
     var input = 'value';
     function cb(value) {
       expect(value).to.be.a('string').that.equals(input);
+      var contents = fs.readFileSync(outlog);
+      expect(contents.toString()).to.be.a('string').that.equals(input);
       stdout.writer.end();
       done();
     }
