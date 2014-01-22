@@ -66,8 +66,10 @@ var codes = {
  *  @param ... The format string arguments.
  */
 function proxy(term, method, format) {
+  // NOTE: do not print undefined for mocha compatibilty
+  if(format == undefined) return;
   var re = /(%[sdj])+/g;
-  var replacing = (typeof format == 'string')
+  var replacing = format && (typeof format == 'string')
     && re.test(format) && arguments.length > 3;
   var replacements = [].slice.call(arguments, 3);
   if(!replacing) {
@@ -174,6 +176,11 @@ module.exports = {
   attributes: attrs,
   foreground: definition.colors,
   background: definition.bg.colors,
+  revert: function() {
+    for(var z in stash) {
+      console[z] = stash[z];
+    }
+  },
   stringify: function(value, code, attr) {
     return codes.open(code, attr) + value + codes.close();
   }
