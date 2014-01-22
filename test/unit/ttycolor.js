@@ -5,8 +5,7 @@ var expect = require('chai').expect;
 
 var ttycolor = require('../..');
 var outlog = path.join(__dirname, '..', '..', 'log', 'out.log');
-
-console.log(outlog);
+var errlog = path.join(__dirname, '..', '..', 'log', 'err.log');
 
 var stdout = {reader: null, writer: null}, stderr = {reader: null, writer: null};
 
@@ -30,16 +29,7 @@ describe('ttycolor:', function() {
     expect(ttycolor.stringify).to.be.a('function');
     done();
   });
-
-  it('should print empty string with no arguments', function(done) {
-    function cb(value) {
-      expect(value).to.be.a('string').that.equals('');
-      stdout.writer.end();
-      done();
-    }
-    console.write({stream: stdout.writer, callback: cb});
-  });
-  it('should print value', function(done) {
+  it('should write to stream', function(done) {
     var input = 'value';
     function cb(value) {
       expect(value).to.be.a('string').that.equals(input);
@@ -48,16 +38,30 @@ describe('ttycolor:', function() {
     }
     console.write({stream: stdout.writer, callback: cb}, input);
   });
-  it('should print escaped', function(done) {
-    var fd = process.stdout.fd;
-    process.stdout.fd = stdout.writer.fd;
-    var input = 'my value';
+  it('should print empty string with no arguments', function(done) {
     function cb(value) {
-      expect(value).to.be.a('string').that.equals(input);
-      process.stdout.fd = fd;
+      expect(value).to.be.a('string').that.equals('');
       stdout.writer.end();
       done();
     }
-    console.write({stream: stdout.writer, callback: cb}, input);
+    console.write({stream: stdout.writer, callback: cb});
+  });
+  it('should return vanilla string', function(done) {
+    var input = 'value';
+    var result = ttycolor.debug('%s', input);
+    expect(result).to.be.a('string').that.equals(input);
+    done();
+  });
+  it('should return vanilla number', function(done) {
+    var input = 3.14;
+    var result = ttycolor.debug('%s', input);
+    expect(result).to.be.a('string').that.equals('' + input);
+    done();
+  });
+  it('should return vanilla json', function(done) {
+    var input = {message: 'json'};
+    var result = ttycolor.debug('%j', input);
+    expect(result).to.be.a('string').that.equals(JSON.stringify(input));
+    done();
   });
 })

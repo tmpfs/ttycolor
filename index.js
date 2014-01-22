@@ -211,12 +211,17 @@ module.exports = {
   attributes: attrs,
   foreground: definition.colors,
   background: definition.bg.colors,
-  revert: function() {
-    for(var z in stash) {
-      console[z] = stash[z];
-    }
-  },
+  //revert: function() {
+    //for(var z in stash) {
+      //console[z] = stash[z];
+    //}
+  //},
   stringify: function(value, code, attr) {
     return codes.open(code, attr) + value + codes.close();
+  },
+  debug: function() {
+    var args = [{scope: util, method: util.format, tty: true}];
+    args = args.concat([].slice.call(arguments, 0));
+    return proxy.apply(null, args);
   }
 }
