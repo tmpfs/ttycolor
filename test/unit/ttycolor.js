@@ -150,6 +150,19 @@ describe('ttycolor:', function() {
     });
     done();
   });
+  it('should handle multiple attribute only chains', function(done) {
+    var input = 'value';
+    var expected = '\u001b['
+      + ttycolor.attributes.bright + ';'
+      + ttycolor.foreground.normal + 'm' + '\u001b['
+      + ttycolor.attributes.underline + ';'
+      + ttycolor.foreground.normal + 'm' + input + '\u001b[0m' + '\u001b[0m';
+    var result = ttycolor.debug('%s', ansi(input).underline().bright());
+    //console.dir(result);
+    expect(result).to.be.a('string').that.equals(expected);
+    done();
+  });
+
   it('should handle color only chains', function(done) {
     var def = ttycolor.foreground;
     var keys = Object.keys(def), v, result;
@@ -187,4 +200,20 @@ describe('ttycolor:', function() {
     });
     done();
   });
+  // TODO
+  //it('should handle background/foreground chains', function(done) {
+    //var fore = ttycolor.foreground;
+    //var back = ttycolor.background;
+    //var keys = Object.keys(fore), fg, bg, result;
+    //keys.forEach(function(k) {
+      //fg = fore[k];
+      //bg = back[k];
+      //expected = '\u001b[' + fg + 'm' + '\u001b['
+        //+ bg + 'm' + k + '\u001b[0m' + '\u001b[0m';
+      //result = ttycolor.debug('%s', ansi(k).bg()[k]()[k]());
+      ////console.dir(result);
+      //expect(result).to.be.a('string').that.equals(expected);
+    //});
+    //done();
+  //});
 })

@@ -144,7 +144,6 @@ AnsiColor.prototype.valueOf = function(term) {
   if(!term) return this.v;
   var list = [this];
   var p = this.p;
-  //if(p) list.push(p);
   while(p) {
     if(p) {
       list.push(p);
@@ -152,12 +151,9 @@ AnsiColor.prototype.valueOf = function(term) {
     p = p.p;
   }
   list.reverse();
-  // handle attribute only chains
-  //if(list.length == 1 && this.a && !this.k) {
-    //list[0] = definition.colors.normal;
-  //}
   for(var i = 0;i < list.length;i++){
     p = list[i];
+    if(!p.k) continue;
     this.v = stringify(this.v, p.t[p.k], p.a);
   }
   return this.v;
@@ -166,6 +162,7 @@ AnsiColor.prototype.valueOf = function(term) {
 AnsiColor.prototype.bg = function() {
   var ansi = new AnsiColor(this.v, this.k, this);
   ansi.t = definition.bg.colors;
+  //this.k = null;
   return ansi;
 }
 
