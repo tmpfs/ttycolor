@@ -1,19 +1,15 @@
 var fs = require('fs');
 var path = require('path');
-var tty = require('tty');
 var expect = require('chai').expect;
 
 var ttycolor = require('../..');
-var outlog = path.join(__dirname, '..', '..', 'log', 'out.log');
-var errlog = path.join(__dirname, '..', '..', 'log', 'err.log');
-
-var stdout = {reader: null, writer: null},
-  stderr = {reader: null, writer: null};
+var log = path.join(__dirname, '..', '..', 'log', 'out.log');
+var file = null;
 
 describe('ttycolor:', function() {
   beforeEach(function(done) {
-    stdout.writer = fs.createWriteStream(outlog, {flags: 'w'});
-    stdout.writer.on('open', function(fd) {
+    file = fs.createWriteStream(log, {flags: 'w'});
+    file.on('open', function(fd) {
       done();
     });
   });
@@ -32,12 +28,12 @@ describe('ttycolor:', function() {
     var input = 'value';
     function cb(value) {
       expect(value).to.be.a('string').that.equals(input);
-      var contents = fs.readFileSync(outlog);
+      var contents = fs.readFileSync(log);
       expect(contents.toString()).to.be.a('string').that.equals(input);
-      stdout.writer.end();
+      file.end();
       done();
     }
-    console.write({stream: stdout.writer, callback: cb}, input);
+    console.write({stream: file, callback: cb}, input);
   });
   it('should return empty string with no arguments', function(done) {
     var result = ttycolor.debug();
