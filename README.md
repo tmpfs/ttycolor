@@ -83,7 +83,7 @@ Wrap `value` in a chainable color instance, the `value` will be coerced to a str
 
 #### attributes
 
-Map of ANSI attribute codes.
+Map of attribute codes.
 
 #### background
 
