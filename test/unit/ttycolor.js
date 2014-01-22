@@ -7,16 +7,14 @@ var ttycolor = require('../..');
 var outlog = path.join(__dirname, '..', '..', 'log', 'out.log');
 var errlog = path.join(__dirname, '..', '..', 'log', 'err.log');
 
-var stdout = {reader: null, writer: null}, stderr = {reader: null, writer: null};
+var stdout = {reader: null, writer: null},
+  stderr = {reader: null, writer: null};
 
 describe('ttycolor:', function() {
   beforeEach(function(done) {
     stdout.writer = fs.createWriteStream(outlog, {flags: 'w'});
     stdout.writer.on('open', function(fd) {
-      stdout.reader = fs.createReadStream(outlog, 'r');
-      stdout.reader.on('open', function(fd) {
-        done();
-      });
+      done();
     });
   });
   it('should export properties', function(done) {
@@ -25,6 +23,7 @@ describe('ttycolor:', function() {
     expect(ttycolor.background).to.be.an('object');
     expect(ttycolor.colors).to.be.an('array');
     expect(ttycolor.console).to.be.an('object');
+    expect(ttycolor.debug).to.be.a('function');
     expect(ttycolor.foreground).to.be.an('object');
     expect(ttycolor.stringify).to.be.a('function');
     done();
@@ -38,13 +37,10 @@ describe('ttycolor:', function() {
     }
     console.write({stream: stdout.writer, callback: cb}, input);
   });
-  it('should print empty string with no arguments', function(done) {
-    function cb(value) {
-      expect(value).to.be.a('string').that.equals('');
-      stdout.writer.end();
-      done();
-    }
-    console.write({stream: stdout.writer, callback: cb});
+  it('should return empty string with no arguments', function(done) {
+    var result = ttycolor.debug();
+    expect(result).to.be.a('string').that.equals('');
+    done();
   });
   it('should return vanilla string', function(done) {
     var input = 'value';
