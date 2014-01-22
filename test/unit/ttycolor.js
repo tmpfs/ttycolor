@@ -60,6 +60,12 @@ describe('ttycolor:', function() {
     expect(result).to.be.a('string').that.equals(JSON.stringify(input));
     done();
   });
+  it('should handle extra format arguments', function(done) {
+    var expected = 'foo:bar baz';
+    var result = ttycolor.debug('%s:%s', 'foo', 'bar', 'baz');
+    expect(result).to.be.a('string').that.equals(expected);
+    done();
+  });
   it('should return escape sequence', function(done) {
     var input = 'value';
     var expected = '\u001b[1;37m' + input + '\u001b[0m';
