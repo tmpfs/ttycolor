@@ -60,4 +60,15 @@ describe('ttycolor:', function() {
     expect(result).to.be.a('string').that.equals(JSON.stringify(input));
     done();
   });
+  it('should return escape sequence', function(done) {
+    var input = 'value';
+    var expected = '\u001b[1;37m' + input + '\u001b[0m';
+    var result = ttycolor.stringify(
+      input,
+      ttycolor.foreground.white,
+      ttycolor.attributes.bright);
+      expect(result).to.be.a('string').that.equals(expected);
+    done();
+  });
+
 })
