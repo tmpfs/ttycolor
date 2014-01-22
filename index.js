@@ -146,7 +146,7 @@ AnsiColor.prototype.valueOf = function(term, json) {
   }
   list.reverse();
   for(var i = 0;i < list.length;i++){
-    this.v = codes.open(list[i], this.a) + this.v + codes.close();
+    this.v = stringify(this.v, list[i], this.a);
   }
   //console.dir(this.v);
   return this.v;
