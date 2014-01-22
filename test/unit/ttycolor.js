@@ -72,6 +72,12 @@ describe('ttycolor:', function() {
     expect(result).to.be.a('string').that.equals(expected);
     done();
   });
+  it('should handle non-string format', function(done) {
+    var expected = '1 2 3';
+    var result = ttycolor.debug(1, 2, 3);
+    expect(result).to.be.a('string').that.equals(expected);
+    done();
+  });
   it('should return escape sequence', function(done) {
     var input = 'value';
     var expected = '\u001b[1;37m' + input + '\u001b[0m';
