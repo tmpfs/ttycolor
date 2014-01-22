@@ -134,18 +134,13 @@ describe('ttycolor:', function() {
     var attrs = ttycolor.attributes;
     var keys = Object.keys(attrs), v, result;
     keys.forEach(function(k) {
+      //console.log(k);
       v = attrs[k];
-      expected = '\u001b[' + v + ';37m' + k + '\u001b[0m';
+      expected = '\u001b[' + v + ';'
+        + ttycolor.foreground.normal + 'm' + k + '\u001b[0m';
       result = ttycolor.debug('%s', ansi(k)[k]());
-      process.stdout.write(result);
+      expect(result).to.be.a('string').that.equals(expected);
     });
-
-    //var input = 'value';
-    //var result = ttycolor.stringify(
-      //input,
-      //ttycolor.foreground.white,
-      //ttycolor.attributes.bright);
-      //expect(result).to.be.a('string').that.equals(expected);
     done();
   });
 })

@@ -37,7 +37,7 @@ var definition = {
     }
   },
   attrs: {
-    normal          : 0,
+    //normal          : 0,
     bright          : 1,
     dim             : 2,
     italic          : 3,
