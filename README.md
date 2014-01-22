@@ -89,7 +89,7 @@ Print an error message with escape sequence support, output is to `stderr`.
 
 #### console.write(options, format, ...)
 
-Asynchronously write to an arbitray writable stream with escape sequence support if the stream if a tty as reported by `tty.isatty`.
+Asynchronously write to an arbitray writable stream with escape sequence support if the stream is a tty as reported by `tty.isatty`.
 
 * `options`: The write options.
 * `format`: The format string.
