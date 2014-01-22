@@ -48,12 +48,12 @@ colors.forEach(function(color) {
     method,  ansi(color).bg()[color]());
 });
 
-//console.log(ansi('bright').bright());
-//console.log(ansi('underline').underline());
-//console.log(ansi('reverse').white().bg().black().reverse());
+console.log('console.log: %s', ansi('bright').bright());
+console.info('console.info: %s', ansi('underline').underline());
+console.warn('console.warn: %s', ansi('reverse').white().bg().black().reverse());
 //console.log(ansi('reverse').underline().white().bg().black().bright());
 //console.log(ansi('bright underline').underline().bright());
-console.log(ansi('bright underline').underline().bright())
+console.error('console.error: %s', ansi('bright underline').underline().bright())
 //console.dir(ttycolor.debug(ansi('bright underline').underline().bright()));
 
 //console.log('a %s for you', ansi('log message').bg().black());

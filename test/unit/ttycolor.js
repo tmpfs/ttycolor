@@ -158,7 +158,6 @@ describe('ttycolor:', function() {
       + ttycolor.attributes.underline + ';'
       + ttycolor.foreground.normal + 'm' + input + '\u001b[0m' + '\u001b[0m';
     var result = ttycolor.debug('%s', ansi(input).underline().bright());
-    //console.dir(result);
     expect(result).to.be.a('string').that.equals(expected);
     done();
   });
