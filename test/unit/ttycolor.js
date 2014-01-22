@@ -131,13 +131,24 @@ describe('ttycolor:', function() {
     done();
   });
   it('should handle attribute only chains', function(done) {
-    var attrs = ttycolor.attributes;
-    var keys = Object.keys(attrs), v, result;
+    var def = ttycolor.attributes;
+    var keys = Object.keys(def), v, result;
     keys.forEach(function(k) {
       //console.log(k);
-      v = attrs[k];
+      v = def[k];
       expected = '\u001b[' + v + ';'
         + ttycolor.foreground.normal + 'm' + k + '\u001b[0m';
+      result = ttycolor.debug('%s', ansi(k)[k]());
+      expect(result).to.be.a('string').that.equals(expected);
+    });
+    done();
+  });
+  it('should handle color only chains', function(done) {
+    var def = ttycolor.foreground;
+    var keys = Object.keys(def), v, result;
+    keys.forEach(function(k) {
+      v = def[k];
+      expected = '\u001b[' + v + 'm' + k + '\u001b[0m';
       result = ttycolor.debug('%s', ansi(k)[k]());
       expect(result).to.be.a('string').that.equals(expected);
     });
