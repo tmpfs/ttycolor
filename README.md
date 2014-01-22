@@ -37,7 +37,7 @@ npm test
 
 ## API
 
-```
+```javascript
 var ansi = require('ttycolor').ansi;
 // no colors, normal console operation
 console.log('%s', 'value');
