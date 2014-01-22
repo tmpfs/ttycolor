@@ -13,31 +13,30 @@ var stash = {
 
 var definition = {
   colors: {
+    normal          : 39,
     white           : 37,
     black           : 30,
     blue            : 34,
     cyan            : 36,
     green           : 32,
-    magenta         : 35,
-    red             : 31,
     yellow          : 33,
-    normal          : 39
+    magenta         : 35,
+    red             : 31
   },
   bg: {
     colors: {
+      normal        : 49,
+      white         : 47,
       black         : 40,
-      red           : 41,
+      blue          : 44,
+      cyan          : 46,
       green         : 42,
       yellow        : 43,
-      blue          : 44,
       magenta       : 45,
-      cyan          : 46,
-      white         : 47,
-      normal        : 49
+      red           : 41
     }
   },
   attrs: {
-    //normal          : 0,
     bright          : 1,
     dim             : 2,
     italic          : 3,
