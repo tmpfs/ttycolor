@@ -163,7 +163,7 @@ console.log('%s', ansi('log message').bg().black());
 
 #### Attributes
 
-Depending upon the temrinal emulator some attributes may not be supported and will have no visual effect. Typcially, `bright`, `underline` and `reverse` are safe to use.
+Depending upon the temrinal emulator some attributes may not be supported and will have no visual effect. Typically `bright`, `underline` and `reverse` are safe to use.
 
 ```
 console.log('%s', ansi('log message').bright());
