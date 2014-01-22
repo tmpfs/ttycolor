@@ -9,6 +9,12 @@ Terminal colors for [node][node] that respect whether the `stdout` and `stderr` 
 npm install ttycolor
 ```
 
+## Test
+
+```
+npm test
+```
+
 ## API
 
 ```
