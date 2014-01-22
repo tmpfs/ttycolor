@@ -33,6 +33,8 @@ console.log('pi %d', ansi(3.14).blue().underline());
 console.log('%j', ansi({message: 'json'}).red());
 ```
 
+This package overrides the default `console` functions, you may access the original console functions via the `console` property exposed by the module.
+
 ### ansi(value)
 
 Wrap `value` in a chainable color instance, the `value` will be coerced
@@ -60,7 +62,7 @@ Map of foreground color codes.
 
 ### stringify(value, code, attr)
 
-Convert a value to an ANSI escape sequence.
+Low-level method for creating escaped string sequences.
 
 * `value`: The value to escape, will be coerced to a string.
 * `code`: The color code.

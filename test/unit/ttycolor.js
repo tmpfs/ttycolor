@@ -40,6 +40,13 @@ describe('ttycolor:', function() {
     expect(result).to.be.a('string').that.equals('');
     done();
   });
+  it('should not touch percent', function(done) {
+    var result = ttycolor.debug('%', 'value');
+    expect(result).to.be.a('string').that.equals('% value');
+    result = ttycolor.debug('%d%', 100);
+    expect(result).to.be.a('string').that.equals('100%');
+    done();
+  });
   it('should return vanilla string', function(done) {
     var input = 'value';
     var result = ttycolor.debug('%s', input);
@@ -112,7 +119,7 @@ describe('ttycolor:', function() {
     expect(result).to.be.a('string').that.equals(expected);
     done();
   });
-  it('should return escape sequence', function(done) {
+  it('should return escape sequence from stringify', function(done) {
     var input = 'value';
     var expected = '\u001b[1;37m' + input + '\u001b[0m';
     var result = ttycolor.stringify(
