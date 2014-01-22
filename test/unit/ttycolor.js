@@ -90,6 +90,18 @@ describe('ttycolor:', function() {
     expect(result).to.be.a('string').that.equals(expected);
     done();
   });
+  it('should handle true format', function(done) {
+    var expected = 'true';
+    var result = ttycolor.debug(true);
+    expect(result).to.be.a('string').that.equals(expected);
+    done();
+  });
+  it('should handle false format', function(done) {
+    var expected = 'false';
+    var result = ttycolor.debug(false);
+    expect(result).to.be.a('string').that.equals(expected);
+    done();
+  });
   it('should return escape sequence', function(done) {
     var input = 'value';
     var expected = '\u001b[1;37m' + input + '\u001b[0m';
