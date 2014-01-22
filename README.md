@@ -87,16 +87,6 @@ The `options` object should contain the properties `stream` and `callback`. The 
 
 The `stream` must be open and have an associated `fd` or this method will throw an error.
 
-For ex
-
-```
-var fs = require('fs');
-var file = fs.createWriteStream('/path/to/file', {flags: 'w'});
-file.on('open', function(fd) {
-  
-});
-```
-
 ### Module
 
 #### ansi(value)
