@@ -33,34 +33,67 @@ console.log('pi %d', ansi(3.14).blue().underline());
 console.log('%j', ansi({message: 'json'}).red());
 ```
 
-This package overrides the default `console` functions, you may access the original console functions via the `console` property exposed by the module.
+### Console
 
-### ansi(value)
+This package overrides the default `console` functions, you may access the original console functions via the `console` property exposed by the module. Note that the `console.dir` method is left untouched.
 
-Wrap `value` in a chainable color instance, the `value` will be coerced
-to a string when passed to a `console` function.
+All overriden methods proxy to the original method after handling escape sequences.
 
-### attributes
+#### console.log(format, ...)
+
+Print a log message with escape sequence support, output is to `stdout`.
+
+* `format`: The format string.
+* `...`: The format replacement parameters.
+
+#### console.info(format, ...)
+
+Print an info message with escape sequence support, output is to `stdout`.
+
+* `format`: The format string.
+* `...`: The format replacement parameters.
+
+#### console.warn(format, ...)
+
+Print a warn message with escape sequence support, output is to `stderr`.
+
+* `format`: The format string.
+* `...`: The format replacement parameters.
+
+#### console.error(format, ...)
+
+Print an error message with escape sequence support, output is to `stderr`.
+
+* `format`: The format string.
+* `...`: The format replacement parameters.
+
+### Module
+
+#### ansi(value)
+
+Wrap `value` in a chainable color instance, the `value` will be coerced to a string when passed to a `console` function.
+
+#### attributes
 
 Map of ANSI attribute codes.
 
-### background
+#### background
 
 Map of background color codes.
 
-### colors
+#### colors
 
 Array of color names.
 
-### console
+#### console
 
 Map referencing the original `console` methods.
 
-### foreground
+#### foreground
 
 Map of foreground color codes.
 
-### stringify(value, code, attr)
+#### stringify(value, code, attr)
 
 Low-level method for creating escaped string sequences.
 

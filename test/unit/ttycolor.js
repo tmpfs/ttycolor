@@ -3,6 +3,7 @@ var path = require('path');
 var expect = require('chai').expect;
 
 var ttycolor = require('../..');
+var ansi = ttycolor.ansi;
 var log = path.join(__dirname, '..', '..', 'log', 'out.log');
 var file = null;
 
@@ -129,5 +130,22 @@ describe('ttycolor:', function() {
       expect(result).to.be.a('string').that.equals(expected);
     done();
   });
+  it('should handle attribute only chains', function(done) {
+    var attrs = ttycolor.attributes;
+    var keys = Object.keys(attrs), v, result;
+    keys.forEach(function(k) {
+      v = attrs[k];
+      expected = '\u001b[' + v + ';37m' + k + '\u001b[0m';
+      result = ttycolor.debug('%s', ansi(k)[k]());
+      process.stdout.write(result);
+    });
 
+    //var input = 'value';
+    //var result = ttycolor.stringify(
+      //input,
+      //ttycolor.foreground.white,
+      //ttycolor.attributes.bright);
+      //expect(result).to.be.a('string').that.equals(expected);
+    done();
+  });
 })

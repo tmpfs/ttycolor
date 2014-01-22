@@ -13,39 +13,38 @@ var stash = {
 
 var definition = {
   colors: {
-    white           :  37,
-    black           :  30,
-    blue            :  34,
-    cyan            :  36,
-    green           :  32,
-    magenta         :  35,
-    red             :  31,
-    yellow          :  33,
-    normal          :  39
+    white           : 37,
+    black           : 30,
+    blue            : 34,
+    cyan            : 36,
+    green           : 32,
+    magenta         : 35,
+    red             : 31,
+    yellow          : 33,
+    normal          : 39
   },
   bg: {
     colors: {
-      black         :  40,
-      red           :  41,
-      green         :  42,
-      yellow        :  43,
-      blue          :  44,
-      magenta       :  45,
-      cyan          :  46,
-      white         :  47,
-      normal        :  49
+      black         : 40,
+      red           : 41,
+      green         : 42,
+      yellow        : 43,
+      blue          : 44,
+      magenta       : 45,
+      cyan          : 46,
+      white         : 47,
+      normal        : 49
     }
+  },
+  attrs: {
+    normal          : 0,
+    bright          : 1,
+    dim             : 2,
+    italic          : 3,
+    underline       : 4,
+    blink           : 5,
+    reverse         : 7
   }
-}
-
-var attrs = {
-  normal: 0,
-  bright: 1,
-  dim: 2,
-  italic: 3,
-  underline: 4,
-  blink: 5,
-  reverse: 7
 }
 
 var ANSI_OPEN = '\u001b[';
@@ -203,10 +202,10 @@ Object.keys(stash).forEach(function (k) {
 });
 
 // attributes
-Object.keys(attrs).forEach(function (k) {
+Object.keys(definition.attrs).forEach(function (k) {
   AnsiColor.prototype[k] = function () {
     var ansi = new AnsiColor(this.v, this.k, this);
-    ansi.a = attrs[k];
+    ansi.a = definition.attrs[k];
     return ansi;
   };
 });
@@ -225,7 +224,7 @@ module.exports = {
     return new AnsiColor(v);
   },
   colors: Object.keys(definition.colors),
-  attributes: attrs,
+  attributes: definition.attrs,
   foreground: definition.colors,
   background: definition.bg.colors,
   stringify: stringify,
