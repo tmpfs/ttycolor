@@ -19,6 +19,10 @@ Terminal colors for [node][node] that respect whether the `stdout` and `stderr` 
   <img src="img/cat.png" />
 </p>
 
+<p align="center">
+  <img src="img/source.png" />
+</p>
+
 ## Installation
 
 ```
