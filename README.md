@@ -11,6 +11,14 @@ Terminal colors for [node][node] that respect whether the `stdout` and `stderr` 
 * Asynchronous write to any stream respecting `tty.isatty`
 * Comprehensive test suite
 
+<p align="center">
+  <img src="img/colors.png" />
+</p>
+
+<p align="center">
+  <img src="img/cat.png" />
+</p>
+
 ## Installation
 
 ```

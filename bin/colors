@@ -18,29 +18,43 @@ var ansi = ttycolor.ansi;
   //ansi('underline').white().underline());
 //
 
-//console.log(ansi(process.env.TERM).white().bg().black());
 //
 
-    var input = 'value';
-    var expected = '\u001b[1;37m' + input + '\u001b[0m';
+    //var input = 'value';
+    //var expected = '\u001b[1;37m' + input + '\u001b[0m';
 
-    var result = ttycolor.debug(ansi(input).bright().white());
-    console.dir(result);
+    //var result = ttycolor.debug(ansi(input).bright().white());
+    //console.dir(result);
 
-    var result = ttycolor.debug(ansi(input).white().bright());
-    console.dir(result);
-process.exit(0);
+    //var result = ttycolor.debug(ansi(input).white().bright());
+    //console.dir(result);
+//process.exit(0);
 
 //
 var colors = ttycolor.colors;
+colors.shift();
 var methods = ['log', 'info', 'warn', 'error'], i = 0, method;
 methods = methods.concat(methods);
-methods.push('log');
 colors.forEach(function(color) {
   method = methods[i++];
   console[method]('console.%s: %s color',
     method,  ansi(color)[color]());
 });
+
+i = 0;
+colors.forEach(function(color) {
+  method = methods[i++];
+  console[method]('console.%s: %s color',
+    method,  ansi(color).bg()[color]());
+});
+
+//console.log(ansi('bright').bright());
+//console.log(ansi('underline').underline());
+//console.log(ansi('reverse').white().bg().black().reverse());
+//console.log(ansi('reverse').underline().white().bg().black().bright());
+//console.log(ansi('bright underline').underline().bright());
+console.log(ansi('bright underline').underline().bright())
+//console.dir(ttycolor.debug(ansi('bright underline').underline().bright()));
 
 //console.log('a %s for you', ansi('log message').bg().black());
 

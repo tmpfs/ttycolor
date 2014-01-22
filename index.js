@@ -135,28 +135,31 @@ function proxy(options, format) {
 var AnsiColor = function(value, key, parent){
   this.t = definition.colors;
   this.v = value;
-  this.k = key;
+  this.k = key || 'normal';
   this.p = parent;
   this.a = null;
 };
 
 AnsiColor.prototype.valueOf = function(term) {
   if(!term) return this.v;
-  var list = [this.t[this.k]];
+  var list = [this];
   var p = this.p;
+  //if(p) list.push(p);
   while(p) {
-    if(p.t[p.k]) list.push(p.t[p.k]);
+    if(p) {
+      list.push(p);
+    }
     p = p.p;
   }
   list.reverse();
   // handle attribute only chains
-  if(list.length == 1 && this.a && !this.k) {
-    list[0] = definition.colors.normal;
-  }
+  //if(list.length == 1 && this.a && !this.k) {
+    //list[0] = definition.colors.normal;
+  //}
   for(var i = 0;i < list.length;i++){
-    this.v = stringify(this.v, list[i], this.a);
+    p = list[i];
+    this.v = stringify(this.v, p.t[p.k], p.a);
   }
-  //console.dir(this.v);
   return this.v;
 }
 
@@ -207,6 +210,11 @@ Object.keys(stash).forEach(function (k) {
 // attributes
 Object.keys(definition.attrs).forEach(function (k) {
   AnsiColor.prototype[k] = function () {
+    if(this.a) {
+      var ansi = new AnsiColor(this.v, this.k, this);
+      ansi.a = definition.attrs[k];
+      return ansi;
+    }
     this.a = definition.attrs[k];
     return this;
   };
