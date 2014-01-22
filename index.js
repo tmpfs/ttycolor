@@ -86,12 +86,16 @@ function stringify(value, code, attr) {
 function proxy(options, format) {
   var term = options.tty;
   var method = options.method;
-  //console.dir(method);
   if(arguments.length == 1) return method.apply(console, []);
   var re = /(%[sdj])+/g;
   var replacing = (typeof format == 'string')
     && re.test(format) && arguments.length > 2;
   var replacements = [].slice.call(arguments, 2);
+  if(format instanceof AnsiColor) {
+    replacements.unshift(format);
+    format = '%s';
+    replacing = true;
+  }
   if(!replacing) {
     replacements.unshift(format);
     return method.apply(console, replacements);

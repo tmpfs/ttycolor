@@ -34,7 +34,7 @@ describe('ttycolor:', function() {
       file.end();
       done();
     }
-    console.write({stream: file, callback: cb}, input);
+    console.write({stream: file, callback: cb}, '%s', ansi(input).white().underline());
   });
   it('should return empty string with no arguments', function(done) {
     var result = ttycolor.debug();
