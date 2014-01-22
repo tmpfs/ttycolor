@@ -109,6 +109,47 @@ Low-level method for creating escaped string sequences.
 * `code`: The color code.
 * `attr`: Optional attribute code. 
 
+### Styles
+
+#### Foreground Colors
+
+```
+console.log('%s', ansi('log message').white());
+```
+
+* `normal`
+* `white`
+* `black`
+* `blue`
+* `cyan`
+* `green`
+* `yellow`
+* `magenta`
+* `red`
+
+#### Background Colors
+
+Background colors are set by invoking the `bg` function prior to a color function. Function names are identical to the foregound color list.
+
+```
+console.log('%s', ansi('log message').bg().black());
+```
+
+#### Attributes
+
+Depending upon the temrinal emulator some attributes may not be supported and will have no visual effect. Typcially, `bright`, `underline` and `reverse` are safe to use.
+
+```
+console.log('%s', ansi('log message').bright());
+```
+
+* `bright`
+* `dim`
+* `italic`
+* `underline`
+* `blink`
+* `reverse`
+
 ## License
 
 Everything is [MIT](http://en.wikipedia.org/wiki/MIT_License). Read the [license](/LICENSE) if you feel inclined.
