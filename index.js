@@ -1,5 +1,9 @@
 'use strict';
 
+var tty = require('tty');
+var util = require('util');
+var WritableStream = require('stream').Writable;
+
 var stash = {
   log: console.log,
   info: console.info,
@@ -60,18 +64,23 @@ var codes = {
 /**
  *  Escapes replacement values.
  *
- *  @param term Indicates whether the stream is a tty.
- *  @param method The console method to invoke.
+ *  @param options.tty A boolean indicating whether the output is a tty.
+ *  @param options.method A method to proxy to.
+ *  @param options.stream A writable stream to write to.
+ *
+ *  @param options Write options.
  *  @param format The format string.
  *  @param ... The format string arguments.
  */
-function proxy(term, method, format) {
-  // NOTE: do not print undefined for mocha compatibilty
-  if(format == undefined) return;
+function proxy(options, format) {
+  var term = options.tty;
+  var method = options.method;
+  //console.dir(method);
+  if(arguments.length == 1) return method.apply(console, []);
   var re = /(%[sdj])+/g;
-  var replacing = format && (typeof format == 'string')
-    && re.test(format) && arguments.length > 3;
-  var replacements = [].slice.call(arguments, 3);
+  var replacing = (typeof format == 'string')
+    && re.test(format) && arguments.length > 2;
+  var replacements = [].slice.call(arguments, 2);
   if(!replacing) {
     replacements.unshift(format);
     return method.apply(console, replacements);
@@ -98,7 +107,7 @@ function proxy(term, method, format) {
     }
   }
   replacements.unshift(format);
-  method.apply(console, replacements);
+  return method.apply(options.scope ? options.scope : console, replacements);
 }
 
 /**
@@ -144,11 +153,37 @@ Object.keys(stash).forEach(function (k) {
     process.stdout : process.stderr;
   console[k] = function(format) {
     var term = stream.isTTY;
-    var args = [term, stash[k], format];
-    args = args.concat([].slice.call(arguments, 1));
+    var args = [{tty: term, method: stash[k]}];
+    var rest = [].slice.call(arguments, 0);
+    args = args.concat(rest);
     proxy.apply(null, args);
   }
 });
+
+/**
+ *  Write a writable stream.
+ *
+ *  @param options.stream A writable stream.
+ *  @param options.callback A callback to invoke once the data is written.
+ *  @param format The format string.
+ *  @param ...  The format string arguments.
+ */
+console.write = function(options) {
+  var stream = options.stream;
+  if(stream instanceof WritableStream) {
+    if(stream.fd == null) {
+      throw new Error('Cannot write to stream, file descriptor not open');
+    }
+    var args = [{scope: util, method: util.format, tty: tty.isatty(stream.fd)}];
+    args = args.concat([].slice.call(arguments, 1));
+    var value = proxy.apply(null, args);
+    stream.write(value, function() {
+      if(typeof options.callback == 'function') options.callback(value);
+    });
+  }else{
+    throw new Error('Stream option must be writable');
+  }
+}
 
 // attributes
 Object.keys(attrs).forEach(function (k) {
