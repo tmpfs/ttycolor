@@ -154,4 +154,15 @@ describe('ttycolor:', function() {
     });
     done();
   });
+  it('should handle background only chains', function(done) {
+    var def = ttycolor.background;
+    var keys = Object.keys(def), v, result;
+    keys.forEach(function(k) {
+      v = def[k];
+      expected = '\u001b[' + v + 'm' + k + '\u001b[0m';
+      result = ttycolor.debug('%s', ansi(k).bg()[k]());
+      expect(result).to.be.a('string').that.equals(expected);
+    });
+    done();
+  });
 })
