@@ -110,7 +110,7 @@ function proxy(options, format) {
       if(json && term) {
         arg.v = JSON.stringify(arg.v);
       }
-      replacements[i] = arg.valueOf(term, json);
+      replacements[i] = arg.valueOf(term);
     }else if(json && term){
       replacements[i] = JSON.stringify(replacements[i]);
     }
@@ -140,10 +140,10 @@ var AnsiColor = function(value, key, parent){
   this.a = null;
 };
 
-AnsiColor.prototype.valueOf = function(term, json) {
+AnsiColor.prototype.valueOf = function(term) {
   if(!term) return this.v;
   var list = [this.t[this.k]];
-  var p = this.p, a;
+  var p = this.p;
   while(p) {
     if(p.t[p.k]) list.push(p.t[p.k]);
     p = p.p;

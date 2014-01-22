@@ -19,7 +19,13 @@ var ansi = ttycolor.ansi;
 //
 
 //console.log(ansi(process.env.TERM).white().bg().black());
-//process.exit(0);
+//
+
+    var input = 'value';
+    var expected = '\u001b[1;37m' + input + '\u001b[0m';
+    var result = ttycolor.debug(ansi(input).white().bright());
+    console.dir(result);
+process.exit(0);
 
 //
 var colors = ttycolor.colors;

@@ -130,6 +130,13 @@ describe('ttycolor:', function() {
       expect(result).to.be.a('string').that.equals(expected);
     done();
   });
+  //it('should handle format as ansi instance', function(done) {
+    //var input = 'value';
+    //var expected = '\u001b[1;37m' + input + '\u001b[0m';
+    //var result = ttycolor.debug(ansi(input).white().bright());
+    //expect(result).to.be.a('string').that.equals(expected);
+    //done();
+  //});
   it('should handle attribute only chains', function(done) {
     var def = ttycolor.attributes;
     var keys = Object.keys(def), v, result;
