@@ -18,12 +18,16 @@ console.log('console.log: but really an %s is cleaner',
   ansi('underline').white().underline());
 var colors = ttycolor.colors;
 var methods = ['log', 'info', 'warn', 'error'], i = 0, method;
+methods.push('log');
 methods = methods.concat(methods);
 colors.forEach(function(color) {
   method = methods[i++];
   console[method]('console.%s: %s color can be nice too',
     method,  ansi(color)[color]());
 });
+
+console.log('console.log: %s values draw attention to the eye',
+  ansi('bright').bright().normal());
 
 // no colors, normal console operation
 //console.log('%s', 'value');

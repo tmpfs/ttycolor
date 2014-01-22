@@ -20,7 +20,8 @@ var definition = {
     green           :  32,
     magenta         :  35,
     red             :  31,
-    yellow          :  33
+    yellow          :  33,
+    normal          :  39
   },
   bg: {
     colors: {
@@ -31,7 +32,8 @@ var definition = {
       blue          :  44,
       magenta       :  45,
       cyan          :  46,
-      white         :  47
+      white         :  47,
+      normal        :  49
     }
   }
 }
@@ -158,19 +160,6 @@ AnsiColor.prototype.bg = function() {
   return ansi;
 }
 
-// console functions
-Object.keys(stash).forEach(function (k) {
-  var stream = (k == 'info' || k == 'log') ?
-    process.stdout : process.stderr;
-  console[k] = function(format) {
-    var term = stream.isTTY;
-    var args = [{tty: term, method: stash[k]}];
-    var rest = [].slice.call(arguments, 0);
-    args = args.concat(rest);
-    proxy.apply(null, args);
-  }
-});
-
 /**
  *  Write a writable stream.
  *
@@ -195,6 +184,19 @@ console.write = function(options) {
     throw new Error('Stream option must be writable');
   }
 }
+
+// console functions
+Object.keys(stash).forEach(function (k) {
+  var stream = (k == 'info' || k == 'log') ?
+    process.stdout : process.stderr;
+  console[k] = function(format) {
+    var term = stream.isTTY;
+    var args = [{tty: term, method: stash[k]}];
+    var rest = [].slice.call(arguments, 0);
+    args = args.concat(rest);
+    proxy.apply(null, args);
+  }
+});
 
 // attributes
 Object.keys(attrs).forEach(function (k) {
