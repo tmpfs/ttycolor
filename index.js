@@ -62,6 +62,17 @@ var codes = {
 }
 
 /**
+ *  Low-level method for creating escaped string sequences.
+ *
+ *  @param value The value to escape.
+ *  @param code The color code.
+ *  @param attr An optional attribute code.
+ */
+function stringify(value, code, attr) {
+  return codes.open(code, attr) + value + codes.close();
+}
+
+/**
  *  Escapes replacement values.
  *
  *  @param options.tty A boolean indicating whether the output is a tty.
@@ -211,14 +222,7 @@ module.exports = {
   attributes: attrs,
   foreground: definition.colors,
   background: definition.bg.colors,
-  //revert: function() {
-    //for(var z in stash) {
-      //console[z] = stash[z];
-    //}
-  //},
-  stringify: function(value, code, attr) {
-    return codes.open(code, attr) + value + codes.close();
-  },
+  stringify: stringify,
   debug: function() {
     var args = [{scope: util, method: util.format, tty: true}];
     args = args.concat([].slice.call(arguments, 0));
