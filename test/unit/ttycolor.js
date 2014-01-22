@@ -165,4 +165,19 @@ describe('ttycolor:', function() {
     });
     done();
   });
+  it('should handle foreground/background chains', function(done) {
+    var fore = ttycolor.foreground;
+    var back = ttycolor.background;
+    var keys = Object.keys(fore), fg, bg, result;
+    keys.forEach(function(k) {
+      fg = fore[k];
+      bg = back[k];
+      expected = '\u001b[' + bg + 'm' + '\u001b['
+        + fg + 'm' + k + '\u001b[0m' + '\u001b[0m';
+      result = ttycolor.debug('%s', ansi(k)[k]().bg()[k]());
+      //console.dir(result);
+      expect(result).to.be.a('string').that.equals(expected);
+    });
+    done();
+  });
 })
