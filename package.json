@@ -1,6 +1,6 @@
 {
   "name": "ttycolor",
-  "description": "ANSI colors that respects isatty",
+  "description": "Terminal colors that respect whether a stream is a tty",
   "version": "0.2.0",
   "author": "muji <noop@xpm.io>",
   "repository": {
@@ -8,10 +8,11 @@
     "url": "git://github.com/freeformsystems/ttycolor.git"
   },
   "keywords": [
+    "ansi",
     "color",
-    "tty",
+    "colour",
     "terminal",
-    "ansi"
+    "tty"
   ],
   "licenses": [{
     "type": "MIT",
@@ -23,6 +24,8 @@
     "chai": "1.8.1"
   },
   "engine": [ "node >= 0.10.21" ],
-  "scripts": {},
+  "scripts": {
+    "test": "mocha -u bdd --recursive --reporter list -A test/unit/"
+  },
   "config" : {}
 }

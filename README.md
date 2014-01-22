@@ -1,8 +1,7 @@
 ttycolor
 ========
 
-Terminal colors for [node][node] that respect whether the `stdout` and `stderr` streams are
-a `tty`.
+Terminal colors for [node][node] that respect whether the `stdout` and `stderr` streams are a `tty`.
 
 ## Installation
 
