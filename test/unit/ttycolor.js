@@ -102,6 +102,18 @@ describe('ttycolor:', function() {
     expect(result).to.be.a('string').that.equals(expected);
     done();
   });
+  it('should handle object format', function(done) {
+    var expected = '{}';
+    var result = ttycolor.debug({});
+    expect(result).to.be.a('string').that.equals(expected);
+    done();
+  });
+  it('should handle array format', function(done) {
+    var expected = '[]';
+    var result = ttycolor.debug([]);
+    expect(result).to.be.a('string').that.equals(expected);
+    done();
+  });
   it('should return escape sequence', function(done) {
     var input = 'value';
     var expected = '\u001b[1;37m' + input + '\u001b[0m';
