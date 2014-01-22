@@ -23,6 +23,10 @@ var ansi = ttycolor.ansi;
 
     var input = 'value';
     var expected = '\u001b[1;37m' + input + '\u001b[0m';
+
+    var result = ttycolor.debug(ansi(input).bright().white());
+    console.dir(result);
+
     var result = ttycolor.debug(ansi(input).white().bright());
     console.dir(result);
 process.exit(0);

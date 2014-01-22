@@ -207,9 +207,8 @@ Object.keys(stash).forEach(function (k) {
 // attributes
 Object.keys(definition.attrs).forEach(function (k) {
   AnsiColor.prototype[k] = function () {
-    var ansi = new AnsiColor(this.v, this.k, this);
-    ansi.a = definition.attrs[k];
-    return ansi;
+    this.a = definition.attrs[k];
+    return this;
   };
 });
 
