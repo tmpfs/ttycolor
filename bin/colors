@@ -26,6 +26,8 @@ colors.forEach(function(color) {
     method,  ansi(color)[color]());
 });
 
+//console.log('a %s for you', ansi('log message').bg().black());
+
 //console.log('console.log: %s values draw attention to the eye',
   //ansi('bright').bright());
 //console.log('console.log: but really an %s is cleaner',

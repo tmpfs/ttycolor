@@ -3,6 +3,14 @@ ttycolor
 
 Terminal colors for [node][node] that respect whether the `stdout` and `stderr` streams are a `tty`.
 
+## Features
+
+* Extends the familiar `console` functions
+* Always respects whether the stream is a tty
+* Chainable attributes, foreground colors and background colors
+* Asynchronous write to any stream respecting `tty.isatty`
+* Comprehensive test suite
+
 ## Installation
 
 ```
@@ -100,5 +108,9 @@ Low-level method for creating escaped string sequences.
 * `value`: The value to escape, will be coerced to a string.
 * `code`: The color code.
 * `attr`: Optional attribute code. 
+
+## License
+
+Everything is [MIT](http://en.wikipedia.org/wiki/MIT_License). Read the [license](/LICENSE) if you feel inclined.
 
 [node]: http://nodejs.org
