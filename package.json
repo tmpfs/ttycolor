@@ -17,10 +17,11 @@
     "type": "MIT",
     "url": "https://github.com/freeformsystems/ttycolor/blob/master/LICENSE"
   }],
-  "dependencies": {
-    "ansicolors": ">= 0.3.2"
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": ">= 1.17.0",
+    "chai": "1.8.1"
   },
-  "devDependencies": {},
   "engine": [ "node >= 0.10.21" ],
   "scripts": {},
   "config" : {}
