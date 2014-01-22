@@ -141,7 +141,7 @@ Low-level method for creating escaped string sequences.
 
 #### Foreground Colors
 
-```
+```javascript
 console.log('%s', ansi('log message').white());
 ```
 
@@ -159,7 +159,7 @@ console.log('%s', ansi('log message').white());
 
 Background colors are set by invoking the `bg` function prior to a color function. Function names are identical to the foregound color list.
 
-```
+```javascript
 console.log('%s', ansi('log message').bg().black());
 ```
 
@@ -167,7 +167,7 @@ console.log('%s', ansi('log message').bg().black());
 
 Depending upon the temrinal emulator some attributes may not be supported and will have no visual effect. Typically `bright`, `underline` and `reverse` are safe to use.
 
-```
+```javascript
 console.log('%s', ansi('log message').bright());
 ```
 
