@@ -77,39 +77,35 @@ function stringify(value, code, attr) {
  *  @param ... The format string arguments.
  */
 function proxy(options, format) {
-  var term = options.tty;
-  var method = options.method;
+  var tty = options.tty, method = options.method, re = /(%[sdj])+/g;
   if(arguments.length == 1) return method.apply(console, []);
-  var re = /(%[sdj])+/g;
-  var replacing = (typeof format == 'string')
+  var arg, i, json, replacing, replacements, matches;
+  replacing = (typeof format == 'string')
     && re.test(format) && arguments.length > 2;
-  var replacements = [].slice.call(arguments, 2);
+  replacements = [].slice.call(arguments, 2);
   if(format instanceof AnsiColor) {
-    replacements.unshift(format);
-    format = '%s';
-    replacing = true;
+    replacements.unshift(format); format = '%s'; replacing = true;
   }
   if(!replacing) {
     replacements.unshift(format);
     return method.apply(console, replacements);
   }
-  var arg, i, json;
-  var matches = (format && (typeof format.match == 'function')) ?
+  matches = (format && (typeof format.match == 'function')) ?
     format.match(re) : [];
   for(i = 0;i < replacements.length;i++) {
     arg = replacements[i];
-    json = matches[i] == '%j';
+    json = (matches[i] == '%j');
     if(arg instanceof AnsiColor) {
-      if(json && term) {
+      if(json && tty) {
         arg.v = JSON.stringify(arg.v);
       }
-      replacements[i] = arg.valueOf(term);
-    }else if(json && term){
+      replacements[i] = arg.valueOf(tty);
+    }else if(json && tty){
       replacements[i] = JSON.stringify(replacements[i]);
     }
   }
   // we have already coerced to strings
-  if(term) {
+  if(tty) {
     for(i = 0;i < replacements.length;i++) {
       format = format.replace(/%[jd]/, '%s');
     }
@@ -119,7 +115,7 @@ function proxy(options, format) {
 }
 
 /**
- *  Chainable ANSI color builder.
+ *  Chainable color builder.
  *
  *  @param value The underlying value to be escaped.
  *  @param key The key for the code lookup.
@@ -128,16 +124,19 @@ function proxy(options, format) {
 var AnsiColor = function(value, key, parent){
   this.t = definition.colors;
   this.v = value;
-  //this.k = key || 'normal';
   this.k = key;
   this.p = parent;
   this.a = null;
 };
 
-AnsiColor.prototype.valueOf = function(term) {
-  if(!term) return this.v;
-  var list = [this];
-  var p = this.p;
+/**
+ *  Retrieve an escape sequence from the chain.
+ *
+ *  @param tty Whether the output stream is a terminal.
+ */
+AnsiColor.prototype.valueOf = function(tty) {
+  if(!tty) return this.v;
+  var list = [this], p = this.p, i;
   while(p) {
     if(p) {
       list.push(p);
@@ -145,7 +144,7 @@ AnsiColor.prototype.valueOf = function(term) {
     p = p.p;
   }
   list.reverse();
-  for(var i = 0;i < list.length;i++){
+  for(i = 0;i < list.length;i++){
     p = list[i];
     if(!p.k) continue;
     this.v = stringify(this.v, p.t[p.k], p.a);
@@ -189,8 +188,8 @@ Object.keys(stash).forEach(function (k) {
   var stream = (k == 'info' || k == 'log') ?
     process.stdout : process.stderr;
   console[k] = function(format) {
-    var term = stream.isTTY;
-    var args = [{tty: term, method: stash[k]}];
+    var tty = stream.isTTY;
+    var args = [{tty: tty, method: stash[k]}];
     var rest = [].slice.call(arguments, 0);
     args = args.concat(rest);
     proxy.apply(null, args);
