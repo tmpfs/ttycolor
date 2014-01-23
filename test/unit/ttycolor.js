@@ -161,7 +161,15 @@ describe('ttycolor:', function() {
     expect(result).to.be.a('string').that.equals(expected);
     done();
   });
-
+  it('should handle color+attribute chains', function(done) {
+    var input = 'value';
+    var expected = '\u001b[1;37m' + input + '\u001b[0m';
+    var result = ttycolor.debug('%s', ansi(input).white().bright());
+    expect(result).to.be.a('string').that.equals(expected);
+    result = ttycolor.debug('%s', ansi(input).bright().white());
+    expect(result).to.be.a('string').that.equals(expected);
+    done();
+  });
   it('should handle color only chains', function(done) {
     var def = ttycolor.foreground;
     var keys = Object.keys(def), v, result;
