@@ -222,7 +222,7 @@ Object.keys(definition.attrs).forEach(function (k) {
 
 // colors
 Object.keys(definition.colors).forEach(function (k) {
-  AnsiColor.prototype[k] = function () {
+  AnsiColor.prototype.__defineGetter__(k, function () {
     // reset the background color chain after color method invocation
     // allows invoking foreground colors after background colors
     if(this.k && this.t == definition.bg.colors && this.p && !this.p.k) {
@@ -230,7 +230,7 @@ Object.keys(definition.colors).forEach(function (k) {
     }
     this.k = k;
     return this;
-  };
+  });
 });
 
 module.exports = {
