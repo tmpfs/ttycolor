@@ -162,17 +162,17 @@ AnsiColor.prototype.valueOf = function(term) {
   return this.v;
 }
 
-AnsiColor.prototype.bg = function() {
-  var ansi = new AnsiColor(this.v, this.k, this);
-  ansi.t = definition.bg.colors;
-  return ansi;
-}
-
-//AnsiColor.prototype.__defineGetter__('bg', function() {
+//AnsiColor.prototype.bg = function() {
   //var ansi = new AnsiColor(this.v, this.k, this);
   //ansi.t = definition.bg.colors;
   //return ansi;
-//});
+//}
+
+AnsiColor.prototype.__defineGetter__('bg', function() {
+  var ansi = new AnsiColor(this.v, this.k, this);
+  ansi.t = definition.bg.colors;
+  return ansi;
+});
 
 /**
  *  Write a writable stream.

@@ -10,11 +10,11 @@ colors.forEach(function(color) {
 i = 0;
 colors.forEach(function(color) {
   method = methods[i++];
-  console[method]('%s: %s color', method, ansi(color).bg()[color]());
+  console[method]('%s: %s color', method, ansi(color).bg[color]());
 });
 console.log('log: %s', ansi('bright').bright());
 console.info('info: %s', ansi('underline').underline());
 console.warn('warn: %s',
-  ansi('reverse').white().bg().black().reverse());
+  ansi('reverse').white().bg.black().reverse());
 console.error('error: %s',
   ansi('bright underline').underline().bright())

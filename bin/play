@@ -5,45 +5,45 @@ var ansi = ttycolor.ansi;
 
 //console.log('%s: %s > %s %d%',
   //'cp',
-  //ansi('input.txt').bg().black().white(),
-  //ansi('output.txt').bg().black().white(),
+  //ansi('input.txt').bg.black().white(),
+  //ansi('output.txt').bg.black().white(),
   //ansi(95).bright());
 //process.exit(0);
 
-//var chain = ansi('value').bg().red().white();
+//var chain = ansi('value').bg.red().white();
 //console.log(ttycolor.debug('%s', chain));
-//var chain = ansi('value').white().bg().red();
+//var chain = ansi('value').white().bg.red();
 //console.log(ttycolor.debug('%s', chain));
 //process.exit(0);
 //
 
-var chain = ansi('value').bg().red().white().underline();
+var chain = ansi('value').bg.red().white().underline();
 console.dir(ttycolor.debug('%s', chain));
 console.log(ttycolor.debug('%s', chain));
-var chain = ansi('value').bg().red().underline().white();
+var chain = ansi('value').bg.red().underline().white();
 console.dir(ttycolor.debug('%s', chain));
 console.log(ttycolor.debug('%s', chain));
-var chain = ansi('value').underline().white().bg().red();
+var chain = ansi('value').underline().white().bg.red();
 console.dir(ttycolor.debug('%s', chain));
 console.log(ttycolor.debug('%s', chain));
-var chain = ansi('value').white().underline().bg().red();
+var chain = ansi('value').white().underline().bg.red();
 console.dir(ttycolor.debug('%s', chain));
 console.log(ttycolor.debug('%s', chain));
-var chain = ansi('value').white().bg().red().underline();
+var chain = ansi('value').white().bg.red().underline();
 console.dir(ttycolor.debug('%s', chain));
 console.log(ttycolor.debug('%s', chain));
 process.exit(0);
 
 //console.log('console.log: TERM %s',
-  //ansi(process.env.TERM).white().bg().black());
+  //ansi(process.env.TERM).white().bg.black());
 //console.log('console.log: TERM_PROGRAM %s',
-  //ansi(process.env.TERM_PROGRAM).white().bg().black().reverse());
+  //ansi(process.env.TERM_PROGRAM).white().bg.black().reverse());
 //console.log('console.log: %s',
   //ansi('white on black looks nice in the solarized color scheme')
-    //.white().bg().black());
+    //.white().bg.black());
 //console.log('console.log: sometimes just %s a word with a background is useful',
   //ansi('highlighting')
-    //.black().bg().white());
+    //.black().bg.white());
 //console.log('console.log: %s values draw attention to the eye',
   //ansi('bright').bright().white());
 //console.log('console.log: but really an %s is cleaner',
@@ -77,18 +77,18 @@ i = 0;
 colors.forEach(function(color) {
   method = methods[i++];
   console[method]('console.%s: %s color',
-    method,  ansi(color).bg()[color]());
+    method,  ansi(color).bg[color]());
 });
 
 console.log('console.log: %s', ansi('bright').bright());
 console.info('console.info: %s', ansi('underline').underline());
-console.warn('console.warn: %s', ansi('reverse').white().bg().black().reverse());
-//console.log(ansi('reverse').underline().white().bg().black().bright());
+console.warn('console.warn: %s', ansi('reverse').white().bg.black().reverse());
+//console.log(ansi('reverse').underline().white().bg.black().bright());
 //console.log(ansi('bright underline').underline().bright());
 console.error('console.error: %s', ansi('bright underline').underline().bright())
 //console.dir(ttycolor.debug(ansi('bright underline').underline().bright()));
 
-//console.log('a %s for you', ansi('log message').bg().black());
+//console.log('a %s for you', ansi('log message').bg.black());
 
 //console.log('console.log: %s values draw attention to the eye',
   //ansi('bright').bright());
@@ -102,7 +102,7 @@ console.error('console.error: %s', ansi('bright underline').underline().bright()
 //console.log('a %s of %d with %j', 'value', 3.14, {message: 'json'});
 
 // colors
-//console.log('%s', ansi('log message').white().bg().black());
+//console.log('%s', ansi('log message').white().bg.black());
 //console.info('%s', ansi('info message').cyan());
 //console.warn('%s', ansi('warn message').magenta());
 //console.error('%s', ansi('error message').bright().red());
