@@ -157,19 +157,29 @@ console.log('%s', ansi('log message').white());
 
 #### Background Colors
 
-Background colors are set by invoking the `bg` function prior to a color function. Function names are identical to the foregound color list.
-
 ```javascript
 console.log('%s', ansi('log message').bg().black());
 ```
 
-#### Attributes
+Background colors are set by invoking the `bg` function prior to a color function. Function names are identical to the foregound color list.
 
-Depending upon the terminal emulator some attributes may not be supported and will have no visual effect. Typically `bright`, `underline` and `reverse` are safe to use.
+Note that the background color chain is reset after invoking a color method such that order is not important when combining background and foreground colors, the following are all equivalent:
+
+```javascript
+ansi('value').bg().red().white().underline();
+ansi('value').bg().red().underline().white();
+ansi('value').underline().white().bg().red();
+ansi('value').white().underline().bg().red();
+ansi('value').white().bg().red().underline();
+```
+
+#### Attributes
 
 ```javascript
 console.log('%s', ansi('log message').bright());
 ```
+
+Depending upon the terminal emulator some attributes may not be supported and will have no visual effect. Typically `bright`, `underline` and `reverse` are safe to use.
 
 * `bright`
 * `dim`

@@ -3,11 +3,36 @@
 var ttycolor = require('..');
 var ansi = ttycolor.ansi;
 
+//console.log('%s: %s > %s %d%',
+  //'cp',
+  //ansi('input.txt').bg().black().white(),
+  //ansi('output.txt').bg().black().white(),
+  //ansi(95).bright());
+//process.exit(0);
+
 //var chain = ansi('value').bg().red().white();
 //console.log(ttycolor.debug('%s', chain));
 //var chain = ansi('value').white().bg().red();
 //console.log(ttycolor.debug('%s', chain));
 //process.exit(0);
+//
+
+var chain = ansi('value').bg().red().white().underline();
+console.dir(ttycolor.debug('%s', chain));
+console.log(ttycolor.debug('%s', chain));
+var chain = ansi('value').bg().red().underline().white();
+console.dir(ttycolor.debug('%s', chain));
+console.log(ttycolor.debug('%s', chain));
+var chain = ansi('value').underline().white().bg().red();
+console.dir(ttycolor.debug('%s', chain));
+console.log(ttycolor.debug('%s', chain));
+var chain = ansi('value').white().underline().bg().red();
+console.dir(ttycolor.debug('%s', chain));
+console.log(ttycolor.debug('%s', chain));
+var chain = ansi('value').white().bg().red().underline();
+console.dir(ttycolor.debug('%s', chain));
+console.log(ttycolor.debug('%s', chain));
+process.exit(0);
 
 //console.log('console.log: TERM %s',
   //ansi(process.env.TERM).white().bg().black());
