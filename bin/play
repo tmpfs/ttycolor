@@ -19,7 +19,9 @@ var ansi = ttycolor.ansi;
 //
 //
 
-var chain = console.log(ansi('a %s value').red, ansi('bright red').bright);
+console.log('cp: %s > %s %d% %j', 'input.txt', 'output.txt', 95, {chmod: 'g+w'});
+
+//var chain = console.log(ansi('a %s value').red, ansi('bright red').bright);
 //console.dir(chain);
 //console.log(chain);
 

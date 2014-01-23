@@ -99,12 +99,11 @@ function stringify(value, code, attr, tag) {
 function proxy(options, format) {
   var tty = options.tty, method = options.method, re = /(%[sdj])+/g;
   if(arguments.length == 1) return method.apply(console, []);
-  var arg, i, json, replacing, replacements, matches, wrapped;
-  wrapped = (format instanceof AnsiColor);
+  var arg, i, replacing, replacements, matches;
   replacing = (typeof format == 'string')
     && re.test(format) && arguments.length > 2;
   replacements = [].slice.call(arguments, 2);
-  if(wrapped) {
+  if(format instanceof AnsiColor) {
     replacing = true;
     if(!replacements.length) {
       replacements.unshift(format); format = '%s';
@@ -126,24 +125,17 @@ function proxy(options, format) {
       format = format.valueOf(tty);
     }
   }
-
-  // we will coerce to strings
-  if(tty) {
-    for(i = 0;i < replacements.length;i++) {
-      format = format.replace(/%[jds]/, '%s');
-    }
-  }
-
   for(i = 0;i < replacements.length;i++) {
     arg = replacements[i];
-    json = (matches[i] == '%j');
     if(arg instanceof AnsiColor) {
-      if(json && tty) {
-        arg.v = JSON.stringify(arg.v);
+      if(tty) {
+        // we will coerce to strings
+        format = format.replace(/%[jds]/, '%s');
+        if(matches[i] == '%j') {
+          arg.v = JSON.stringify(arg.v);
+        }
       }
       replacements[i] = arg.valueOf(tty, tag);
-    }else if(json && tty){
-      replacements[i] = JSON.stringify(replacements[i]);
     }
   }
   replacements.unshift(format);
