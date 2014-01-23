@@ -135,7 +135,8 @@ function proxy(options, format) {
 var AnsiColor = function(value, key, parent){
   this.t = definition.colors;
   this.v = value;
-  this.k = key || 'normal';
+  //this.k = key || 'normal';
+  this.k = key;
   this.p = parent;
   this.a = null;
 };
@@ -208,11 +209,12 @@ Object.keys(stash).forEach(function (k) {
 Object.keys(definition.attrs).forEach(function (k) {
   AnsiColor.prototype[k] = function () {
     if(this.a) {
-      var ansi = new AnsiColor(this.v, this.k, this);
+      var ansi = new AnsiColor(this.v, this.k || 'normal', this);
       ansi.a = definition.attrs[k];
       return ansi;
     }
     this.a = definition.attrs[k];
+    this.k = this.k || 'normal';
     return this;
   };
 });
