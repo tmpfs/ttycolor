@@ -12,15 +12,15 @@ Terminal colors for [node][node] that respect whether the `stdout` and `stderr` 
 * Comprehensive test suite
 
 <p align="center">
-  <img src="https://github.com/freeformsystems/ttycolor/img/colors.png" />
+  <img src="https://github.com/freeformsystems/ttycolor/blob/master/img/colors.png" />
 </p>
 
 <p align="center">
-  <img src="https://github.com/freeformsystems/ttycolor/img/cat.png" />
+  <img src="https://github.com/freeformsystems/ttycolor/blob/master/img/cat.png" />
 </p>
 
 <p align="center">
-  <img src="https://github.com/freeformsystems/ttycolor/img/source.png" />
+  <img src="https://github.com/freeformsystems/ttycolor/blob/master/img/source.png" />
 </p>
 
 ## Installation
