@@ -294,6 +294,7 @@ function defaults(custom) {
       while(prop = names.shift()) {
         console.dir(prop);
         arg = arg[prop];
+        console.dir(arg.valueOf(true));
       }
     }
     return arg;
@@ -307,7 +308,7 @@ function defaults(custom) {
       var args = [].slice.call(arguments, 1), i, arg, names, prop;
       for(i = 0;i < args.length;i++) {
         arg = args[i];
-        convert(args, props[name].parameters);
+        args[i] = convert(args, props[name].parameters);
       }
       args.unshift(format);
       //console.dir(args);
