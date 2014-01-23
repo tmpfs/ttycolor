@@ -4,4 +4,10 @@ var ansi = require('..').ansi;
 //normal console operation
 console.log('cp: %s > %s %d% %j', 'input.txt', 'output.txt', 95, {chmod: 'g+w'});
 // highlight entire message
-console.info(ansi('info: skipping file').cyan);
+console.info(ansi('info: copying file').cyan);
+// highlight entire message with replacements
+console.warn(ansi('warn: file %s is not readable, skipping').magenta,
+  ansi('input.txt').magenta.bright);
+// highlight replacements
+console.error('%s: %s could not be written',
+  ansi('fatal').red, ansi('output.txt').underline);
