@@ -45,12 +45,12 @@ console.log('%d', 3.14);
 console.log('%j', {message: 'json'});
 console.log('a %s of %d with %j', 'value', 3.14, {message: 'json'});
 // colors
-console.log('%s', ansi('log message').white().bg().black());
-console.info('%s', ansi('info message').cyan());
-console.warn('%s', ansi('warn message').magenta());
-console.error('%s', ansi('error message').bright().red());
-console.log('pi %d', ansi(3.14).blue().underline());
-console.log('%j', ansi({message: 'json'}).red());
+console.log('%s', ansi('log message').white.bg.black);
+console.info('%s', ansi('info message').cyan;
+console.warn('%s', ansi('warn message').magenta;
+console.error('%s', ansi('error message').bright.red);
+console.log('pi %d', ansi(3.14).blue().underline);
+console.log('%j', ansi({message: 'json'}).red);
 ```
 
 ### Console
@@ -142,7 +142,7 @@ Low-level method for creating escaped string sequences.
 #### Foreground Colors
 
 ```javascript
-console.log('%s', ansi('log message').white());
+console.log('%s', ansi('log message').white);
 ```
 
 * `normal`
@@ -158,25 +158,25 @@ console.log('%s', ansi('log message').white());
 #### Background Colors
 
 ```javascript
-console.log('%s', ansi('log message').bg().black());
+console.log('%s', ansi('log message').bg.black);
 ```
 
-Background colors are set by invoking the `bg` function prior to a color function. Function names are identical to the foregound color list.
+Background colors are set by invoking the `bg` function prior to accessing a color property. Property names are identical to the foregound color list.
 
-Note that the background color chain is reset after invoking a color method such that order is not important when combining background and foreground colors, the following are all equivalent:
+Note that the background color chain is reset after accessing a color property such that order is not important when combining background and foreground colors, the following are all equivalent:
 
 ```javascript
-ansi('value').bg().red().white().underline();
-ansi('value').bg().red().underline().white();
-ansi('value').underline().white().bg().red();
-ansi('value').white().underline().bg().red();
-ansi('value').white().bg().red().underline();
+ansi('value').bg.red.white.underline;
+ansi('value').bg.red.underline.white;
+ansi('value').underline.white.bg.red;
+ansi('value').white.underline.bg.red;
+ansi('value').white.bg.red.underline;
 ```
 
 #### Attributes
 
 ```javascript
-console.log('%s', ansi('log message').bright());
+console.log('%s', ansi('log message').bright);
 ```
 
 Depending upon the terminal emulator some attributes may not be supported and will have no visual effect. Typically `bright`, `underline` and `reverse` are safe to use.

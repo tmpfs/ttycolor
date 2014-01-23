@@ -162,17 +162,11 @@ AnsiColor.prototype.valueOf = function(term) {
   return this.v;
 }
 
-AnsiColor.prototype.bg = function() {
+AnsiColor.prototype.__defineGetter__('bg', function() {
   var ansi = new AnsiColor(this.v, this.k, this);
   ansi.t = definition.bg.colors;
   return ansi;
-}
-
-//AnsiColor.prototype.__defineGetter__('bg', function() {
-  //var ansi = new AnsiColor(this.v, this.k, this);
-  //ansi.t = definition.bg.colors;
-  //return ansi;
-//});
+});
 
 /**
  *  Write a writable stream.
@@ -214,7 +208,7 @@ Object.keys(stash).forEach(function (k) {
 
 // attributes
 Object.keys(definition.attrs).forEach(function (k) {
-  AnsiColor.prototype[k] = function () {
+  AnsiColor.prototype.__defineGetter__(k, function () {
     if(this.a) {
       var ansi = new AnsiColor(this.v, this.k || 'normal', this);
       ansi.a = definition.attrs[k];
@@ -223,12 +217,12 @@ Object.keys(definition.attrs).forEach(function (k) {
     this.a = definition.attrs[k];
     this.k = this.k || 'normal';
     return this;
-  };
+  });
 });
 
 // colors
 Object.keys(definition.colors).forEach(function (k) {
-  AnsiColor.prototype[k] = function () {
+  AnsiColor.prototype.__defineGetter__(k, function () {
     // reset the background color chain after color method invocation
     // allows invoking foreground colors after background colors
     if(this.k && this.t == definition.bg.colors && this.p && !this.p.k) {
@@ -236,7 +230,7 @@ Object.keys(definition.colors).forEach(function (k) {
     }
     this.k = k;
     return this;
-  };
+  });
 });
 
 module.exports = {
