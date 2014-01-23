@@ -2,6 +2,13 @@
 
 var ttycolor = require('..');
 var ansi = ttycolor.ansi;
+
+//var chain = ansi('value').bg().red().white();
+//console.log(ttycolor.debug('%s', chain));
+//var chain = ansi('value').white().bg().red();
+//console.log(ttycolor.debug('%s', chain));
+//process.exit(0);
+
 //console.log('console.log: TERM %s',
   //ansi(process.env.TERM).white().bg().black());
 //console.log('console.log: TERM_PROGRAM %s',

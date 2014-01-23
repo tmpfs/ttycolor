@@ -152,6 +152,8 @@ AnsiColor.prototype.valueOf = function(term) {
     p = p.p;
   }
   list.reverse();
+  //console.dir(list.length);
+  //console.dir(list);
   for(var i = 0;i < list.length;i++){
     p = list[i];
     if(!p.k) continue;
@@ -163,7 +165,6 @@ AnsiColor.prototype.valueOf = function(term) {
 AnsiColor.prototype.bg = function() {
   var ansi = new AnsiColor(this.v, this.k, this);
   ansi.t = definition.bg.colors;
-  //this.k = null;
   return ansi;
 }
 
@@ -222,6 +223,11 @@ Object.keys(definition.attrs).forEach(function (k) {
 // colors
 Object.keys(definition.colors).forEach(function (k) {
   AnsiColor.prototype[k] = function () {
+    // reset the background color chain after color method invocation
+    // allows invoking foreground colors after background colors
+    if(this.k && this.t == definition.bg.colors && this.p && !this.p.k) {
+      return new AnsiColor(this.v, k, this);
+    }
     this.k = k;
     return this;
   };
