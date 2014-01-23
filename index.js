@@ -4,11 +4,18 @@ var tty = require('tty');
 var util = require('util');
 var WritableStream = require('stream').Writable;
 
-var stash = {
+var cache = {}, stash = {
   log: console.log,
   info: console.info,
   error: console.error,
   warn: console.warn
+}
+
+var styles = {
+  log: {format: ['normal'], parameters: ['normal', 'bright']},
+  info: {format: ['cyan'], parameters: ['cyan', 'bright']},
+  warn: {format: ['magenta'], parameters: ['magenta', 'bright']},
+  error: {format: ['red'], parameters: ['red', 'bright']}
 }
 
 var definition = {
@@ -270,11 +277,50 @@ Object.keys(definition.colors).forEach(function (k) {
   });
 });
 
+function ansi(v) {
+  return new AnsiColor(v);
+}
+
+function defaults(custom) {
+  var props = custom || styles;
+  var keys = Object.keys(styles);
+  function convert(arg, names) {
+    var prop;
+    names = Array.isArray(names) ? names : [];
+    names = names.slice(0);
+    console.dir(names);
+    if(!(arg instanceof AnsiColor) && names.length) {
+      arg = ansi(arg);
+      while(prop = names.shift()) {
+        console.dir(prop);
+        arg = arg[prop];
+      }
+    }
+    return arg;
+  }
+  keys.forEach(function(name) {
+    cache[name] = console[name];
+    console[name] = function() {
+      //console.dir('console function after defaults: ' + name);
+      var format = arguments[0];
+      format = convert(format, props[name].format);
+      var args = [].slice.call(arguments, 1), i, arg, names, prop;
+      for(i = 0;i < args.length;i++) {
+        arg = args[i];
+        convert(args, props[name].parameters);
+      }
+      args.unshift(format);
+      //console.dir(args);
+      //console.dir(styles);
+      return cache[name].apply(null, args);
+    }
+  });
+}
+
 module.exports = {
   console: stash,
-  ansi: function(v) {
-    return new AnsiColor(v);
-  },
+  cache: cache,
+  ansi: ansi,
   colors: Object.keys(definition.colors),
   attributes: definition.attrs,
   foreground: definition.colors,
@@ -284,5 +330,6 @@ module.exports = {
     var args = [{scope: util, method: util.format, tty: true}];
     args = args.concat([].slice.call(arguments, 0));
     return proxy.apply(null, args);
-  }
+  },
+  defaults: defaults
 }

@@ -15,3 +15,10 @@ console.error('%s: %s could not be written',
 console.log('cp: copied %s > %s', ansi('input.txt').underline.bright, ansi('output.txt').bright.underline);
 // color chaining (order is not important)
 console.log('cp: copied %s > %s', ansi('input.txt').white.bg.black, ansi('output.txt').bg.black.white);
+
+require('..').defaults();
+
+//console.log('log: %s', 'message');
+//console.info('info: %s', 'message');
+//console.warn('warn: %s', 'message');
+console.error('error: %s', 'message');
