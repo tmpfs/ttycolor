@@ -17,7 +17,9 @@ var ansi = ttycolor.ansi;
 //process.exit(0);
 //
 //
-console.log(ansi('a %s value').red, ansi('bright red').bright);
+var chain = console.log(ansi('a %s value').red, ansi('bright red').bright);
+//console.dir(chain);
+//console.log(chain);
 
 //var chain = ansi('value').bg.red.white.underline;
 //console.dir(ttycolor.debug('%s', chain));

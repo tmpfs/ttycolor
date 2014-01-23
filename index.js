@@ -67,8 +67,8 @@ function open(code, attr) {
  *
  *  @param value The value to close.
  */
-function close(value) {
-  return value + ANSI_CLOSE;
+function close(value, tag) {
+  return value + (tag ? tag : ANSI_CLOSE);
 }
 
 /**
@@ -79,9 +79,9 @@ function close(value) {
  *  @param attr An optional attribute code.
  *  @param loose Whether to keep the escape sequence open.
  */
-function stringify(value, code, attr, loose) {
+function stringify(value, code, attr, tag) {
   var s = open(code, attr);
-  s +=  loose ? value : close(value);
+  s +=  close(value, tag);
   return s;
 }
 
@@ -99,11 +99,12 @@ function stringify(value, code, attr, loose) {
 function proxy(options, format) {
   var tty = options.tty, method = options.method, re = /(%[sdj])+/g;
   if(arguments.length == 1) return method.apply(console, []);
-  var arg, i, json, replacing, replacements, matches;
+  var arg, i, json, replacing, replacements, matches, wrapped;
+  wrapped = (format instanceof AnsiColor);
   replacing = (typeof format == 'string')
     && re.test(format) && arguments.length > 2;
   replacements = [].slice.call(arguments, 2);
-  if(format instanceof AnsiColor) {
+  if(wrapped) {
     replacing = true;
     if(!replacements.length) {
       replacements.unshift(format); format = '%s';
@@ -115,6 +116,19 @@ function proxy(options, format) {
   }
   matches = (format && (typeof format.match == 'function')) ?
     format.match(re) : [];
+
+  var tag;
+  if(format instanceof AnsiColor) {
+    if(!tty) {
+      format = format.v;
+    }else{
+      //console.dir('tty: ' + tty);
+      tag = format.start(tty);
+      //console.dir('start: ' + tag);
+      format = format.valueOf(tty);
+    }
+  }
+
   for(i = 0;i < replacements.length;i++) {
     arg = replacements[i];
     json = (matches[i] == '%j');
@@ -122,18 +136,17 @@ function proxy(options, format) {
       if(json && tty) {
         arg.v = JSON.stringify(arg.v);
       }
-      replacements[i] = arg.valueOf(tty);
+      replacements[i] = arg.valueOf(tty, tag);
     }else if(json && tty){
       replacements[i] = JSON.stringify(replacements[i]);
     }
   }
-  if(format instanceof AnsiColor) {
-    format = format.valueOf(tty);
-  }
   // we have already coerced to strings
   if(tty) {
     for(i = 0;i < replacements.length;i++) {
+      //console.dir('before replace: ' + format);
       format = format.replace(/%[jd]/, '%s');
+      //console.dir('after replace: ' + format);
     }
   }
   replacements.unshift(format);
@@ -155,12 +168,33 @@ var AnsiColor = function(value, key, parent){
   this.a = null;
 };
 
+AnsiColor.prototype.start = function(tty) {
+  if(!tty) return '';
+  var list = [this], p = this.p, i;
+  while(p) {
+    if(p) {
+      list.push(p);
+    }
+    p = p.p;
+  }
+  list.reverse();
+  var o = ANSI_CLOSE;
+  for(i = 0;i < list.length;i++){
+    p = list[i];
+    if(!p.k) continue;
+    o += open(p.t[p.k], p.a);
+    //this.v = stringify(this.v, p.t[p.k], p.a, loose);
+  }
+  return o;
+}
+
 /**
  *  Retrieve an escape sequence from the chain.
  *
  *  @param tty Whether the output stream is a terminal.
+ *  @param loose Indicates that the escape sequence should not be closed.
  */
-AnsiColor.prototype.valueOf = function(tty) {
+AnsiColor.prototype.valueOf = function(tty, tag) {
   if(!tty) return this.v;
   var list = [this], p = this.p, i;
   while(p) {
@@ -173,7 +207,7 @@ AnsiColor.prototype.valueOf = function(tty) {
   for(i = 0;i < list.length;i++){
     p = list[i];
     if(!p.k) continue;
-    this.v = stringify(this.v, p.t[p.k], p.a);
+    this.v = stringify(this.v, p.t[p.k], p.a, tag);
   }
   return this.v;
 }

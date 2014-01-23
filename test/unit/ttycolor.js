@@ -76,9 +76,21 @@ describe('ttycolor:', function() {
     expect(result).to.be.a('string').that.equals(expected);
     done();
   });
-  it('should handle too few format arguments', function(done) {
+  it('should handle too few format arguments (%s)', function(done) {
     var expected = 'foo:%s';
     var result = ttycolor.debug('%s:%s', 'foo');
+    expect(result).to.be.a('string').that.equals(expected);
+    done();
+  });
+  it('should handle too few format arguments (%j)', function(done) {
+    var expected = 'foo:%j';
+    var result = ttycolor.debug('%s:%j', 'foo');
+    expect(result).to.be.a('string').that.equals(expected);
+    done();
+  });
+  it('should handle too few format arguments (%d)', function(done) {
+    var expected = 'foo:%d';
+    var result = ttycolor.debug('%s:%d', 'foo');
     expect(result).to.be.a('string').that.equals(expected);
     done();
   });
