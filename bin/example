@@ -11,3 +11,7 @@ console.warn(ansi('warn: file %s is not readable, skipping').magenta,
 // highlight replacements
 console.error('%s: %s could not be written',
   ansi('fatal').red, ansi('output.txt').underline);
+// attribute chaining (order is not important)
+console.log('cp: copied %s > %s', ansi('input.txt').underline.bright, ansi('output.txt').bright.underline);
+// color chaining (order is not important)
+console.log('cp: copied %s > %s', ansi('input.txt').white.bg.black, ansi('output.txt').bg.black.white);
