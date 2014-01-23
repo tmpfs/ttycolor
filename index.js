@@ -99,7 +99,7 @@ function stringify(value, code, attr, tag) {
 function proxy(options, format) {
   var tty = options.tty, method = options.method, re = /(%[sdj])+/g;
   if(arguments.length == 1) return method.apply(console, []);
-  var arg, i, replacing, replacements, matches;
+  var arg, i, replacing, replacements, matches, tag;
   replacing = (typeof format == 'string')
     && re.test(format) && arguments.length > 2;
   replacements = [].slice.call(arguments, 2);
@@ -115,8 +115,6 @@ function proxy(options, format) {
   }
   matches = (format && (typeof format.match == 'function')) ?
     format.match(re) : [];
-
-  var tag;
   if(format instanceof AnsiColor) {
     if(!tty) {
       format = format.v;
