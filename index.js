@@ -84,7 +84,10 @@ function proxy(options, format) {
     && re.test(format) && arguments.length > 2;
   replacements = [].slice.call(arguments, 2);
   if(format instanceof AnsiColor) {
-    replacements.unshift(format); format = '%s'; replacing = true;
+    replacing = true;
+    if(!replacements.length) {
+      replacements.unshift(format); format = '%s';
+    }
   }
   if(!replacing) {
     replacements.unshift(format);
@@ -103,6 +106,9 @@ function proxy(options, format) {
     }else if(json && tty){
       replacements[i] = JSON.stringify(replacements[i]);
     }
+  }
+  if(format instanceof AnsiColor) {
+    format = format.valueOf(tty);
   }
   // we have already coerced to strings
   if(tty) {

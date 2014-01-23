@@ -16,20 +16,22 @@ var ansi = ttycolor.ansi;
 //console.log(ttycolor.debug('%s', chain));
 //process.exit(0);
 //
+//
+console.log(ansi('a %s value').red, ansi('bright red').bright);
 
-var chain = ansi('value').bg.red.white.underline;
-console.dir(ttycolor.debug('%s', chain));
-console.log(ttycolor.debug('%s', chain));
-var chain = ansi('value').bg.red.underline.white;
-console.dir(ttycolor.debug('%s', chain));
-console.log(ttycolor.debug('%s', chain));
-var chain = ansi('value').underline.white.bg.red;
-console.dir(ttycolor.debug('%s', chain));
-console.log(ttycolor.debug('%s', chain));
-var chain = ansi('value').white.underline.bg.red;
-console.dir(ttycolor.debug('%s', chain));
-console.log(ttycolor.debug('%s', chain));
-var chain = ansi('value').white.bg.red.underline;
-console.dir(ttycolor.debug('%s', chain));
-console.log(ttycolor.debug('%s', chain));
-process.exit(0);
+//var chain = ansi('value').bg.red.white.underline;
+//console.dir(ttycolor.debug('%s', chain));
+//console.log(ttycolor.debug('%s', chain));
+//var chain = ansi('value').bg.red.underline.white;
+//console.dir(ttycolor.debug('%s', chain));
+//console.log(ttycolor.debug('%s', chain));
+//var chain = ansi('value').underline.white.bg.red;
+//console.dir(ttycolor.debug('%s', chain));
+//console.log(ttycolor.debug('%s', chain));
+//var chain = ansi('value').white.underline.bg.red;
+//console.dir(ttycolor.debug('%s', chain));
+//console.log(ttycolor.debug('%s', chain));
+//var chain = ansi('value').white.bg.red.underline;
+//console.dir(ttycolor.debug('%s', chain));
+//console.log(ttycolor.debug('%s', chain));
+//process.exit(0);
