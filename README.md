@@ -49,7 +49,7 @@ console.log('%s', ansi('log message').white.bg.black);
 console.info('%s', ansi('info message').cyan;
 console.warn('%s', ansi('warn message').magenta;
 console.error('%s', ansi('error message').bright.red);
-console.log('pi %d', ansi(3.14).blue().underline);
+console.log('pi %d', ansi(3.14).blue.underline);
 console.log('%j', ansi({message: 'json'}).red);
 ```
 
@@ -161,7 +161,7 @@ console.log('%s', ansi('log message').white);
 console.log('%s', ansi('log message').bg.black);
 ```
 
-Background colors are set by invoking the `bg` function prior to accessing a color property. Property names are identical to the foregound color list.
+Background colors are set by accessing a color property via the `bg` property. Property names are identical to the foreground color list.
 
 Note that the background color chain is reset after accessing a color property such that order is not important when combining background and foreground colors, the following are all equivalent:
 
