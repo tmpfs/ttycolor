@@ -51,16 +51,6 @@ var ANSI_FINAL = 'm';
 var ANSI_CLOSE_CODE = '0';
 var ANSI_CLOSE = ANSI_OPEN + ANSI_CLOSE_CODE + ANSI_FINAL;
 
-var codes = {
-  open: function(v, a) {
-    return a ? ANSI_OPEN + a + ';' + v + ANSI_FINAL
-      : ANSI_OPEN + v + ANSI_FINAL;
-  },
-  close: function() {
-    return ANSI_CLOSE;
-  }
-}
-
 /**
  *  Low-level method for creating escaped string sequences.
  *
@@ -69,7 +59,10 @@ var codes = {
  *  @param attr An optional attribute code.
  */
 function stringify(value, code, attr) {
-  return codes.open(code, attr) + value + codes.close();
+  var s = attr ? ANSI_OPEN + attr + ';' + code + ANSI_FINAL
+    : ANSI_OPEN + code + ANSI_FINAL;
+  s += value + ANSI_CLOSE;
+  return s;
 }
 
 /**
@@ -152,8 +145,6 @@ AnsiColor.prototype.valueOf = function(term) {
     p = p.p;
   }
   list.reverse();
-  //console.dir(list.length);
-  //console.dir(list);
   for(var i = 0;i < list.length;i++){
     p = list[i];
     if(!p.k) continue;
