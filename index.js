@@ -288,13 +288,10 @@ function defaults(custom) {
     var prop;
     names = Array.isArray(names) ? names : [];
     names = names.slice(0);
-    console.dir(names);
     if(!(arg instanceof AnsiColor) && names.length) {
       arg = ansi(arg);
       while(prop = names.shift()) {
-        console.dir(prop);
         arg = arg[prop];
-        console.dir(arg.valueOf(true));
       }
     }
     return arg;
@@ -302,20 +299,23 @@ function defaults(custom) {
   keys.forEach(function(name) {
     cache[name] = console[name];
     console[name] = function() {
-      //console.dir('console function after defaults: ' + name);
       var format = arguments[0];
       format = convert(format, props[name].format);
-      var args = [].slice.call(arguments, 1), i, arg, names, prop;
+      var args = [].slice.call(arguments, 1), i;
       for(i = 0;i < args.length;i++) {
-        arg = args[i];
-        args[i] = convert(args, props[name].parameters);
+        args[i] = convert(args[i], props[name].parameters);
       }
       args.unshift(format);
-      //console.dir(args);
-      //console.dir(styles);
       return cache[name].apply(null, args);
     }
   });
+
+  function revert() {
+    keys.forEach(function(name) {
+      console[name] = cache[name];
+    });
+  }
+  return revert;
 }
 
 module.exports = {
