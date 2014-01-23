@@ -52,16 +52,36 @@ var ANSI_CLOSE_CODE = '0';
 var ANSI_CLOSE = ANSI_OPEN + ANSI_CLOSE_CODE + ANSI_FINAL;
 
 /**
+ *  Open an escape sequence.
+ *
+ *  @param code The color code.
+ *  @param attr An optional attribute code.
+ */
+function open(code, attr) {
+  return  attr ? ANSI_OPEN + attr + ';' + code + ANSI_FINAL
+    : ANSI_OPEN + code + ANSI_FINAL;
+}
+
+/**
+ *  Concatenate a close sequence.
+ *
+ *  @param value The value to close.
+ */
+function close(value) {
+  return value + ANSI_CLOSE;
+}
+
+/**
  *  Low-level method for creating escaped string sequences.
  *
  *  @param value The value to escape.
  *  @param code The color code.
  *  @param attr An optional attribute code.
+ *  @param loose Whether to keep the escape sequence open.
  */
-function stringify(value, code, attr) {
-  var s = attr ? ANSI_OPEN + attr + ';' + code + ANSI_FINAL
-    : ANSI_OPEN + code + ANSI_FINAL;
-  s += value + ANSI_CLOSE;
+function stringify(value, code, attr, loose) {
+  var s = open(code, attr);
+  s +=  loose ? value : close(value);
   return s;
 }
 
