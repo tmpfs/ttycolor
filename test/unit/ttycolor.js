@@ -8,6 +8,10 @@ var log = path.join(__dirname, '..', '..', 'log', 'out.log');
 var file = null;
 
 describe('ttycolor:', function() {
+  var underline = ttycolor.attributes.underline;
+  var red = ttycolor.background.red;
+  var white = ttycolor.foreground.white;
+
   beforeEach(function(done) {
     file = fs.createWriteStream(log, {flags: 'w'});
     file.on('open', function(fd) {
@@ -223,9 +227,63 @@ describe('ttycolor:', function() {
       expected = '\u001b[' + fg + 'm' + '\u001b['
         + bg + 'm' + k + '\u001b[0m' + '\u001b[0m';
       result = ttycolor.debug('%s', ansi(k).bg()[k]()[k]());
-      //console.dir(result);
       expect(result).to.be.a('string').that.equals(expected);
     });
+    done();
+  });
+
+  it('should handle background/foreground/attribute chains', function(done) {
+    var input = 'value';
+    var chain = ansi(input).bg().red().white().underline();
+    var expected = '\u001b[' + underline + ';'
+      + white + 'm\u001b[' + red + 'm'
+      + input + '\u001b[0m\u001b[0m';
+    var result = ttycolor.debug('%s', chain);
+    expect(result).to.be.a('string').that.equals(expected);
+    done();
+  });
+
+  it('should handle background/attribute/foreground chains', function(done) {
+    var input = 'value';
+    var chain = ansi('value').bg().red().underline().white();
+    var expected = '\u001b[' + white
+      + 'm\u001b[' + underline + ';' + red + 'm'
+      + input + '\u001b[0m\u001b[0m';
+    var result = ttycolor.debug('%s', chain);
+    expect(result).to.be.a('string').that.equals(expected);
+    done();
+  });
+
+  it('should handle attribute/foreground/background chains', function(done) {
+    var input = 'value';
+    var chain = ansi('value').underline().white().bg().red();
+    var expected = '\u001b[' + red
+      + 'm\u001b[' + underline + ';' + white + 'm'
+      + input + '\u001b[0m\u001b[0m';
+    var result = ttycolor.debug('%s', chain);
+    expect(result).to.be.a('string').that.equals(expected);
+    done();
+  });
+
+  it('should handle foreground/attribute/background chains', function(done) {
+    var input = 'value';
+    var chain = ansi('value').white().underline().bg().red();
+    var expected = '\u001b[' + red
+      + 'm\u001b[' + underline + ';' + white + 'm'
+      + input + '\u001b[0m\u001b[0m';
+    var result = ttycolor.debug('%s', chain);
+    expect(result).to.be.a('string').that.equals(expected);
+    done();
+  });
+
+  it('should handle foreground/background/attribute chains', function(done) {
+    var input = 'value';
+    var chain = ansi('value').white().bg().red().underline();
+    var expected = '\u001b[' + underline + ';' + red
+      + 'm\u001b[' + white + 'm'
+      + input + '\u001b[0m\u001b[0m';
+    var result = ttycolor.debug('%s', chain);
+    expect(result).to.be.a('string').that.equals(expected);
     done();
   });
 })
