@@ -129,13 +129,14 @@ Utility to return an escaped string regardless of `isatty`, used for unit testin
 
 Map of foreground color codes.
 
-#### stringify(value, code, attr)
+#### stringify(value, code, attr, tag)
 
 Low-level method for creating escaped string sequences.
 
 * `value`: The value to escape, will be coerced to a string.
 * `code`: The color code.
-* `attr`: Optional attribute code. 
+* `attr`: Optional attribute code.
+* `tag`: Optional close tag.
 
 ### Styles
 

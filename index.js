@@ -77,7 +77,7 @@ function close(value, tag) {
  *  @param value The value to escape.
  *  @param code The color code.
  *  @param attr An optional attribute code.
- *  @param loose Whether to keep the escape sequence open.
+ *  @param tag A specific closing tag to use.
  */
 function stringify(value, code, attr, tag) {
   var s = open(code, attr);
@@ -189,7 +189,7 @@ AnsiColor.prototype.start = function(tty) {
  *  Retrieve an escape sequence from the chain.
  *
  *  @param tty Whether the output stream is a terminal.
- *  @param loose Indicates that the escape sequence should not be closed.
+ *  @param tag A specific closing tag to use.
  */
 AnsiColor.prototype.valueOf = function(tty, tag) {
   if(!tty) return this.v;
