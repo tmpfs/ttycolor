@@ -38,7 +38,7 @@ describe('ttycolor:', function() {
       file.end();
       done();
     }
-    console.write({stream: file, callback: cb}, '%s', ansi(input).white().underline());
+    console.write({stream: file, callback: cb}, '%s', ansi(input).white().underline);
   });
   it('should return empty string with no arguments', function(done) {
     var result = ttycolor.debug();
@@ -137,7 +137,7 @@ describe('ttycolor:', function() {
   it('should handle format as ansi instance', function(done) {
     var input = 'value';
     var expected = '\u001b[1;37m' + input + '\u001b[0m';
-    var result = ttycolor.debug(ansi(input).white().bright());
+    var result = ttycolor.debug(ansi(input).white().bright);
     expect(result).to.be.a('string').that.equals(expected);
     done();
   });
@@ -149,7 +149,7 @@ describe('ttycolor:', function() {
       v = def[k];
       expected = '\u001b[' + v + ';'
         + ttycolor.foreground.normal + 'm' + k + '\u001b[0m';
-      result = ttycolor.debug('%s', ansi(k)[k]());
+      result = ttycolor.debug('%s', ansi(k)[k]);
       expect(result).to.be.a('string').that.equals(expected);
     });
     done();
@@ -161,21 +161,21 @@ describe('ttycolor:', function() {
       + ttycolor.foreground.normal + 'm' + '\u001b['
       + ttycolor.attributes.underline + ';'
       + ttycolor.foreground.normal + 'm' + input + '\u001b[0m' + '\u001b[0m';
-    var result = ttycolor.debug('%s', ansi(input).underline().bright());
+    var result = ttycolor.debug('%s', ansi(input).underline.bright);
     expect(result).to.be.a('string').that.equals(expected);
     done();
   });
   it('should handle color/attribute chains', function(done) {
     var input = 'value';
     var expected = '\u001b[1;37m' + input + '\u001b[0m';
-    var result = ttycolor.debug('%s', ansi(input).white().bright());
+    var result = ttycolor.debug('%s', ansi(input).white().bright);
     expect(result).to.be.a('string').that.equals(expected);
     done();
   });
   it('should handle attribute/color chains', function(done) {
     var input = 'value';
     var expected = '\u001b[1;37m' + input + '\u001b[0m';
-    var result = ttycolor.debug('%s', ansi(input).bright().white());
+    var result = ttycolor.debug('%s', ansi(input).bright.white());
     expect(result).to.be.a('string').that.equals(expected);
     done();
   });
@@ -234,7 +234,7 @@ describe('ttycolor:', function() {
 
   it('should handle background/foreground/attribute chains', function(done) {
     var input = 'value';
-    var chain = ansi(input).bg.red().white().underline();
+    var chain = ansi(input).bg.red().white().underline;
     var expected = '\u001b[' + underline + ';'
       + white + 'm\u001b[' + red + 'm'
       + input + '\u001b[0m\u001b[0m';
@@ -245,7 +245,7 @@ describe('ttycolor:', function() {
 
   it('should handle background/attribute/foreground chains', function(done) {
     var input = 'value';
-    var chain = ansi('value').bg.red().underline().white();
+    var chain = ansi('value').bg.red().underline.white();
     var expected = '\u001b[' + white
       + 'm\u001b[' + underline + ';' + red + 'm'
       + input + '\u001b[0m\u001b[0m';
@@ -256,7 +256,7 @@ describe('ttycolor:', function() {
 
   it('should handle attribute/foreground/background chains', function(done) {
     var input = 'value';
-    var chain = ansi('value').underline().white().bg.red();
+    var chain = ansi('value').underline.white().bg.red();
     var expected = '\u001b[' + red
       + 'm\u001b[' + underline + ';' + white + 'm'
       + input + '\u001b[0m\u001b[0m';
@@ -267,7 +267,7 @@ describe('ttycolor:', function() {
 
   it('should handle foreground/attribute/background chains', function(done) {
     var input = 'value';
-    var chain = ansi('value').white().underline().bg.red();
+    var chain = ansi('value').white().underline.bg.red();
     var expected = '\u001b[' + red
       + 'm\u001b[' + underline + ';' + white + 'm'
       + input + '\u001b[0m\u001b[0m';
@@ -278,7 +278,7 @@ describe('ttycolor:', function() {
 
   it('should handle foreground/background/attribute chains', function(done) {
     var input = 'value';
-    var chain = ansi('value').white().bg.red().underline();
+    var chain = ansi('value').white().bg.red().underline;
     var expected = '\u001b[' + underline + ';' + red
       + 'm\u001b[' + white + 'm'
       + input + '\u001b[0m\u001b[0m';
