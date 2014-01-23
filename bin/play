@@ -17,6 +17,12 @@ var ansi = ttycolor.ansi;
 //process.exit(0);
 //
 //
+//
+
+var expected = 'foo:%j';
+var result = ttycolor.debug('%s:%j', 'foo');
+console.dir(result);
+process.exit(1);
 var chain = console.log(ansi('a %s value').red, ansi('bright red').bright);
 //console.dir(chain);
 //console.log(chain);

@@ -122,10 +122,15 @@ function proxy(options, format) {
     if(!tty) {
       format = format.v;
     }else{
-      //console.dir('tty: ' + tty);
       tag = format.start(tty);
-      //console.dir('start: ' + tag);
       format = format.valueOf(tty);
+    }
+  }
+
+  // we will coerce to strings
+  if(tty) {
+    for(i = 0;i < replacements.length;i++) {
+      format = format.replace(/%[jds]/, '%s');
     }
   }
 
@@ -139,14 +144,6 @@ function proxy(options, format) {
       replacements[i] = arg.valueOf(tty, tag);
     }else if(json && tty){
       replacements[i] = JSON.stringify(replacements[i]);
-    }
-  }
-  // we have already coerced to strings
-  if(tty) {
-    for(i = 0;i < replacements.length;i++) {
-      //console.dir('before replace: ' + format);
-      format = format.replace(/%[jd]/, '%s');
-      //console.dir('after replace: ' + format);
     }
   }
   replacements.unshift(format);
