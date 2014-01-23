@@ -168,6 +168,12 @@ AnsiColor.prototype.bg = function() {
   return ansi;
 }
 
+//AnsiColor.prototype.__defineGetter__('bg', function() {
+  //var ansi = new AnsiColor(this.v, this.k, this);
+  //ansi.t = definition.bg.colors;
+  //return ansi;
+//});
+
 /**
  *  Write a writable stream.
  *
