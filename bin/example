@@ -1,0 +1,7 @@
+#!/usr/bin/env node
+
+var ansi = require('..').ansi;
+//normal console operation
+console.log('cp: %s > %s %d% %j', 'input.txt', 'output.txt', 95, {chmod: 'g+w'});
+// highlight entire message
+console.info(ansi('info: skipping file').cyan);
