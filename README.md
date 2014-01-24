@@ -233,7 +233,8 @@ console.error('an %s message', 'error');
 
 ```javascript
 #!/usr/bin/env node
-var ttycolor = require('ttycolor')(), defaults = ttycolor.defaults, revert, styles, keys;
+var ttycolor = require('ttycolor')(), defaults = ttycolor.defaults,
+  revert, styles, keys;
 revert = defaults(); keys = Object.keys(ttycolor.styles); ansi = ttycolor.ansi;
 keys.forEach(function(method) {console[method]('%s: %s', method, 'message')})
 revert();
