@@ -233,6 +233,10 @@ console.error('an %s message', 'error');
   <img src="https://raw.github.com/freeformsystems/ttycolor/master/img/defaults.png" />
 </p>
 
+<p align="center">
+  <img src="https://raw.github.com/freeformsystems/ttycolor/master/img/defaults-cat.png" />
+</p>
+
 ### Arguments
 
 The module supports argument parsing with the modes `always`, `auto` and `never`. Argument parsing is built in to the module to prevent repeating the option parsing logic for multiple command line programs. All you need to do is document the option(s) in your programs help or documentation.
