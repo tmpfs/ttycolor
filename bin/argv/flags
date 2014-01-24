@@ -1,0 +1,7 @@
+#!/usr/bin/env node
+
+var options = {always: '-c', never: '-C'};
+var ttycolor = require('../..')(options);
+ttycolor.defaults();
+console.info('an %s message', 'info');
+console.error('an %s message', 'error');

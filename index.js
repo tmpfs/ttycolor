@@ -364,18 +364,26 @@ function parse(modes, option, argv) {
   option.never = option.never || NO_COLOR_OPTION;
   var i, arg, value, keys = Object.keys(modes), long = '--', short = '-';
   var names = Object.keys(OPTION);
-  var types = {};
+  var types = {}, flags = {};
   names.forEach(function(name) {
     types[name] = option[name].indexOf(long) == 0;
+    if(!types[name]) flags[name] = true;
   });
-  function opts(argv, arg, index) {
+
+  // parse long options
+  function opt(argv, arg, index, key) {
     var value = argv[index + 1], equals = arg.indexOf('=');
     if(equals > -1) value = arg.substr(equals + 1);
     if(value && (keys.indexOf(value) > -1)) {
       return value;
     }
-    if(arg == option.always) return always;
+    if(arg == option[key]) return modes[key];
     return false;
+  }
+
+  // parse flags
+  function flag(argv, arg, index, key) {
+
   }
 
   // default *auto* with no arguments
@@ -386,9 +394,11 @@ function parse(modes, option, argv) {
       arg = argv[i];
       // parsing always as a long option
       if(arg.indexOf(option.always) == 0 && types.always) {
-        if(value = opts(argv, arg, i)) {
+        if(value = opt(argv, arg, i, 'always')) {
           return value;
         }
+      }else if(flags.always || flags.never) {
+
       }else if(option.never && arg == option.never) {
         return never;
       }
