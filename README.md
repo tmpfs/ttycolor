@@ -126,6 +126,22 @@ Map referencing the original `console` methods.
 
 Utility to return an escaped string regardless of `isatty`, used for unit testing.
 
+#### defaults(styles)
+
+Configure default styles for the `console` functions.
+
+* `styles`: Styles to use, if this option is not specified then the module default styles are used.
+
+This method returns a closure that allows reverting to the previous `console` functions.
+
+```javascript
+var ttycolor = require('ttycolor'), defaults = ttycolor.defaults, revert;
+revert = defaults();
+console.log('log: a %s message', 'log');
+revert();
+console.log('log: a %s message', 'log');
+```
+
 #### foreground
 
 Map of foreground color codes.
@@ -138,6 +154,10 @@ Low-level method for creating escaped string sequences.
 * `code`: The color code.
 * `attr`: Optional attribute code.
 * `tag`: Optional close tag.
+
+#### styles
+
+Map of styles to use when no arguments are passed to `defaults()`.
 
 ### Styles
 
