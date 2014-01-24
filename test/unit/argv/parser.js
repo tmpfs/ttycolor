@@ -5,8 +5,6 @@ var exe = path.normalize(
   path.join(__dirname, '..', '..', '..', 'bin', 'argv', 'parser'));
 var log = path.normalize(path.join(__dirname, '..', '..', '..', 'log', 'argv.log'))
 
-console.dir(exe);
-
 describe('argv parser:', function() {
   it('should write to file with escape sequences (default: auto)',
     function(done) {
