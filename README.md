@@ -229,6 +229,33 @@ console.info('an %s message', 'info');
 console.error('an %s message', 'error');
 ```
 
+#### Example
+
+```javascript
+#!/usr/bin/env node
+var ttycolor = require('ttycolor')(), defaults = ttycolor.defaults, revert, styles, keys;
+revert = defaults(); keys = Object.keys(ttycolor.styles); ansi = ttycolor.ansi;
+keys.forEach(function(method) {console[method]('%s: %s', method, 'message')})
+revert();
+keys.forEach(function(method) {console[method]('%s: %s', method, 'message')})
+styles = {
+  log: {format: ['normal'], parameters: ['normal', 'underline']},
+  info: {format: ['cyan'], parameters: ['cyan', 'underline']},
+  warn: {format: ['magenta'], parameters: ['magenta', 'underline']},
+  error: {format: ['red'], parameters: ['red', 'underline']}
+}
+defaults(styles);
+keys.forEach(function(method) {console[method](method + ': %s', 'message')})
+keys.forEach(function(method) {
+  console[method]('[%s] %s', ansi(method).bright[styles[method].format],
+    ansi(method).underline.bright[styles[method].format]);
+});
+keys.forEach(function(method) {
+  console[method]('[%s] %s', ansi(method).bright[styles[method].format],
+    ansi(method).bright);
+});
+```
+
 <p align="center">
   <img src="https://raw.github.com/freeformsystems/ttycolor/master/img/defaults.png" />
 </p>
