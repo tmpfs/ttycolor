@@ -19,7 +19,15 @@ var ansi = ttycolor.ansi;
 //
 //
 
-console.log('cp: %s > %s %d% %j', 'input.txt', 'output.txt', 95, {chmod: 'g+w'});
+//console.log('cp: %s > %s %d% %j', 'input.txt', 'output.txt', 95, {chmod: 'g+w'});
+//
+var seq = ttycolor.debug('a %s', ansi('test').red.bright.underline);
+console.dir(seq);
+console.log(seq);
+
+var seq = ttycolor.debug('a %s', ansi('test').bright.underline.red);
+console.dir(seq);
+console.log(seq);
 
 //var chain = console.log(ansi('a %s value').red, ansi('bright red').bright);
 //console.dir(chain);

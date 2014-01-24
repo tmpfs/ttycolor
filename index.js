@@ -273,6 +273,10 @@ Object.keys(definition.colors).forEach(function (k) {
       return new AnsiColor(this.v, k, this);
     }
     this.k = k;
+    // allow color functions after multiple attribute chains
+    if(this.p && this.p.a && this.p.k == 'normal') {
+      this.p.k = this.k;
+    }
     return this;
   });
 });
