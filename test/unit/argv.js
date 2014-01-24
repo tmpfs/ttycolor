@@ -20,12 +20,9 @@ describe('ttycolor:', function() {
         var contents = fs.readFileSync(colors.log).toString();
         var lines = contents.split('\n');
         lines.pop();
-        //console.dir(lines);
         lines.forEach(function(line) {
           var re = /\u001b/g;
           var escaped = re.test(line);
-          //console.dir(line);
-          //console.dir(escaped);
           expect(line).to.be.a('string');
           expect(escaped).to.be.a('boolean').that.equals(expected);
         });

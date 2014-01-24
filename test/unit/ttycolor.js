@@ -1,71 +1,12 @@
-var exec = require('child_process').exec;
-var fs = require('fs');
-var path = require('path');
-var util = require('util');
 var expect = require('chai').expect;
 
 var ttycolor = require('../..')();
 var ansi = ttycolor.ansi;
-var log = path.join(__dirname, '..', '..', 'log', 'out.log');
-var colors = {
-  bin: path.normalize(path.join(__dirname, '..', '..', 'bin', 'colors')),
-  log: path.normalize(path.join(__dirname, '..', '..', 'log', 'colors.log'))
-}
-var file = null;
 
 describe('ttycolor:', function() {
   var underline = ttycolor.attributes.underline;
   var red = ttycolor.background.red;
   var white = ttycolor.foreground.white;
-
-  beforeEach(function(done) {
-    file = fs.createWriteStream(log, {flags: 'w'});
-    file.on('open', function(fd) {
-      done();
-    });
-  });
-  it('should export properties', function(done) {
-    expect(ttycolor.ansi).to.be.a('function');
-    expect(ttycolor.attributes).to.be.an('object');
-    expect(ttycolor.background).to.be.an('object');
-    expect(ttycolor.colors).to.be.an('array');
-    expect(ttycolor.console).to.be.an('object');
-    expect(ttycolor.debug).to.be.a('function');
-    expect(ttycolor.foreground).to.be.an('object');
-    expect(ttycolor.stringify).to.be.a('function');
-    done();
-  });
-  it('should write to file with no escape sequences', function(done) {
-    var re = /\u001b/g;
-    var cmd = util.format('%s > %s 2>&1', colors.bin, colors.log);
-    var ps = exec(cmd,
-      function (error, stdout, stderr) {
-        var out = stdout.toString(), err = stderr.toString();
-        expect(error).to.be.null;
-        expect(out).to.be.a('string').that.equals('');
-        expect(err).to.be.a('string').that.equals('');
-        var contents = fs.readFileSync(colors.log).toString();
-        var lines = contents.split('\n');
-        lines.forEach(function(line) {
-          var escaped = re.test(line);
-          expect(line).to.be.a('string');
-          expect(escaped).to.be.a('boolean').that.equals(false);
-        });
-        done();
-      }
-    );
-  });
-  it('should write to stream', function(done) {
-    var input = 'value';
-    function cb(value) {
-      expect(value).to.be.a('string').that.equals(input);
-      var contents = fs.readFileSync(log);
-      expect(contents.toString()).to.be.a('string').that.equals(input);
-      file.end();
-      done();
-    }
-    console.write({stream: file, callback: cb}, '%s', ansi(input).white.underline);
-  });
   it('should return empty string with no arguments', function(done) {
     var result = ttycolor.debug();
     expect(result).to.be.a('string').that.equals('');
@@ -183,7 +124,6 @@ describe('ttycolor:', function() {
     var def = ttycolor.attributes;
     var keys = Object.keys(def), v, result;
     keys.forEach(function(k) {
-      //console.log(k);
       v = def[k];
       expected = '\u001b[' + v + ';'
         + ttycolor.foreground.normal + 'm' + k + '\u001b[0m';
