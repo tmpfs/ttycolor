@@ -4,6 +4,14 @@ var tty = require('tty');
 var util = require('util');
 var WritableStream = require('stream').Writable;
 
+var auto = 'auto';
+var never = 'never';
+var always = 'always';
+
+var COLOR_OPTION = '--color';
+var NO_COLOR_OPTION = '--no-color';
+var OPTION = {always: COLOR_OPTION, never: NO_COLOR_OPTION};
+
 var cache = {}, stash = {
   log: console.log,
   info: console.info,
@@ -243,7 +251,13 @@ Object.keys(definition.colors).forEach(function (k) {
   });
 });
 
-function initialize() {
+function isatty(tty, mode) {
+  if(mode == always) return true;
+  if(mode == never) return false;
+  return tty;
+}
+
+function initialize(mode) {
   /**
    *  Write a writable stream.
    *
@@ -258,7 +272,12 @@ function initialize() {
       if(stream.fd == null) {
         throw new Error('Cannot write to stream, file descriptor not open');
       }
-      var args = [{scope: util, method: util.format, tty: tty.isatty(stream.fd)}];
+      var args = [
+        {
+          scope: util, method: util.format,
+          tty: isatty(tty.isatty(stream.fd), mode)
+        }
+      ];
       args = args.concat([].slice.call(arguments, 1));
       var value = proxy.apply(null, args);
       stream.write(value, function() {
@@ -274,7 +293,7 @@ function initialize() {
     var stream = (k == 'info' || k == 'log') ?
       process.stdout : process.stderr;
     console[k] = function(format) {
-      var tty = stream.isTTY;
+      var tty = isatty(stream.isTTY, mode);
       var args = [{tty: tty, method: stash[k]}];
       var rest = [].slice.call(arguments, 0);
       args = args.concat(rest);
@@ -329,9 +348,36 @@ function debug() {
   return proxy.apply(null, args);
 }
 
-module.exports = function() {
-  //console.dir('init called...');
-  initialize();
+function parse(option, argv) {
+  option = option || {};
+  argv = argv || process.argv.slice(2);
+  option.always = option.always || COLOR_OPTION;
+  option.never = option.never || NO_COLOR_OPTION;
+  var i, arg;
+  // default *auto* with no arguments
+  if(!argv.length) {
+    return auto;
+  }else{
+    for(i = 0;i < argv.length;i++) {
+      arg = argv[i];
+      if(arg == option.always) {
+        return always;
+      }else if(arg == option.never) {
+        return never;
+      }
+    }
+  }
+  return auto;
+}
+
+module.exports = function(parser, option) {
+  option = option || OPTION;
+  parser = parser || parse;
+  if(!(typeof parser == 'function')) {
+    throw new Error('Argument parser must be a function');
+  }
+  var mode = parser(option);
+  initialize(mode);
   return module.exports;
 }
 
