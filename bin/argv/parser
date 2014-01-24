@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+
+function parser(modes, option, argv) {
+  return modes.always;
+}
+
+var ttycolor = require('../..')(parser);
+ttycolor.defaults();
+console.info('an %s message', 'info');
+console.error('an %s message', 'error');

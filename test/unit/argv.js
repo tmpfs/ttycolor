@@ -9,7 +9,7 @@ var colors = {
   log: path.normalize(path.join(__dirname, '..', '..', 'log', 'argv.log'))
 }
 
-describe('ttycolor:', function() {
+describe('argv:', function() {
   function run(cmd, expected, done) {
     var ps = exec(cmd,
       function (error, stdout, stderr) {
