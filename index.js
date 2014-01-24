@@ -361,21 +361,34 @@ function parse(modes, option, argv) {
   option = option || {};
   argv = argv || process.argv.slice(2);
   option.always = option.always || COLOR_OPTION;
-  option.never = option.never;
-  var i, arg, equals, value, keys = Object.keys(modes);
+  option.never = option.never || NO_COLOR_OPTION;
+  var i, arg, value, keys = Object.keys(modes), long = '--', short = '-';
+  var names = Object.keys(OPTION);
+  var types = {};
+  names.forEach(function(name) {
+    types[name] = option[name].indexOf(long) == 0;
+  });
+  function opts(argv, arg, index) {
+    var value = argv[index + 1], equals = arg.indexOf('=');
+    if(equals > -1) value = arg.substr(equals + 1);
+    if(value && (keys.indexOf(value) > -1)) {
+      return value;
+    }
+    if(arg == option.always) return always;
+    return false;
+  }
+
   // default *auto* with no arguments
   if(!argv.length) {
     return auto;
   }else{
     for(i = 0;i < argv.length;i++) {
       arg = argv[i];
-      if(arg.indexOf(option.always) == 0) {
-        value = argv[i + 1], equals = arg.indexOf('=');
-        if(equals > -1) value = arg.substr(equals + 1);
-        if(value && (keys.indexOf(value) > -1)) {
+      // parsing always as a long option
+      if(arg.indexOf(option.always) == 0 && types.always) {
+        if(value = opts(argv, arg, i)) {
           return value;
         }
-        if(arg == option.always) return always;
       }else if(option.never && arg == option.never) {
         return never;
       }
