@@ -228,10 +228,10 @@ The default argument parsing supports the following variations:
 * `--color`: Sets the mode to `always`.
 * `--no-color`: Sets the mode to `never`.
 * `--color=always`: Sets the mode to `always`.
-* `--color=auto`: Sets the mode to `auto` (default).
+* `--color=auto`: Sets the mode to `auto`.
 * `--color=never`: Sets the mode to `never`.
 * `--color always`: Sets the mode to `always`.
-* `--color auto`: Sets the mode to `auto` (default).
+* `--color auto`: Sets the mode to `auto`.
 * `--color never`: Sets the mode to `never`.
 
 #### Custom
