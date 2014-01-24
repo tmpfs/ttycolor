@@ -25,6 +25,7 @@
   },
   "engine": [ "node >= 0.10.21" ],
   "scripts": {
+    "clean": "rm log/*.log",
     "test": "mocha -u bdd --recursive --reporter list -A test/unit/"
   },
   "config" : {}
