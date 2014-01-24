@@ -332,5 +332,6 @@ module.exports = {
     args = args.concat([].slice.call(arguments, 0));
     return proxy.apply(null, args);
   },
-  defaults: defaults
+  defaults: defaults,
+  styles: styles
 }
