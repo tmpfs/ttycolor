@@ -353,10 +353,9 @@ var ttycolor = require('ttycolor')(parser);
 
 * `modes`: A map of the available highlighting modes.
 * `option`: A map containing option keys.
-* `argv`: Optional arguments to parse, defaults to `process.argv`.
+* `argv`: Arguments to parse, value is `process.argv.slice(2)`.
 
-The parser function should return a string representing one of the available
-modes.
+The parser function should return a string representing one of the available modes.
 
 #### Disable
 

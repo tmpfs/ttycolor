@@ -359,7 +359,6 @@ function debug() {
 
 function parse(modes, option, argv) {
   option = option || {};
-  argv = argv || process.argv.slice(2);
   option.always = option.always || COLOR_OPTION;
   option.never = option.never;
   var i, arg, value, keys = Object.keys(modes), long = '--', short = '-';
@@ -432,7 +431,7 @@ module.exports = function(option, parser) {
   parser = option !== false ? (parser || parse) : false;
   var mode = auto;
   if(typeof parser == 'function') {
-    mode = parser(modes, option);
+    mode = parser(modes, option, process.argv.slice(2));
   }
   initialize(mode);
   return module.exports;
