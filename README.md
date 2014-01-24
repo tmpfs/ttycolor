@@ -231,6 +231,8 @@ console.error('an %s message', 'error');
 
 #### Example
 
+An example derived from the [defaults](bin/defaults) executable:
+
 ```javascript
 #!/usr/bin/env node
 var ttycolor = require('ttycolor')(), defaults = ttycolor.defaults,
