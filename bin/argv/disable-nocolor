@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-// this configuration disables parsing of the --no-color option
+// configuration that disables parsing of the --no-color option
 var options = {always: '--color'};
 var ttycolor = require('../..')(options);
 ttycolor.defaults();

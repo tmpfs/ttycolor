@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-// this configuration disables option parsing completely
+// configuration that disables option parsing completely
 var ttycolor = require('../..')(false), defaults = ttycolor.defaults, revert;
 revert = defaults();
 console.info('an %s message', 'info');

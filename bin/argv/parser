@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-// this configuration is an example of declaring a custom parser
+// example of configuring a custom option parser
 function parser(modes, option, argv) {
   return modes.always;
 }
