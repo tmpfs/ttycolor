@@ -4,6 +4,14 @@ var tty = require('tty');
 var util = require('util');
 var WritableStream = require('stream').Writable;
 
+var auto = 'auto';
+var never = 'never';
+var always = 'always';
+
+var COLOR_OPTION = '--color';
+var NO_COLOR_OPTION = '--no-color';
+var OPTION = {always: COLOR_OPTION, never: NO_COLOR_OPTION};
+
 var cache = {}, stash = {
   log: console.log,
   info: console.info,
@@ -212,44 +220,6 @@ AnsiColor.prototype.__defineGetter__('bg', function() {
   return ansi;
 });
 
-/**
- *  Write a writable stream.
- *
- *  @param options.stream A writable stream.
- *  @param options.callback A callback to invoke once the data is written.
- *  @param format The format string.
- *  @param ...  The format string arguments.
- */
-console.write = function(options) {
-  var stream = options.stream;
-  if(stream instanceof WritableStream) {
-    if(stream.fd == null) {
-      throw new Error('Cannot write to stream, file descriptor not open');
-    }
-    var args = [{scope: util, method: util.format, tty: tty.isatty(stream.fd)}];
-    args = args.concat([].slice.call(arguments, 1));
-    var value = proxy.apply(null, args);
-    stream.write(value, function() {
-      if(typeof options.callback == 'function') options.callback(value);
-    });
-  }else{
-    throw new Error('Stream option must be writable');
-  }
-}
-
-// console functions
-Object.keys(stash).forEach(function (k) {
-  var stream = (k == 'info' || k == 'log') ?
-    process.stdout : process.stderr;
-  console[k] = function(format) {
-    var tty = stream.isTTY;
-    var args = [{tty: tty, method: stash[k]}];
-    var rest = [].slice.call(arguments, 0);
-    args = args.concat(rest);
-    proxy.apply(null, args);
-  }
-});
-
 // attributes
 Object.keys(definition.attrs).forEach(function (k) {
   AnsiColor.prototype.__defineGetter__(k, function () {
@@ -280,6 +250,57 @@ Object.keys(definition.colors).forEach(function (k) {
     return this;
   });
 });
+
+function isatty(tty, mode) {
+  if(mode == always) return true;
+  if(mode == never) return false;
+  return tty;
+}
+
+function initialize(mode) {
+  /**
+   *  Write a writable stream.
+   *
+   *  @param options.stream A writable stream.
+   *  @param options.callback A callback to invoke once the data is written.
+   *  @param format The format string.
+   *  @param ...  The format string arguments.
+   */
+  console.write = function(options) {
+    var stream = options.stream;
+    if(stream instanceof WritableStream) {
+      if(stream.fd == null) {
+        throw new Error('Cannot write to stream, file descriptor not open');
+      }
+      var args = [
+        {
+          scope: util, method: util.format,
+          tty: isatty(tty.isatty(stream.fd), mode)
+        }
+      ];
+      args = args.concat([].slice.call(arguments, 1));
+      var value = proxy.apply(null, args);
+      stream.write(value, function() {
+        if(typeof options.callback == 'function') options.callback(value);
+      });
+    }else{
+      throw new Error('Stream option must be writable');
+    }
+  }
+
+  // console functions
+  Object.keys(stash).forEach(function (k) {
+    var stream = (k == 'info' || k == 'log') ?
+      process.stdout : process.stderr;
+    console[k] = function(format) {
+      var tty = isatty(stream.isTTY, mode);
+      var args = [{tty: tty, method: stash[k]}];
+      var rest = [].slice.call(arguments, 0);
+      args = args.concat(rest);
+      proxy.apply(null, args);
+    }
+  });
+}
 
 function ansi(v) {
   return new AnsiColor(v);
@@ -313,7 +334,6 @@ function defaults(custom) {
       return cache[name].apply(null, args);
     }
   });
-
   function revert() {
     keys.forEach(function(name) {
       console[name] = cache[name];
@@ -322,20 +342,53 @@ function defaults(custom) {
   return revert;
 }
 
-module.exports = {
-  console: stash,
-  cache: cache,
-  ansi: ansi,
-  colors: Object.keys(definition.colors),
-  attributes: definition.attrs,
-  foreground: definition.colors,
-  background: definition.bg.colors,
-  stringify: stringify,
-  debug: function() {
-    var args = [{scope: util, method: util.format, tty: true}];
-    args = args.concat([].slice.call(arguments, 0));
-    return proxy.apply(null, args);
-  },
-  defaults: defaults,
-  styles: styles
+function debug() {
+  var args = [{scope: util, method: util.format, tty: true}];
+  args = args.concat([].slice.call(arguments, 0));
+  return proxy.apply(null, args);
 }
+
+function parse(option, argv) {
+  option = option || {};
+  argv = argv || process.argv.slice(2);
+  option.always = option.always || COLOR_OPTION;
+  option.never = option.never || NO_COLOR_OPTION;
+  var i, arg;
+  // default *auto* with no arguments
+  if(!argv.length) {
+    return auto;
+  }else{
+    for(i = 0;i < argv.length;i++) {
+      arg = argv[i];
+      if(arg == option.always) {
+        return always;
+      }else if(arg == option.never) {
+        return never;
+      }
+    }
+  }
+  return auto;
+}
+
+module.exports = function(parser, option) {
+  option = option || OPTION;
+  parser = parser || parse;
+  if(!(typeof parser == 'function')) {
+    throw new Error('Argument parser must be a function');
+  }
+  var mode = parser(option);
+  initialize(mode);
+  return module.exports;
+}
+
+module.exports.console = stash;
+module.exports.cache = cache;
+module.exports.ansi = ansi;
+module.exports.colors = Object.keys(definition.colors);
+module.exports.attributes = definition.attrs;
+module.exports.foreground = definition.colors;
+module.exports.background = definition.bg.colors;
+module.exports.stringify = stringify;
+module.exports.debug = debug;
+module.exports.defaults = defaults;
+module.exports.styles = styles;

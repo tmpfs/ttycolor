@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var ansi = require('..').ansi;
+var ansi = require('..')().ansi;
 //normal console operation
 console.log('cp: %s > %s %d% %j', 'input.txt', 'output.txt', 95, {chmod: 'g+w'});
 // highlight entire message
@@ -15,17 +15,3 @@ console.error('%s: %s could not be written',
 console.log('cp: copied %s > %s', ansi('input.txt').underline.bright, ansi('output.txt').bright.underline);
 // color chaining (order is not important)
 console.log('cp: copied %s > %s', ansi('input.txt').white.bg.black, ansi('output.txt').bg.black.white);
-
-var revert = require('..').defaults();
-
-console.log('log: %s', 'message');
-console.info('info: %s', 'message');
-console.warn('warn: %s', 'message');
-console.error('error: %s', 'message');
-
-revert();
-
-console.log('log: %s', 'message');
-console.info('info: %s', 'message');
-console.warn('warn: %s', 'message');
-console.error('error: %s', 'message');

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var ttycolor = require('..'), ansi = ttycolor.ansi;
+var ttycolor = require('..')(), ansi = ttycolor.ansi;
 var colors = ttycolor.colors; colors.shift();
 var methods = ['log', 'info', 'warn', 'error'], i = 0, method;
 methods = methods.concat(methods);
