@@ -384,9 +384,13 @@ function parse(modes, option, argv) {
   return auto;
 }
 
-module.exports = function(parser, option) {
-  option = option || OPTION;
-  parser = parser !== false ? (parser || parse) : false;
+module.exports = function(option, parser) {
+  if(typeof option == 'function') {
+    parser = option;
+    option = null;
+  }
+  option = option !== false ? (option || OPTION) : false;
+  parser = option !== false ? (parser || parse) : false;
   var mode = auto;
   if(typeof parser == 'function') {
     mode = parser(modes, option);
