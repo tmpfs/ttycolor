@@ -363,8 +363,7 @@ function parse(modes, option, argv) {
   option.always = option.always || COLOR_OPTION;
   option.never = option.never;
   var i, arg, value, keys = Object.keys(modes), long = '--', short = '-';
-  var names = Object.keys(OPTION);
-  var types = {}, flags = {};
+  var names = Object.keys(OPTION), types = {}, flags = {}, re = /^-[^-]/;
   names.forEach(function(name) {
     if(option[name]) {
       types[name] = option[name].indexOf(long) == 0;
@@ -384,8 +383,18 @@ function parse(modes, option, argv) {
   }
 
   // parse flags
-  function flag(argv, arg, index, key) {
-
+  function flag(argv, arg) {
+    var value = false, arg = arg.replace(/^-/, ''), i, key;
+    for(i = 0;i < names.length;i++) {
+      key = names[i];
+      if(!flags[key]) continue;
+      var char = option[key].substr(1,1);
+      if(!char) continue; // misconfigured short option
+      if(arg.lastIndexOf(char) > -1) {
+        return key;
+      }
+    }
+    return value;
   }
 
   // default *auto* with no arguments
@@ -394,14 +403,19 @@ function parse(modes, option, argv) {
   }else{
     for(i = 0;i < argv.length;i++) {
       arg = argv[i];
-      // parsing always as a long option
+      // parse always as a long option
       if(arg.indexOf(option.always) == 0 && types.always) {
-        if(value = opt(argv, arg, i, 'always')) {
+        if(value = opt(argv, arg, i, always)) {
           return value;
         }
-      }else if(flags.always || flags.never) {
-
-      }else if(option.never && arg == option.never) {
+      //
+      }else if(re.test(arg)) {
+        if(value = flag(argv, arg)) {
+          console.log('flag returned: ' + value);
+          return value;
+        }
+      // parse never option as a long option
+      }else if(option.never && arg == option.never && types.never) {
         return never;
       }
     }
