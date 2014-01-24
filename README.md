@@ -9,6 +9,7 @@ Terminal colors for [node][node] that respect whether the `stdout` and `stderr` 
 * Always respects whether the stream is a tty
 * Chainable attributes, foreground colors and background colors
 * Asynchronous write to any stream respecting `tty.isatty`
+* Default styles to keep the code clean
 * Comprehensive test suite
 
 <p align="center">
