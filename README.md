@@ -314,7 +314,7 @@ keys.forEach(function(method) {
 
 ### Arguments
 
-The module supports argument parsing with the modes `always`, `auto` and `never`. Argument parsing is built in to the module to prevent repeating the option parsing logic for multiple command line programs. All you need to do is document the option(s) in your programs help or documentation.
+The module supports argument parsing with the modes `always`, `auto` and `never`. Argument parsing is built in to the module to prevent repeating the option parsing logic for multiple command line programs. All you need to do is document the option(s) in your program's help or documentation.
 
 Note that by default the module will use `auto` behaviour.
 
