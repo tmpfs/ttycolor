@@ -7,6 +7,7 @@ var WritableStream = require('stream').Writable;
 var auto = 'auto';
 var never = 'never';
 var always = 'always';
+var modes = [auto, always, never];
 
 var COLOR_OPTION = '--color';
 var NO_COLOR_OPTION = '--no-color';
@@ -357,17 +358,22 @@ function parse(option, argv) {
   option = option || {};
   argv = argv || process.argv.slice(2);
   option.always = option.always || COLOR_OPTION;
-  option.never = option.never || NO_COLOR_OPTION;
-  var i, arg;
+  option.never = option.never;
+  var i, arg, equals, value;
   // default *auto* with no arguments
   if(!argv.length) {
     return auto;
   }else{
     for(i = 0;i < argv.length;i++) {
       arg = argv[i];
-      if(arg == option.always) {
-        return always;
-      }else if(arg == option.never) {
+      if(arg.indexOf(option.always) == 0) {
+        value = argv[i + 1], equals = arg.indexOf('=');
+        if(equals > -1) value = arg.substr(equals + 1);
+        if(value && (modes.indexOf(value) > -1)) {
+          return value;
+        }
+        if(arg == option.always) return always;
+      }else if(option.never && arg == option.never) {
         return never;
       }
     }
