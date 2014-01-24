@@ -229,6 +229,51 @@ console.info('an %s message', 'info');
 console.error('an %s message', 'error');
 ```
 
+#### Customise
+
+To customise the styles when using `defaults()` create an object with the following structure (see below for some example code):
+
+```json
+{
+  "log": {
+    "format": [
+      "normal"
+    ],
+    "parameters": [
+      "normal",
+      "bright"
+    ]
+  },
+  "info": {
+    "format": [
+      "cyan"
+    ],
+    "parameters": [
+      "cyan",
+      "bright"
+    ]
+  },
+  "warn": {
+    "format": [
+      "magenta"
+    ],
+    "parameters": [
+      "magenta",
+      "bright"
+    ]
+  },
+  "error": {
+    "format": [
+      "red"
+    ],
+    "parameters": [
+      "red",
+      "bright"
+    ]
+  }
+}
+```
+
 #### Example
 
 An example derived from the [defaults](bin/defaults) executable:

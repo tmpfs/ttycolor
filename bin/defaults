@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
 var ttycolor = require('..')(), defaults = ttycolor.defaults, revert, styles, keys;
+console.log(JSON.stringify(ttycolor.styles, undefined, 2));
+process.exit(0);
 revert = defaults(); keys = Object.keys(ttycolor.styles); ansi = ttycolor.ansi;
 keys.forEach(function(method) {console[method]('%s: %s', method, 'message')})
 revert();
