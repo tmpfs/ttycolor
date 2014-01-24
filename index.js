@@ -361,13 +361,15 @@ function parse(modes, option, argv) {
   option = option || {};
   argv = argv || process.argv.slice(2);
   option.always = option.always || COLOR_OPTION;
-  option.never = option.never || NO_COLOR_OPTION;
+  option.never = option.never;
   var i, arg, value, keys = Object.keys(modes), long = '--', short = '-';
   var names = Object.keys(OPTION);
   var types = {}, flags = {};
   names.forEach(function(name) {
-    types[name] = option[name].indexOf(long) == 0;
-    if(!types[name]) flags[name] = true;
+    if(option[name]) {
+      types[name] = option[name].indexOf(long) == 0;
+      if(!types[name]) flags[name] = true;
+    }
   });
 
   // parse long options

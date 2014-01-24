@@ -37,6 +37,10 @@ npm install ttycolor
 npm test
 ```
 
+## Examples
+
+There are various example and test programs in the [bin](bin) directory. Note that these executables are not included when the package is distributed via npm.
+
 ## API
 
 ```javascript
