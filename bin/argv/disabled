@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+
+var ttycolor = require('../..')(false), defaults = ttycolor.defaults, revert;
+revert = defaults();
+console.info('an %s message', 'info');
+console.error('an %s message', 'error');
+revert();
+console.info('an %s message', 'info');
+console.error('an %s message', 'error');
