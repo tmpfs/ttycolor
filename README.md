@@ -41,23 +41,40 @@ npm test
 
 There are various example and test programs in the [bin](bin) directory. Note that these executables are not included when the package is distributed via npm.
 
-## API
+### Normal
 
 ```javascript
-var ansi = require('ttycolor').ansi;
-// no colors, normal console operation
+var ttycolor = require('ttycolor')();
 console.log('%s', 'value');
 console.log('%d', 3.14);
 console.log('%j', {message: 'json'});
 console.log('a %s of %d with %j', 'value', 3.14, {message: 'json'});
-// colors
+```
+
+### Defaults (recommended)
+
+```javascript
+var ttycolor = require('ttycolor')();
+var revert = ttycolor.defaults();
+console.log('a %s message', 'log');
+console.info('an %s message', 'info');
+console.warn('a %s message', 'warn');
+console.error('an %s message', 'error');
+```
+
+### Custom
+
+```javascript
+var ansi = require('ttycolor')().ansi;
 console.log('%s', ansi('log message').white.bg.black);
-console.info('%s', ansi('info message').cyan;
-console.warn('%s', ansi('warn message').magenta;
+console.info('%s', ansi('info message').cyan);
+console.warn('%s', ansi('warn message').magenta);
 console.error('%s', ansi('error message').bright.red);
 console.log('pi %d', ansi(3.14).blue.underline);
 console.log('%j', ansi({message: 'json'}).red);
 ```
+
+## API
 
 ### Console
 

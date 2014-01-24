@@ -1,0 +1,6 @@
+#!/usr/bin/env node
+var ttycolor = require('../..')();
+console.log('%s', 'value');
+console.log('%d', 3.14);
+console.log('%j', {message: 'json'});
+console.log('a %s of %d with %j', 'value', 3.14, {message: 'json'});
