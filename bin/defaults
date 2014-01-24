@@ -17,3 +17,7 @@ keys.forEach(function(method) {
   console[method]('[%s] %s', ansi(method).bright[styles[method].format],
     ansi(method).underline.bright[styles[method].format]);
 });
+keys.forEach(function(method) {
+  console[method]('[%s] %s', ansi(method).bright[styles[method].format],
+    ansi(method).bright);
+});

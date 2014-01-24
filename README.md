@@ -215,6 +215,24 @@ Depending upon the terminal emulator some attributes may not be supported and wi
 * `blink`
 * `reverse`
 
+### Default Styles
+
+To keep your code clean and the program output consistent it is a good idea to use the default styles.
+
+```javascript
+var ttycolor = require('ttycolor')(), defaults = ttycolor.defaults, revert;
+revert = defaults();
+console.info('an %s message', 'info');
+console.error('an %s message', 'error');
+revert();
+console.info('an %s message', 'info');
+console.error('an %s message', 'error');
+```
+
+<p align="center">
+  <img src="https://raw.github.com/freeformsystems/ttycolor/master/img/defaults.png" />
+</p>
+
 ### Arguments
 
 The module supports argument parsing with the modes `always`, `auto` and `never`. Argument parsing is built in to the module to prevent repeating the option parsing logic for multiple command line programs. All you need to do is document the option(s) in your programs help or documentation.

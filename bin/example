@@ -15,3 +15,4 @@ console.error('%s: %s could not be written',
 console.log('cp: copied %s > %s', ansi('input.txt').underline.bright, ansi('output.txt').bright.underline);
 // color chaining (order is not important)
 console.log('cp: copied %s > %s', ansi('input.txt').white.bg.black, ansi('output.txt').bg.black.white);
+// TODO: 14 more lines
