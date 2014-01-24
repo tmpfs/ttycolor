@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-// example of configuring short flag options
-var options = {always: '-c', never: '-C'};
+// example of configuring custom long option names
+var options = {always: '--colorize', never: '--colorize'};
 var ttycolor = require('../..')(options);
 ttycolor.defaults();
 console.info('an %s message', 'info');
