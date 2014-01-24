@@ -10,6 +10,7 @@ Terminal colors for [node][node] that respect whether the `stdout` and `stderr` 
 * Chainable attributes, foreground colors and background colors
 * Asynchronous write to any stream respecting `tty.isatty`
 * Default styles to keep the code clean
+* Argument parsing support (`always|never|auto`)
 * Comprehensive test suite
 
 <p align="center">

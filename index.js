@@ -168,7 +168,7 @@ var AnsiColor = function(value, key, parent){
   this.k = key;
   this.p = parent;
   this.a = null;
-};
+}
 
 /**
  *  Retrieve list of parent instances.
@@ -377,11 +377,11 @@ function parse(option, argv) {
 
 module.exports = function(parser, option) {
   option = option || OPTION;
-  parser = parser || parse;
-  if(!(typeof parser == 'function')) {
-    throw new Error('Argument parser must be a function');
+  parser = parser !== false ? (parser || parse) : false;
+  var mode = auto;
+  if(typeof parser == 'function') {
+    mode = parser(option);
   }
-  var mode = parser(option);
   initialize(mode);
   return module.exports;
 }
