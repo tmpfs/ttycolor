@@ -4,10 +4,13 @@ var tty = require('tty');
 var util = require('util');
 var WritableStream = require('stream').Writable;
 
+var always = 'always';
 var auto = 'auto';
 var never = 'never';
-var always = 'always';
-var modes = [auto, always, never];
+var modes = {};
+modes[always] = always;
+modes[auto] = auto;
+modes[never] = never;
 
 var COLOR_OPTION = '--color';
 var NO_COLOR_OPTION = '--no-color';
@@ -354,12 +357,12 @@ function debug() {
   return proxy.apply(null, args);
 }
 
-function parse(option, argv) {
+function parse(modes, option, argv) {
   option = option || {};
   argv = argv || process.argv.slice(2);
   option.always = option.always || COLOR_OPTION;
   option.never = option.never;
-  var i, arg, equals, value;
+  var i, arg, equals, value, keys = Object.keys(modes);
   // default *auto* with no arguments
   if(!argv.length) {
     return auto;
@@ -369,7 +372,7 @@ function parse(option, argv) {
       if(arg.indexOf(option.always) == 0) {
         value = argv[i + 1], equals = arg.indexOf('=');
         if(equals > -1) value = arg.substr(equals + 1);
-        if(value && (modes.indexOf(value) > -1)) {
+        if(value && (keys.indexOf(value) > -1)) {
           return value;
         }
         if(arg == option.always) return always;
@@ -386,7 +389,7 @@ module.exports = function(parser, option) {
   parser = parser !== false ? (parser || parse) : false;
   var mode = auto;
   if(typeof parser == 'function') {
-    mode = parser(option);
+    mode = parser(modes, option);
   }
   initialize(mode);
   return module.exports;
@@ -403,3 +406,4 @@ module.exports.stringify = stringify;
 module.exports.debug = debug;
 module.exports.defaults = defaults;
 module.exports.styles = styles;
+module.exports.modes = modes;

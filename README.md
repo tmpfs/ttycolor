@@ -147,6 +147,10 @@ console.log('log: a %s message', 'log');
 
 Map of foreground color codes.
 
+#### modes
+
+Map of highlighting modes.
+
 #### stringify(value, code, attr, tag)
 
 Low-level method for creating escaped string sequences.
@@ -210,6 +214,54 @@ Depending upon the terminal emulator some attributes may not be supported and wi
 * `underline`
 * `blink`
 * `reverse`
+
+### Arguments
+
+The module supports argument parsing with the modes `always`, `auto` and `never`. Argument parsing is built in to the module to prevent repeating the option parsing logic for multiple command line programs. All you need to do is document the option(s) in your programs help or documentation.
+
+Note that by default the module will use `auto` behaviour.
+
+#### Defaults
+
+The default argument parsing supports the following variations:
+
+`--color`: Sets the mode to `always`.
+`--no-color`: Sets the mode to `never`.
+`--color=always`: Sets the mode to `always`.
+`--color=auto`: Sets the mode to `auto` (default).
+`--color=never`: Sets the mode to `never`.
+`--color always`: Sets the mode to `always`.
+`--color auto`: Sets the mode to `auto` (default).
+`--color never`: Sets the mode to `never`.
+
+#### Custom
+
+If you want to implement a custom argument parser you can pass a function when initializing the module.
+
+```javascript
+function parser(modes, option, argv) {
+  // do argument parsing and return a mode (always|auto|never)
+  return modes.auto;
+}
+var ttycolor = require('ttycolor')(parser);
+```
+
+##### parser(modes, option, argv)
+
+* `modes`: A map of the available highlighting modes.
+* `option`: A map containing option keys.
+* `argv`: Optional arguments to parse, defaults to `process.argv`.
+
+The parser function should return a string representing one of the available
+modes.
+
+#### Disable
+
+You may wish to disable argument parsing, to do so pass `false` when initializing the module.
+
+```javascript
+var ttycolor = require('ttycolor')(false);
+```
 
 ## License
 
