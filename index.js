@@ -170,9 +170,11 @@ var AnsiColor = function(value, key, parent){
   this.a = null;
 };
 
-AnsiColor.prototype.start = function(tty) {
-  if(!tty) return '';
-  var list = [this], p = this.p, i;
+/**
+ *  Retrieve list of parent instances.
+ */
+AnsiColor.prototype.parents = function() {
+  var list = [this], p = this.p;
   while(p) {
     if(p) {
       list.push(p);
@@ -180,12 +182,22 @@ AnsiColor.prototype.start = function(tty) {
     p = p.p;
   }
   list.reverse();
+  return list;
+}
+
+/**
+ *  Retrieve a start escape sequence.
+ *
+ *  @param tty Whether the output stream is a terminal.
+ */
+AnsiColor.prototype.start = function(tty) {
+  if(!tty) return '';
+  var list = this.parents(), i, p;
   var o = ANSI_CLOSE;
   for(i = 0;i < list.length;i++){
     p = list[i];
     if(!p.k) continue;
     o += open(p.t[p.k], p.a);
-    //this.v = stringify(this.v, p.t[p.k], p.a, loose);
   }
   return o;
 }
@@ -198,14 +210,7 @@ AnsiColor.prototype.start = function(tty) {
  */
 AnsiColor.prototype.valueOf = function(tty, tag) {
   if(!tty) return this.v;
-  var list = [this], p = this.p, i;
-  while(p) {
-    if(p) {
-      list.push(p);
-    }
-    p = p.p;
-  }
-  list.reverse();
+  var list = this.parents(), i, p;
   for(i = 0;i < list.length;i++){
     p = list[i];
     if(!p.k) continue;
