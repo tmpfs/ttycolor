@@ -2,11 +2,11 @@
 
 var ttycolor = require('..')();
 var ansi = ttycolor.ansi, format = ttycolor.format;
-ttycolor.defaults();
-console.error();
-console.log();
-console.info();
-console.warn();
+//ttycolor.defaults();
+//console.error();
+//console.log();
+//console.info();
+//console.warn();
 
 //console.log('%s: %s > %s %d%',
   //'cp',
