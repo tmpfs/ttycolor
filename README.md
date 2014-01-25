@@ -39,7 +39,7 @@ npm test
 
 ## Examples
 
-There are various example and test programs in the [bin](bin) directory. Note that these executables are not included when the package is distributed via npm.
+There are various example and test programs in the [bin](https://github.com/freeformsystems/ttycolor/tree/master/bin) directory. Note that these executables are not included when the package is distributed via npm.
 
 ### Normal
 
@@ -298,7 +298,7 @@ To customise the styles when using `defaults()` create an object with the follow
 
 #### Example
 
-An example derived from the [defaults](bin/defaults) executable:
+An example derived from the [defaults](https://github.com/freeformsystems/ttycolor/blob/master/bin/defaults) executable:
 
 ```javascript
 #!/usr/bin/env node
