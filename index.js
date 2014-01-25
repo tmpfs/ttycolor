@@ -4,17 +4,9 @@ var tty = require('tty');
 var util = require('util');
 var WritableStream = require('stream').Writable;
 
-var always = 'always';
-var auto = 'auto';
-var never = 'never';
-var modes = {};
-modes[always] = always;
-modes[auto] = auto;
-modes[never] = never;
-
-var COLOR_OPTION = '--color';
-var NO_COLOR_OPTION = '--no-color';
-var OPTION = {always: COLOR_OPTION, never: NO_COLOR_OPTION};
+var parse = require('./lib/parse');
+//var always = parse.always;
+//var never = parse.never;
 
 var cache = {}, stash = {
   log: console.log,
@@ -261,8 +253,8 @@ Object.keys(definition.colors).forEach(function (k) {
 });
 
 function isatty(tty, mode) {
-  if(mode == always) return true;
-  if(mode == never) return false;
+  if(mode == parse.always) return true;
+  if(mode == parse.never) return false;
   return tty;
 }
 
@@ -272,11 +264,11 @@ function main(option, parser) {
     parser = option;
     option = null;
   }
-  option = option !== false ? (option || OPTION) : false;
+  option = option !== false ? (option || parse.option) : false;
   parser = option !== false ? (parser || parse) : false;
-  var mode = auto;
+  var mode = parse.auto;
   if(typeof parser == 'function') {
-    mode = parser(modes, option, process.argv.slice(2));
+    mode = parser(parse.modes, option, process.argv.slice(2));
   }
   initialize(mode);
   return module.exports;
@@ -374,70 +366,6 @@ function debug() {
   return proxy.apply(null, args);
 }
 
-function parse(modes, option, argv) {
-  option = option || {};
-  option.always = option.always || COLOR_OPTION;
-  option.never = option.never;
-  var i, arg, value, keys = Object.keys(modes), long = '--', short = '-';
-  var names = Object.keys(OPTION), types = {}, flags = {}, re = /^-[^-]/;
-  names.forEach(function(name) {
-    if(option[name]) {
-      types[name] = option[name].indexOf(long) == 0;
-      if(!types[name]) flags[name] = true;
-    }
-  });
-
-  // parse long options
-  function opt(argv, arg, index, key) {
-    var value = argv[index + 1], equals = arg.indexOf('=');
-    if(equals > -1) value = arg.substr(equals + 1);
-    if(value && (keys.indexOf(value) > -1)) {
-      return value;
-    }
-    if(arg == option[key]) return modes[key];
-    return false;
-  }
-
-  // parse flags
-  function flag(argv, arg) {
-    var value = false, arg = arg.replace(/^-/, ''), i, key;
-    for(i = 0;i < names.length;i++) {
-      key = names[i];
-      if(!flags[key]) continue;
-      var char = option[key].substr(1,1);
-      if(!char) continue; // misconfigured short option
-      if(arg.lastIndexOf(char) > -1) {
-        return key;
-      }
-    }
-    return value;
-  }
-
-  // default *auto* with no arguments
-  if(!argv.length) {
-    return auto;
-  }else{
-    for(i = 0;i < argv.length;i++) {
-      arg = argv[i];
-      // parse always as a long option
-      if(arg.indexOf(option.always) == 0 && types.always) {
-        if(value = opt(argv, arg, i, always)) {
-          return value;
-        }
-      //
-      }else if(re.test(arg)) {
-        if(value = flag(argv, arg)) {
-          return value;
-        }
-      // parse never option as a long option
-      }else if(option.never && arg == option.never && types.never) {
-        return never;
-      }
-    }
-  }
-  return auto;
-}
-
 module.exports = main;
 module.exports.console = stash;
 module.exports.cache = cache;
@@ -450,4 +378,4 @@ module.exports.stringify = stringify;
 module.exports.debug = debug;
 module.exports.defaults = defaults;
 module.exports.styles = styles;
-module.exports.modes = modes;
+module.exports.modes = parse.modes;
