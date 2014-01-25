@@ -101,6 +101,21 @@ function initialize(mode) {
   });
 }
 
+/**
+ *  Retrieve a formatted string.
+ */
+function format(format) {
+  var args = [].slice.call(arguments, 0);
+  var tty = true;
+  var test = (typeof format == 'function') ? format : null;
+  if(test) {
+    tty = test();
+    args.shift();
+  }
+  args.unshift({scope: util, method: util.format, tty: tty});
+  return proxy.apply(null, args);
+}
+
 function main(option, parser) {
   if(typeof option == 'function') {
     parser = option;
@@ -116,12 +131,6 @@ function main(option, parser) {
   return module.exports;
 }
 
-function debug() {
-  var args = [{scope: util, method: util.format, tty: true}];
-  args = args.concat([].slice.call(arguments, 0));
-  return proxy.apply(null, args);
-}
-
 module.exports = main;
 module.exports.console = stash;
 module.exports.cache = defaults.cache;
@@ -131,7 +140,7 @@ module.exports.attributes = definition.attrs;
 module.exports.foreground = definition.colors;
 module.exports.background = definition.bg.colors;
 module.exports.stringify = stringify;
-module.exports.debug = debug;
 module.exports.defaults = defaults;
 module.exports.styles = styles;
 module.exports.modes = parse.modes;
+module.exports.format = format;

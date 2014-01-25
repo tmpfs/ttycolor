@@ -1,0 +1,16 @@
+#!/usr/bin/env node
+
+/**
+ *  Example of implementing a custom tty test.
+ *
+ *  This is particularly useful for interactive cli
+ *  programs that may need to test the isTTY property
+ *  of multiple streams.
+ */
+var ttycolor = require('..')();
+var format = ttycolor.format, ansi = ttycolor.ansi;
+function isatty() {
+  return process.stdout.isTTY && process.stdin.isTTY;
+}
+var value = format(isatty, ansi('a %s message').bg.black, ansi('log').bright);
+console.log(value);

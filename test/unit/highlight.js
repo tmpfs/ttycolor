@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 
 var ttycolor = require('../..')();
-var ansi = ttycolor.ansi;
+var ansi = ttycolor.ansi, format = ttycolor.format;
 
 describe('ttycolor:', function() {
   var underline = ttycolor.attributes.underline;
@@ -20,7 +20,7 @@ describe('ttycolor:', function() {
   it('should handle format as ansi instance', function(done) {
     var input = 'value';
     var expected = '\u001b[1;37m' + input + '\u001b[0m';
-    var result = ttycolor.debug(ansi(input).white.bright);
+    var result = format(ansi(input).white.bright);
     expect(result).to.be.a('string').that.equals(expected);
     done();
   });
@@ -31,7 +31,7 @@ describe('ttycolor:', function() {
       v = def[k];
       expected = '\u001b[' + v + ';'
         + ttycolor.foreground.normal + 'm' + k + '\u001b[0m';
-      result = ttycolor.debug('%s', ansi(k)[k]);
+      result = format('%s', ansi(k)[k]);
       expect(result).to.be.a('string').that.equals(expected);
     });
     done();
@@ -43,35 +43,35 @@ describe('ttycolor:', function() {
       + ttycolor.foreground.normal + 'm' + '\u001b['
       + ttycolor.attributes.underline + ';'
       + ttycolor.foreground.normal + 'm' + input + '\u001b[0m' + '\u001b[0m';
-    var result = ttycolor.debug('%s', ansi(input).underline.bright);
+    var result = format('%s', ansi(input).underline.bright);
     expect(result).to.be.a('string').that.equals(expected);
     done();
   });
   it('should handle color/attribute chains', function(done) {
     var input = 'value';
     var expected = '\u001b[1;37m' + input + '\u001b[0m';
-    var result = ttycolor.debug('%s', ansi(input).white.bright);
+    var result = format('%s', ansi(input).white.bright);
     expect(result).to.be.a('string').that.equals(expected);
     done();
   });
   it('should handle attribute/color chains', function(done) {
     var input = 'value';
     var expected = '\u001b[1;37m' + input + '\u001b[0m';
-    var result = ttycolor.debug('%s', ansi(input).bright.white);
+    var result = format('%s', ansi(input).bright.white);
     expect(result).to.be.a('string').that.equals(expected);
     done();
   });
   it('should handle color/multiple attribute chains', function(done) {
     var input = 'value';
     var expected = '\u001b[4;31m\u001b[1;31m' + input + '\u001b[0m\u001b[0m';
-    var result = ttycolor.debug('%s', ansi(input).red.bright.underline);
+    var result = format('%s', ansi(input).red.bright.underline);
     expect(result).to.be.a('string').that.equals(expected);
     done();
   });
   it('should handle multiple attribute/color chains', function(done) {
     var input = 'value';
     var expected = '\u001b[4;31m\u001b[1;31m' + input + '\u001b[0m\u001b[0m';
-    var result = ttycolor.debug('%s', ansi(input).bright.underline.red);
+    var result = format('%s', ansi(input).bright.underline.red);
     expect(result).to.be.a('string').that.equals(expected);
     done();
   });
@@ -81,7 +81,7 @@ describe('ttycolor:', function() {
     keys.forEach(function(k) {
       v = def[k];
       expected = '\u001b[' + v + 'm' + k + '\u001b[0m';
-      result = ttycolor.debug('%s', ansi(k)[k]);
+      result = format('%s', ansi(k)[k]);
       expect(result).to.be.a('string').that.equals(expected);
     });
     done();
@@ -92,7 +92,7 @@ describe('ttycolor:', function() {
     keys.forEach(function(k) {
       v = def[k];
       expected = '\u001b[' + v + 'm' + k + '\u001b[0m';
-      result = ttycolor.debug('%s', ansi(k).bg[k]);
+      result = format('%s', ansi(k).bg[k]);
       expect(result).to.be.a('string').that.equals(expected);
     });
     done();
@@ -106,7 +106,7 @@ describe('ttycolor:', function() {
       bg = back[k];
       expected = '\u001b[' + bg + 'm' + '\u001b['
         + fg + 'm' + k + '\u001b[0m' + '\u001b[0m';
-      result = ttycolor.debug('%s', ansi(k)[k].bg[k]);
+      result = format('%s', ansi(k)[k].bg[k]);
       expect(result).to.be.a('string').that.equals(expected);
     });
     done();
@@ -120,7 +120,7 @@ describe('ttycolor:', function() {
       bg = back[k];
       expected = '\u001b[' + fg + 'm' + '\u001b['
         + bg + 'm' + k + '\u001b[0m' + '\u001b[0m';
-      result = ttycolor.debug('%s', ansi(k).bg[k][k]);
+      result = format('%s', ansi(k).bg[k][k]);
       expect(result).to.be.a('string').that.equals(expected);
     });
     done();
@@ -131,7 +131,7 @@ describe('ttycolor:', function() {
     var expected = '\u001b[' + underline + ';'
       + white + 'm\u001b[' + red + 'm'
       + input + '\u001b[0m\u001b[0m';
-    var result = ttycolor.debug('%s', chain);
+    var result = format('%s', chain);
     expect(result).to.be.a('string').that.equals(expected);
     done();
   });
@@ -141,7 +141,7 @@ describe('ttycolor:', function() {
     var expected = '\u001b[' + white
       + 'm\u001b[' + underline + ';' + red + 'm'
       + input + '\u001b[0m\u001b[0m';
-    var result = ttycolor.debug('%s', chain);
+    var result = format('%s', chain);
     expect(result).to.be.a('string').that.equals(expected);
     done();
   });
@@ -151,7 +151,7 @@ describe('ttycolor:', function() {
     var expected = '\u001b[' + red
       + 'm\u001b[' + underline + ';' + white + 'm'
       + input + '\u001b[0m\u001b[0m';
-    var result = ttycolor.debug('%s', chain);
+    var result = format('%s', chain);
     expect(result).to.be.a('string').that.equals(expected);
     done();
   });
@@ -161,7 +161,7 @@ describe('ttycolor:', function() {
     var expected = '\u001b[' + red
       + 'm\u001b[' + underline + ';' + white + 'm'
       + input + '\u001b[0m\u001b[0m';
-    var result = ttycolor.debug('%s', chain);
+    var result = format('%s', chain);
     expect(result).to.be.a('string').that.equals(expected);
     done();
   });
@@ -171,7 +171,7 @@ describe('ttycolor:', function() {
     var expected = '\u001b[' + underline + ';' + red
       + 'm\u001b[' + white + 'm'
       + input + '\u001b[0m\u001b[0m';
-    var result = ttycolor.debug('%s', chain);
+    var result = format('%s', chain);
     expect(result).to.be.a('string').that.equals(expected);
     done();
   });

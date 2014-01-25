@@ -132,10 +132,6 @@ Array of color names.
 
 Map referencing the original `console` methods.
 
-#### debug(format, ...)
-
-Utility to return an escaped string regardless of `isatty`, used for unit testing.
-
 #### defaults(styles)
 
 Configure default styles for the `console` functions.
@@ -155,6 +151,16 @@ console.log('log: a %s message', 'log');
 #### foreground
 
 Map of foreground color codes.
+
+#### format([test], format, ...)
+
+Return a formatted string with escape sequences. If the first argument is a function it should return a boolean indicating whether escape sequences should be used.
+
+* `test`: A function used to determine the `tty` boolean.
+* `format`: The format string.
+* `...`: The format replacement parameters.
+
+Note that there are no default styles for this method even if `defaults()` has been invoked.
 
 #### modes
 

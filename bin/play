@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 var ttycolor = require('..')();
-var ansi = ttycolor.ansi;
+var ansi = ttycolor.ansi, format = ttycolor.format;
 
 //console.log('%s: %s > %s %d%',
   //'cp',
@@ -11,9 +11,9 @@ var ansi = ttycolor.ansi;
 //process.exit(0);
 
 //var chain = ansi('value').bg.red.white;
-//console.log(ttycolor.debug('%s', chain));
+//console.log(format('%s', chain));
 //var chain = ansi('value').white.bg.red;
-//console.log(ttycolor.debug('%s', chain));
+//console.log(format('%s', chain));
 //process.exit(0);
 //
 //
@@ -23,12 +23,12 @@ var ansi = ttycolor.ansi;
 
 //console.log('cp: %s > %s %d% %j', 'input.txt', 'output.txt', 95, {chmod: 'g+w'});
 //
-//var seq = ttycolor.debug('a %s', ansi('test').red.bright.underline);
+//var seq = format('a %s', ansi('test').red.bright.underline);
 //var seq = '\u001b[4;31m\u001b[1;31mtest\u001b[0m\u001b[0m';
 //console.dir(seq);
 //console.log('%s', 'str', seq);
 
-var seq = ttycolor.debug('a %s', ansi('test').bright.underline.red);
+var seq = format('a %s', ansi('test').bright.underline.red);
 //console.dir(seq);
 console.log(seq);
 
@@ -37,18 +37,18 @@ console.log(seq);
 //console.log(chain);
 
 //var chain = ansi('value').bg.red.white.underline;
-//console.dir(ttycolor.debug('%s', chain));
-//console.log(ttycolor.debug('%s', chain));
+//console.dir(format('%s', chain));
+//console.log(format('%s', chain));
 //var chain = ansi('value').bg.red.underline.white;
-//console.dir(ttycolor.debug('%s', chain));
-//console.log(ttycolor.debug('%s', chain));
+//console.dir(format('%s', chain));
+//console.log(format('%s', chain));
 //var chain = ansi('value').underline.white.bg.red;
-//console.dir(ttycolor.debug('%s', chain));
-//console.log(ttycolor.debug('%s', chain));
+//console.dir(format('%s', chain));
+//console.log(format('%s', chain));
 //var chain = ansi('value').white.underline.bg.red;
-//console.dir(ttycolor.debug('%s', chain));
-//console.log(ttycolor.debug('%s', chain));
+//console.dir(format('%s', chain));
+//console.log(format('%s', chain));
 //var chain = ansi('value').white.bg.red.underline;
-//console.dir(ttycolor.debug('%s', chain));
-//console.log(ttycolor.debug('%s', chain));
+//console.dir(format('%s', chain));
+//console.log(format('%s', chain));
 //process.exit(0);
