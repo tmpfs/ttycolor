@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+
+var prompt = require('cli-prompt');
+var ttycolor = require('..')();
+var format = ttycolor.format, ansi = ttycolor.ansi, defaults = ttycolor.defaults;
+var revert = defaults();
+function isatty() {
+  return process.stdout.isTTY && process.stdin.isTTY;
+}
+var value = format(isatty, '%s %s ', ansi('input').bright, ansi('⚡').magenta);
+prompt(value, function(value) {
+  console.info('value %s %s', ansi('⚡').magenta, value);
+  process.exit(0);
+});
