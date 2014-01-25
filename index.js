@@ -1,24 +1,16 @@
 'use strict';
 
-//var tty = require('tty');
 var util = require('util');
-//var WritableStream = require('stream').Writable;
 
 var parse = require('./lib/parse');
 var stream = require('./lib/stream');
+var styles = require('./lib/styles');
 
 var cache = {}, stash = {
   log: console.log,
   info: console.info,
   error: console.error,
   warn: console.warn
-}
-
-var styles = {
-  log: {format: ['normal'], parameters: ['normal', 'bright']},
-  info: {format: ['cyan'], parameters: ['cyan', 'bright']},
-  warn: {format: ['magenta'], parameters: ['magenta', 'bright']},
-  error: {format: ['red'], parameters: ['red', 'bright']}
 }
 
 var definition = {
@@ -275,14 +267,7 @@ function main(option, parser) {
 
 function initialize(mode) {
 
-  /**
-   *  Write a writable stream.
-   *
-   *  @param options.stream A writable stream.
-   *  @param options.callback A callback to invoke once the data is written.
-   *  @param format The format string.
-   *  @param ...  The format string arguments.
-   */
+  // stream write
   main.write = function(options) {
     options.proxy = proxy;
     options.mode = mode;
