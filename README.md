@@ -6,11 +6,12 @@ Terminal colors for [node][node] that respect whether the `stdout` and `stderr` 
 ## Features
 
 * Extends the familiar `console` functions
-* Always respects whether the stream is a tty
+* Always respects whether the stream is a `tty`
 * Chainable attributes, foreground colors and background colors
 * Asynchronous write to any stream respecting `tty.isatty`
 * Default styles to keep the code clean
 * Argument parsing support (`always|never|auto`)
+* Stringify with a custom `tty` test using [format](#formattest-format-)
 * Comprehensive test suite
 
 <p align="center">
