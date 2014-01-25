@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
-var ttycolor = require('..');
-var format = ttycolor.format;
-var value = format(true, "abc");
+var format = require('..').format;
+function isatty() {
+  return process.stdout.isTTY && process.stdin.isTTY;
+}
+var value = format(isatty, "abc");
 console.dir(value);
