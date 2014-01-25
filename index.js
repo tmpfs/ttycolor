@@ -77,21 +77,6 @@ function isatty(tty, mode) {
   return tty;
 }
 
-function main(option, parser) {
-  if(typeof option == 'function') {
-    parser = option;
-    option = null;
-  }
-  option = option !== false ? (option || parse.option) : false;
-  parser = option !== false ? (parser || parse) : false;
-  var mode = parse.auto;
-  if(typeof parser == 'function') {
-    mode = parser(parse.modes, option, process.argv.slice(2));
-  }
-  initialize(mode);
-  return module.exports;
-}
-
 function initialize(mode) {
 
   // stream write
@@ -114,6 +99,21 @@ function initialize(mode) {
       proxy.apply(null, args);
     }
   });
+}
+
+function main(option, parser) {
+  if(typeof option == 'function') {
+    parser = option;
+    option = null;
+  }
+  option = option !== false ? (option || parse.option) : false;
+  parser = option !== false ? (parser || parse) : false;
+  var mode = parse.auto;
+  if(typeof parser == 'function') {
+    mode = parser(parse.modes, option, process.argv.slice(2));
+  }
+  initialize(mode);
+  return module.exports;
 }
 
 function debug() {
