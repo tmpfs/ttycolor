@@ -1,12 +1,11 @@
 'use strict';
 
-var tty = require('tty');
+//var tty = require('tty');
 var util = require('util');
-var WritableStream = require('stream').Writable;
+//var WritableStream = require('stream').Writable;
 
 var parse = require('./lib/parse');
-//var always = parse.always;
-//var never = parse.never;
+var stream = require('./lib/stream');
 
 var cache = {}, stash = {
   log: console.log,
@@ -285,25 +284,10 @@ function initialize(mode) {
    *  @param ...  The format string arguments.
    */
   main.write = function(options) {
-    var stream = options.stream;
-    if(stream instanceof WritableStream) {
-      if(stream.fd == null) {
-        throw new Error('Cannot write to stream, file descriptor not open');
-      }
-      var args = [
-        {
-          scope: util, method: util.format,
-          tty: isatty(tty.isatty(stream.fd), mode)
-        }
-      ];
-      args = args.concat([].slice.call(arguments, 1));
-      var value = proxy.apply(null, args);
-      stream.write(value, function() {
-        if(typeof options.callback == 'function') options.callback(value);
-      });
-    }else{
-      throw new Error('Stream option must be writable');
-    }
+    options.proxy = proxy;
+    options.mode = mode;
+    options.isatty = isatty;
+    stream.apply(null, arguments);
   }
 
   // console functions
