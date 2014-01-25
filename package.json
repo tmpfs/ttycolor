@@ -20,8 +20,9 @@
   }],
   "dependencies": {},
   "devDependencies": {
+    "cli-prompt": ">= 0.3.2",
     "mocha": ">= 1.17.0",
-    "chai": "1.8.1"
+    "chai": ">= 1.8.1"
   },
   "engine": [ "node >= 0.10.21" ],
   "scripts": {
