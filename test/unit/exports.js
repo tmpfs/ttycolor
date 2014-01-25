@@ -8,7 +8,7 @@ describe('ttycolor:', function() {
     expect(ttycolor.background).to.be.an('object');
     expect(ttycolor.colors).to.be.an('array');
     expect(ttycolor.console).to.be.an('object');
-    expect(ttycolor.debug).to.be.a('function');
+    expect(ttycolor.format).to.be.a('function');
     expect(ttycolor.foreground).to.be.an('object');
     expect(ttycolor.stringify).to.be.a('function');
     done();

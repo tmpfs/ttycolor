@@ -101,6 +101,21 @@ function initialize(mode) {
   });
 }
 
+/**
+ *  Retrieve a formatted string.
+ */
+function format(format) {
+  var args = [].slice.call(arguments, 0);
+  var tty = true;
+  var test = (typeof format == 'function') ? format : null;
+  if(test) {
+    tty = test();
+    args.shift();
+  }
+  args.unshift({scope: util, method: util.format, tty: tty});
+  return proxy.apply(null, args);
+}
+
 function main(option, parser) {
   if(typeof option == 'function') {
     parser = option;
@@ -135,3 +150,4 @@ module.exports.debug = debug;
 module.exports.defaults = defaults;
 module.exports.styles = styles;
 module.exports.modes = parse.modes;
+module.exports.format = format;
