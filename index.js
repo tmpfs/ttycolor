@@ -427,7 +427,6 @@ function parse(modes, option, argv) {
       //
       }else if(re.test(arg)) {
         if(value = flag(argv, arg)) {
-          console.log('flag returned: ' + value);
           return value;
         }
       // parse never option as a long option
