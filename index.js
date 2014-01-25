@@ -2,13 +2,14 @@
 
 var util = require('util');
 
-var AnsiColor = require('./lib/color');
-var definition = AnsiColor.codes, stringify = AnsiColor.stringify;
+var ansi = require('./lib/ansi'), AnsiColor = ansi.color;
+var definition = ansi.codes, stringify = ansi.stringify;
+var defaults = require('./lib/defaults');
 var parse = require('./lib/parse');
 var stream = require('./lib/stream');
-var styles = require('./lib/styles');
+var styles = defaults.styles;
 
-var cache = {}, stash = {
+var stash = {
   log: console.log,
   info: console.info,
   error: console.error,
@@ -76,7 +77,6 @@ function isatty(tty, mode) {
   return tty;
 }
 
-
 function main(option, parser) {
   if(typeof option == 'function') {
     parser = option;
@@ -116,46 +116,6 @@ function initialize(mode) {
   });
 }
 
-function ansi(v) {
-  return new AnsiColor(v);
-}
-
-function defaults(custom) {
-  var props = custom || styles;
-  var keys = Object.keys(styles);
-  function convert(arg, names) {
-    var prop;
-    names = Array.isArray(names) ? names : [];
-    names = names.slice(0);
-    if(!(arg instanceof AnsiColor) && names.length) {
-      arg = ansi(arg);
-      while(prop = names.shift()) {
-        arg = arg[prop];
-      }
-    }
-    return arg;
-  }
-  keys.forEach(function(name) {
-    cache[name] = console[name];
-    console[name] = function() {
-      var format = arguments[0];
-      format = convert(format, props[name].format);
-      var args = [].slice.call(arguments, 1), i;
-      for(i = 0;i < args.length;i++) {
-        args[i] = convert(args[i], props[name].parameters);
-      }
-      args.unshift(format);
-      return cache[name].apply(null, args);
-    }
-  });
-  function revert() {
-    keys.forEach(function(name) {
-      console[name] = cache[name];
-    });
-  }
-  return revert;
-}
-
 function debug() {
   var args = [{scope: util, method: util.format, tty: true}];
   args = args.concat([].slice.call(arguments, 0));
@@ -164,7 +124,7 @@ function debug() {
 
 module.exports = main;
 module.exports.console = stash;
-module.exports.cache = cache;
+module.exports.cache = defaults.cache;
 module.exports.ansi = ansi;
 module.exports.colors = Object.keys(definition.colors);
 module.exports.attributes = definition.attrs;
