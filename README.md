@@ -110,18 +110,6 @@ Print an error message with escape sequence support, output is to `stderr`.
 * `format`: The format string.
 * `...`: The format replacement parameters.
 
-#### console.write(options, format, ...)
-
-Asynchronously write to an arbitrary writable stream with escape sequence support if the stream is a tty as reported by `tty.isatty`.
-
-* `options`: The write options.
-* `format`: The format string.
-* `...`: The format replacement parameters.
-
-The `options` object should contain the properties `stream` and `callback`. The `callback` is invoked when the write operation has completed and is passed the value written to the stream.
-
-The `stream` must be open and have an associated `fd` or this method will throw an error.
-
 ### Module
 
 #### ansi(value)
@@ -180,6 +168,19 @@ Low-level method for creating escaped string sequences.
 * `code`: The color code.
 * `attr`: Optional attribute code.
 * `tag`: Optional close tag.
+
+#### write(options, format, ...)
+
+Asynchronously write to an arbitrary writable stream with escape sequence support if the stream is a tty as reported by `tty.isatty`.
+
+* `options`: The write options.
+* `format`: The format string.
+* `...`: The format replacement parameters.
+
+The `options` object should contain the properties `stream` and `callback`. The `callback` is invoked when the write operation has completed and is passed the value written to the stream.
+
+The `stream` must be open and have an associated `fd` or this method will throw an error.
+
 
 #### styles
 

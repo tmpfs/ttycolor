@@ -266,7 +266,24 @@ function isatty(tty, mode) {
   return tty;
 }
 
+
+function main(option, parser) {
+  if(typeof option == 'function') {
+    parser = option;
+    option = null;
+  }
+  option = option !== false ? (option || OPTION) : false;
+  parser = option !== false ? (parser || parse) : false;
+  var mode = auto;
+  if(typeof parser == 'function') {
+    mode = parser(modes, option, process.argv.slice(2));
+  }
+  initialize(mode);
+  return module.exports;
+}
+
 function initialize(mode) {
+
   /**
    *  Write a writable stream.
    *
@@ -275,7 +292,7 @@ function initialize(mode) {
    *  @param format The format string.
    *  @param ...  The format string arguments.
    */
-  console.write = function(options) {
+  main.write = function(options) {
     var stream = options.stream;
     if(stream instanceof WritableStream) {
       if(stream.fd == null) {
@@ -422,21 +439,7 @@ function parse(modes, option, argv) {
   return auto;
 }
 
-module.exports = function(option, parser) {
-  if(typeof option == 'function') {
-    parser = option;
-    option = null;
-  }
-  option = option !== false ? (option || OPTION) : false;
-  parser = option !== false ? (parser || parse) : false;
-  var mode = auto;
-  if(typeof parser == 'function') {
-    mode = parser(modes, option, process.argv.slice(2));
-  }
-  initialize(mode);
-  return module.exports;
-}
-
+module.exports = main;
 module.exports.console = stash;
 module.exports.cache = cache;
 module.exports.ansi = ansi;

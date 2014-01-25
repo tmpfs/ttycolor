@@ -24,6 +24,7 @@ describe('ttycolor:', function() {
       file.end();
       done();
     }
-    console.write({stream: file, callback: cb}, '%s', ansi(input).white.underline);
+    ttycolor.write(
+      {stream: file, callback: cb}, '%s', ansi(input).white.underline);
   });
 })
