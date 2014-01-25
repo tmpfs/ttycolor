@@ -160,6 +160,8 @@ Return a formatted string with escape sequences. If the first argument is a func
 * `format`: The format string.
 * `...`: The format replacement parameters.
 
+Note that there are no default styles for this method even if `defaults()` has been invoked.
+
 #### modes
 
 Map of highlighting modes.
