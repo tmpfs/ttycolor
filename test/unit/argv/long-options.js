@@ -2,7 +2,7 @@ var path = require('path');
 var util = require('util');
 var run = require('../../util/run');
 var exe = path.normalize(
-  path.join(__dirname, '..', '..', '..', 'bin', 'argv', 'custom-long-options'));
+  path.join(__dirname, '..', '..', '..', 'bin', 'argv', 'long'));
 var log = path.normalize(
   path.join(__dirname, '..', '..', '..', 'log', 'argv.log'));
 
