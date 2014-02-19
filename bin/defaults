@@ -22,5 +22,3 @@ keys.forEach(function(method) {
   console[method]('[%s] %s', ansi(method).bright[styles[method].format],
     ansi(method).bright);
 });
-
-console.info('arr %s %j', 'info', [1,2,3]);

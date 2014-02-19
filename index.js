@@ -20,11 +20,11 @@ var stash = {
 /**
  *  Escapes replacement values.
  *
+ *  @param options Proxy configuration options.
  *  @param options.tty A boolean indicating whether the output is a tty.
  *  @param options.method A method to proxy to.
  *  @param options.stream A writable stream to write to.
  *
- *  @param options Write options.
  *  @param format The format string.
  *  @param ... The format string arguments.
  */
@@ -35,7 +35,6 @@ function proxy(options, format) {
   replacing = (typeof format == 'string')
     && re.test(format) && arguments.length > 2;
   replacements = [].slice.call(arguments, 2);
-  //console.dir(replacements);
   if(format instanceof AnsiColor) {
     replacing = true;
     if(!replacements.length) {
@@ -46,13 +45,13 @@ function proxy(options, format) {
     replacements.unshift(format);
     return method.apply(console, replacements);
   }
-  //console.dir(format);
-  var fmt = format;
-  if(fmt instanceof AnsiColor) {
-    fmt = fmt.v;
-  }
-  matches = (fmt && (typeof fmt.match == 'function')) ?
-    fmt.match(re) : [];
+  //var fmt = format;
+  //if(fmt instanceof AnsiColor) {
+    //console.log('FORMAT IS ANSI');
+    //fmt = fmt.v;
+  //}
+  matches = (format && (typeof format.match == 'function')) ?
+    format.match(re) : [];
   if(format instanceof AnsiColor) {
     if(!tty) {
       format = format.v;
@@ -61,17 +60,13 @@ function proxy(options, format) {
       format = format.valueOf(tty);
     }
   }
-  //console.dir(matches);
   for(i = 0;i < replacements.length;i++) {
     arg = replacements[i];
     if(arg instanceof AnsiColor) {
       if(tty) {
         // we will coerce to strings
-        //console.dir(format);
         format = format.replace(/%[jd]/, '%s');
-        //console.dir(format);
         if(matches[i] == '%j') {
-          //console.dir(arg.v);
           arg.v = JSON.stringify(arg.v);
         }
       }
@@ -125,6 +120,7 @@ function format(format) {
     args.shift();
   }
   args.unshift({scope: util, method: util.format, tty: tty});
+  //console.dir(args);
   return proxy.apply(null, args);
 }
 

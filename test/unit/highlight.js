@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
 
-var ttycolor = require('../..')();
+var ttycolor = require('../..');
 var ansi = ttycolor.ansi, format = ttycolor.format;
 
 describe('ttycolor:', function() {

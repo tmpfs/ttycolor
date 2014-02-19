@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
 
-var format = require('../..')().format;
+var format = require('../..').format;
 
 describe('ttycolor:', function() {
   it('should return empty string with no arguments', function(done) {

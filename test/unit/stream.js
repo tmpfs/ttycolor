@@ -3,7 +3,7 @@ var path = require('path');
 var util = require('util');
 var expect = require('chai').expect;
 
-var ttycolor = require('../..')();
+var ttycolor = require('../..');
 var ansi = ttycolor.ansi;
 var log = path.join(__dirname, '..', '..', 'log', 'stream.log');
 var file = null;

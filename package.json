@@ -29,7 +29,7 @@
   "scripts": {
     "clean": "rm log/*.log",
     "exe": "_mocha -u bdd --recursive --reporter list -A test/exe/",
-    "test": "istanbul cover _mocha -- -u bdd --recursive --reporter list -A test/unit/"
+    "test": "istanbul cover _mocha -- -u bdd --recursive --reporter list --bail -A test/unit/"
   },
   "config" : {}
 }
