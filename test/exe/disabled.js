@@ -1,12 +1,12 @@
 var path = require('path');
 var util = require('util');
-var run = require('../../util/run');
+var run = require('../util/run');
 var exe = path.normalize(
-  path.join(__dirname, '..', '..', '..', 'bin', 'colors'));
+  path.join(__dirname, '..', '..', 'bin', 'argv', 'disabled'));
 var log = path.normalize(
-  path.join(__dirname, '..', '..', '..', 'log', 'argv.log'));
+  path.join(__dirname, '..', '..', 'log', 'argv.log'));
 
-describe('argv:', function() {
+describe('argv disabled:', function() {
   it('should write to file with no escape sequences (default: auto)',
     function(done) {
       var args = [];
@@ -55,28 +55,28 @@ describe('argv:', function() {
       run(cmd, false, done);
     }
   );
-  it('should write to file with escape sequences (--color)',
+  it('should write to file with no escape sequences (--color)',
     function(done) {
       var args = ['--color'];
       var cmd = util.format('%s > %s 2>&1',
         exe + ' ' + args.join(' '), log);
-      run(cmd, true, done);
+      run(cmd, false, done);
     }
   );
-  it('should write to file with escape sequences (--color=always)',
+  it('should write to file with no escape sequences (--color=always)',
     function(done) {
       var args = ['--color=always'];
       var cmd = util.format('%s > %s 2>&1',
         exe + ' ' + args.join(' '), log);
-      run(cmd, true, done);
+      run(cmd, false, done);
     }
   );
-  it('should write to file with escape sequences (--color always)',
+  it('should write to file with no escape sequences (--color always)',
     function(done) {
       var args = ['--color', 'always'];
       var cmd = util.format('%s > %s 2>&1',
         exe + ' ' + args.join(' '), log);
-      run(cmd, true, done);
+      run(cmd, false, done);
     }
   );
 })

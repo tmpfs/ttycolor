@@ -28,6 +28,7 @@
   "engine": [ "node >= 0.10.21" ],
   "scripts": {
     "clean": "rm log/*.log",
+    "exe": "_mocha -u bdd --recursive --reporter list -A test/exe/",
     "test": "istanbul cover _mocha -- -u bdd --recursive --reporter list -A test/unit/"
   },
   "config" : {}

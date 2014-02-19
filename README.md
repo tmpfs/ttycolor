@@ -38,6 +38,12 @@ npm install ttycolor
 npm test
 ```
 
+Example executables are not included in the default test suite as they do not contribute to the code coverage, however you can run tests against them with:
+
+```
+npm run exe
+```
+
 ## Examples
 
 There are various example and test programs in the [bin](https://github.com/freeformsystems/ttycolor/tree/master/bin) directory. Note that these executables are not included when the package is distributed via npm.

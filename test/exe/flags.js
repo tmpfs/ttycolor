@@ -1,10 +1,10 @@
 var path = require('path');
 var util = require('util');
-var run = require('../../util/run');
+var run = require('../util/run');
 var exe = path.normalize(
-  path.join(__dirname, '..', '..', '..', 'bin', 'argv', 'flags'));
+  path.join(__dirname, '..', '..', 'bin', 'argv', 'flags'));
 var log = path.normalize(
-  path.join(__dirname, '..', '..', '..', 'log', 'argv.log'));
+  path.join(__dirname, '..', '..', 'log', 'argv.log'));
 
 describe('argv flags:', function() {
   it('should write to file with no escape sequences (default: auto)',
