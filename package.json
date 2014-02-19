@@ -18,7 +18,9 @@
     "type": "MIT",
     "url": "https://github.com/freeformsystems/ttycolor/blob/master/LICENSE"
   }],
-  "dependencies": {},
+  "dependencies": {
+    "circular": "~1.0.1"
+  },
   "devDependencies": {
     "cli-prompt": "~0.3.2",
     "mocha": "~1.17.0",
