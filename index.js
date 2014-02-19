@@ -7,15 +7,9 @@ var definition = ansi.codes, stringify = ansi.stringify;
 var defaults = require('./lib/defaults');
 var parse = require('./lib/parse');
 var stream = require('./lib/stream');
+var stash = require('./lib/stash');
 var initialized = false;
 var styles = defaults.styles;
-
-var stash = {
-  log: console.log,
-  info: console.info,
-  error: console.error,
-  warn: console.warn
-}
 
 /**
  *  Escapes replacement values.
@@ -95,7 +89,7 @@ function initialize(mode, force) {
   }
 
   // console functions
-  Object.keys(stash).forEach(function (k) {
+  stash.keys.forEach(function (k) {
     var stream = (k == 'info' || k == 'log') ?
       process.stdout : process.stderr;
     console[k] = function(format) {
@@ -175,6 +169,7 @@ function main(option, parser, force) {
 
 module.exports = main;
 module.exports.console = stash;
+module.exports.keys = stash.keys;
 module.exports.cache = defaults.cache;
 module.exports.ansi = ansi;
 module.exports.colors = Object.keys(definition.colors);

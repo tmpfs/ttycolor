@@ -39,11 +39,59 @@ describe('ttycolor:', function() {
     revert();
     done();
   });
-
-  it('should write using console.error', function(done) {
+  it('should write using console.error (zero arguments)', function(done) {
     var msg = 'mock %s message';
     var param = 'error';
     var revert = ttycolor().defaults(null, null, null, true);
+    process.stderr.write = function(){}
+    error = console.error;
+    console.error = function() {
+      expect(arguments.length).to.eql(0);
+      error.apply(null, arguments);
+      revert();
+      done();
+    }
+    console.error();
+  });
+  it('should write message using console.error', function(done) {
+    var msg = 'mock %s message';
+    var param = 'error';
+    var revert = ttycolor().defaults(null, null, null, true);
+    process.stderr.write = function(){}
+    error = console.error;
+    console.error = function() {
+      expect(arguments[0]).to.eql(msg);
+      expect(arguments[1]).to.eql(param);
+      error(msg, param);
+      revert();
+      done();
+    }
+    console.error(msg, param);
+  });
+  it('should handle missing styles', function(done) {
+    var styles = JSON.parse(JSON.stringify(ttycolor.styles));
+    delete styles.error;
+    var msg = 'mock %s message';
+    var param = 'error';
+    var revert = ttycolor().defaults(styles, null, null, true);
+    process.stderr.write = function(){}
+    error = console.error;
+    console.error = function() {
+      expect(arguments[0]).to.eql(msg);
+      expect(arguments[1]).to.eql(param);
+      error(msg, param);
+      revert();
+      done();
+    }
+    console.error(msg, param);
+  });
+  it('should handle invalid style property', function(done) {
+    var styles = JSON.parse(JSON.stringify(ttycolor.styles));
+    styles.error.format = null;
+    styles.error.parameters = null;
+    var msg = 'mock %s message';
+    var param = 'error';
+    var revert = ttycolor().defaults(styles, null, null, true);
     process.stderr.write = function(){}
     error = console.error;
     console.error = function() {
