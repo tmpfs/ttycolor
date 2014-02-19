@@ -175,4 +175,17 @@ describe('ttycolor:', function() {
     expect(result).to.be.a('string').that.equals(expected);
     done();
   });
+  it('should get empty start tag without tty', function(done) {
+    var color = ansi('msg');
+    expect(color.start()).to.eql('');
+    done();
+  });
+  it('should ignore parent without key', function(done) {
+    var expected = '\u001b[0m\u001b[40m';
+    var color = ansi('msg').bright.red.bg.black;
+    color.p.k = null;
+    var start = color.start(true);
+    expect(start).to.eql(expected);
+    done();
+  });
 })

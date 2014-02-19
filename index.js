@@ -39,11 +39,6 @@ function proxy(options, format) {
     replacements.unshift(format);
     return method.apply(console, replacements);
   }
-  //var fmt = format;
-  //if(fmt instanceof AnsiColor) {
-    //console.log('FORMAT IS ANSI');
-    //fmt = fmt.v;
-  //}
   matches = (format && (typeof format.match == 'function')) ?
     format.match(re) : [];
   if(format instanceof AnsiColor) {

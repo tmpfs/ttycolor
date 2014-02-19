@@ -13,6 +13,7 @@ Terminal colors for [node][node] that respect whether the `stdout` and `stderr` 
 * Argument parsing support (`always|never|auto`)
 * Stringify with a custom `tty` test using [format](#formattest-format-)
 * Comprehensive test suite
+* 100% code coverage
 
 <p align="center">
   <img src="https://raw.github.com/freeformsystems/ttycolor/master/img/colors.png" />
