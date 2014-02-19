@@ -11,6 +11,8 @@ describe('ttycolor:', function() {
     expect(ttycolor.format).to.be.a('function');
     expect(ttycolor.foreground).to.be.an('object');
     expect(ttycolor.stringify).to.be.a('function');
+    expect(ttycolor.keys).to.be.an('array');
+    expect(ttycolor.parser).to.be.a('function');
     done();
   });
 })

@@ -27,6 +27,18 @@ describe('ttycolor:', function() {
     expect(fn).throws(TypeError);
     done();
   });
+  it('should write to stream (no callback)', function(done) {
+    var expected = 'mock stream message';
+    process.stderr.write = function(value, callback) {
+      callback();
+    }
+    ttycolor();
+    var opts = {
+      stream: process.stderr
+    }
+    ttycolor.write(opts, 'mock %s message', 'stream');
+    done();
+  });
   it('should write to stream (stderr)', function(done) {
     var expected = 'mock stream message';
     process.stderr.write = function(value, callback) {

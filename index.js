@@ -182,4 +182,5 @@ module.exports.stringify = stringify;
 module.exports.defaults = defs;
 module.exports.styles = styles;
 module.exports.modes = parse.modes;
+module.exports.parser = parse;
 module.exports.format = format;
