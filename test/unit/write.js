@@ -1,5 +1,5 @@
 var expect = require('chai').expect;
-var ttycolor = require('../..');
+var ttycolor = require('../..'), ansi = ttycolor.ansi;
 
 describe('ttycolor:', function() {
   var method;
@@ -41,5 +41,39 @@ describe('ttycolor:', function() {
       }
     }
     ttycolor.write(opts, 'mock %s message', 'stream');
+  });
+  it('should write to stream (--color)', function(done) {
+    var expected = 'mock \u001b[1;39mstream\u001b[0m message';
+    process.stderr.write = function(value, callback) {
+      callback();
+    }
+    process.argv.push('--color');
+    ttycolor(null, null, true);
+    var opts = {
+      stream: process.stderr,
+      callback: function(value) {
+        expect(value).to.eql(expected);
+        process.argv.pop();
+        done();
+      }
+    }
+    ttycolor.write(opts, 'mock %s message', ansi('stream').bright);
+  });
+  it('should write to stream (--no-color)', function(done) {
+    var expected = 'mock stream message';
+    process.stderr.write = function(value, callback) {
+      callback();
+    }
+    process.argv.push('--no-color');
+    ttycolor(null, null, true);
+    var opts = {
+      stream: process.stderr,
+      callback: function(value) {
+        expect(value).to.eql(expected);
+        process.argv.pop();
+        done();
+      }
+    }
+    ttycolor.write(opts, 'mock %s message', ansi('stream').bright);
   });
 })

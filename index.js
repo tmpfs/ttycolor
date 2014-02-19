@@ -85,7 +85,9 @@ function initialize(mode, force) {
     options.proxy = proxy;
     options.mode = mode;
     options.isatty = isatty;
-    stream.apply(null, arguments);
+    var args = [].slice.call(arguments, 1);
+    args.unshift(options);
+    stream.apply(null, args);
   }
 
   // console functions
