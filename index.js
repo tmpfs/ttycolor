@@ -83,8 +83,9 @@ function isatty(tty, mode) {
   return tty;
 }
 
-function initialize(mode) {
-  if(initialized) return false;
+function initialize(mode, force) {
+  if(initialized && !force) return false;
+
   // stream write
   main.write = function(options) {
     options.proxy = proxy;
@@ -139,10 +140,11 @@ function format(format) {
  *  @param styles Custom styles to pass to defaults().
  *  @param option An option to pass to main().
  *  @param parser A parser to pass to main().
+ *  @param force Force initialization.
  */
-function defs(styles, option, parser) {
-  if(!initialized) {
-    main(option, parser);
+function defs(styles, option, parser, force) {
+  if(!initialized || force) {
+    main(option, parser, force);
   }
   return defaults(styles);
 }
@@ -154,8 +156,9 @@ function defs(styles, option, parser) {
  *  @param option The option name to use when parsing
  *  command line argments.
  *  @param parser The command line parser implementation.
+ *  @param force Force initialization.
  */
-function main(option, parser) {
+function main(option, parser, force) {
   if(typeof option == 'function') {
     parser = option;
     option = null;
@@ -166,7 +169,7 @@ function main(option, parser) {
   if(typeof parser == 'function') {
     mode = parser(parse.modes, option, process.argv.slice(2));
   }
-  initialize(mode);
+  initialize(mode, force);
   return module.exports;
 }
 

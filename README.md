@@ -194,6 +194,12 @@ The `options` object should contain the properties `stream` and `callback`. The 
 
 The `stream` must be open and have an associated `fd` or this method will throw an error.
 
+Note this method is only available after the module main method has been initialized so that the stream write method can respect commmand line arguments. For example:
+
+```javascript
+var ttycolor = require('ttycolor')();
+// ttycolor.write(...);
+```
 
 #### styles
 
