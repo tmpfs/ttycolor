@@ -46,8 +46,13 @@ function proxy(options, format) {
     replacements.unshift(format);
     return method.apply(console, replacements);
   }
-  matches = (format && (typeof format.match == 'function')) ?
-    format.match(re) : [];
+  //console.dir(format);
+  var fmt = format;
+  if(fmt instanceof AnsiColor) {
+    fmt = fmt.v;
+  }
+  matches = (fmt && (typeof fmt.match == 'function')) ?
+    fmt.match(re) : [];
   if(format instanceof AnsiColor) {
     if(!tty) {
       format = format.v;
@@ -56,13 +61,17 @@ function proxy(options, format) {
       format = format.valueOf(tty);
     }
   }
+  //console.dir(matches);
   for(i = 0;i < replacements.length;i++) {
     arg = replacements[i];
     if(arg instanceof AnsiColor) {
       if(tty) {
         // we will coerce to strings
-        format = format.replace(/%[jds]/g, '%s');
+        //console.dir(format);
+        format = format.replace(/%[jd]/, '%s');
+        //console.dir(format);
         if(matches[i] == '%j') {
+          //console.dir(arg.v);
           arg.v = JSON.stringify(arg.v);
         }
       }

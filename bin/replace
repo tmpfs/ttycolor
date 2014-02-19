@@ -5,9 +5,20 @@
  *
  *  ./bin/replace
  */
-require('..').defaults();
-console.info('str %s', 'info');
-console.info('int %d', 128);
-console.info('arr %j', [1,2,3]);
-console.info('arr %s %j %d', 'info', [1,2,3], 128);
-console.info('progress %d%', 50);
+var revert = require('..').defaults();
+var ansi = require('..').ansi;
+function replace() {
+  console.info('str %s', 'info');
+  console.info('int %d', 128);
+  console.info('arr %j', [1,2,3]);
+  console.info('arr %s %j %d', 'info', [1,2,3], 128);
+  console.info('progress %d%', 50);
+}
+replace();
+revert();
+replace();
+console.log(
+  'str: %s, int: %d, arr: %j, obj: %j, str: %s, int: %d, arr: %j, obj: %j',
+  ansi('str').bright, ansi(128).bright, ansi([1,2,3]).bright,
+  ansi({foo: 'bar'}).bright,
+  'str', 128, [1,2,3], {foo: 'bar'});
