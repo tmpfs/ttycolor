@@ -7,6 +7,7 @@ var definition = ansi.codes, stringify = ansi.stringify;
 var defaults = require('./lib/defaults');
 var parse = require('./lib/parse');
 var stream = require('./lib/stream');
+var initialized = false;
 var styles = defaults.styles;
 
 var stash = {
@@ -79,7 +80,7 @@ function isatty(tty, mode) {
 }
 
 function initialize(mode) {
-
+  if(initialized) return false;
   // stream write
   main.write = function(options) {
     options.proxy = proxy;
@@ -100,6 +101,7 @@ function initialize(mode) {
       proxy.apply(null, args);
     }
   });
+  initialized = true;
 }
 
 /**
@@ -117,6 +119,37 @@ function format(format) {
   return proxy.apply(null, args);
 }
 
+/**
+ *  Proxies to defaults() lazily initializing.
+ *
+ *  This implies initialization when using default styles
+ *  such that:
+ *
+ *  require('ttycolor').defaults();
+ *
+ *  Is equivalent to:
+ *
+ *  require('ttycolor')().defaults();
+ *
+ *  @param styles Custom styles to pass to defaults().
+ *  @param option An option to pass to main().
+ *  @param parser A parser to pass to main().
+ */
+function defs(styles, option, parser) {
+  if(!initialized) {
+    main(option, parser);
+  }
+  return defaults(styles);
+}
+
+/**
+ *  Module main entry point to initialize
+ *  console method overrides.
+ *
+ *  @param option The option name to use when parsing
+ *  command line argments.
+ *  @param parser The command line parser implementation.
+ */
 function main(option, parser) {
   if(typeof option == 'function') {
     parser = option;
@@ -141,7 +174,7 @@ module.exports.attributes = definition.attrs;
 module.exports.foreground = definition.colors;
 module.exports.background = definition.bg.colors;
 module.exports.stringify = stringify;
-module.exports.defaults = defaults;
+module.exports.defaults = defs;
 module.exports.styles = styles;
 module.exports.modes = parse.modes;
 module.exports.format = format;

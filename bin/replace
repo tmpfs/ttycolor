@@ -5,7 +5,7 @@
  *
  *  ./bin/replace
  */
-require('..')().defaults();
+require('..').defaults();
 console.info('str %s', 'info');
 console.info('int %d', 128);
 console.info('arr %j', [1,2,3]);
