@@ -10,9 +10,9 @@ Terminal colors for [node][node] that respect whether the `stdout` and `stderr` 
 * Chainable attributes, foreground colors and background colors
 * Asynchronous write to any stream respecting `tty.isatty`
 * Default styles to keep the code clean
+* Safely stringify circular references (`%j`)
 * Argument parsing support (`always|never|auto`)
 * Stringify with a custom `tty` test using [format](#formattest-format-)
-* Comprehensive test suite
 * 100% code coverage
 
 <p align="center">

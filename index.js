@@ -1,6 +1,5 @@
-'use strict';
-
 var util = require('util');
+var circular = require('circular');
 
 var ansi = require('./lib/ansi'), AnsiColor = ansi.color;
 var definition = ansi.codes, stringify = ansi.stringify;
@@ -56,7 +55,7 @@ function proxy(options, format) {
         // we will coerce to strings
         format = format.replace(/%[jd]/, '%s');
         if(matches[i] == '%j') {
-          arg.v = JSON.stringify(arg.v);
+          arg.v = JSON.stringify(arg.v, circular());
         }
       }
       replacements[i] = arg.valueOf(tty, tag);
