@@ -34,6 +34,7 @@ function proxy(options, format) {
   replacing = (typeof format == 'string')
     && re.test(format) && arguments.length > 2;
   replacements = [].slice.call(arguments, 2);
+  //console.dir(replacements);
   if(format instanceof AnsiColor) {
     replacing = true;
     if(!replacements.length) {
@@ -59,7 +60,7 @@ function proxy(options, format) {
     if(arg instanceof AnsiColor) {
       if(tty) {
         // we will coerce to strings
-        format = format.replace(/%[jds]/, '%s');
+        format = format.replace(/%[jds]/g, '%s');
         if(matches[i] == '%j') {
           arg.v = JSON.stringify(arg.v);
         }

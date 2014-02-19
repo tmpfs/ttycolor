@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+
+/**
+ *  Example for testing various replacement format characters.
+ *
+ *  ./bin/replace
+ */
+require('..')().defaults();
+console.info('str %s', 'info');
+console.info('int %d', 128);
+console.info('arr %j', [1,2,3]);
+console.info('arr %s %j %d', 'info', [1,2,3], 128);
+console.info('progress %d%', 50);

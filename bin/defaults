@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-var ttycolor = require('..')(), defaults = ttycolor.defaults, revert, styles, keys;
+var ttycolor = require('..')(),
+  defaults = ttycolor.defaults, revert, styles, keys;
 revert = defaults(); keys = Object.keys(ttycolor.styles); ansi = ttycolor.ansi;
 keys.forEach(function(method) {console[method]('%s: %s', method, 'message')})
 revert();
@@ -21,3 +22,5 @@ keys.forEach(function(method) {
   console[method]('[%s] %s', ansi(method).bright[styles[method].format],
     ansi(method).bright);
 });
+
+console.info('arr %s %j', 'info', [1,2,3]);
