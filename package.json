@@ -1,7 +1,7 @@
 {
   "name": "ttycolor",
   "description": "Terminal colors that respect whether a stream is a tty",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "author": "muji <noop@xpm.io>",
   "repository": {
     "type": "git",
@@ -19,7 +19,7 @@
     "url": "https://github.com/freeformsystems/ttycolor/blob/master/LICENSE"
   }],
   "dependencies": {
-    "circular": "~1.0.1"
+    "circular": "~1.0.2"
   },
   "devDependencies": {
     "cli-prompt": "~0.3.2",
