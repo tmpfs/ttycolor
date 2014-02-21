@@ -1,7 +1,7 @@
 {
   "name": "ttycolor",
   "description": "Terminal colors that respect whether a stream is a tty",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "author": "muji <noop@xpm.io>",
   "repository": {
     "type": "git",

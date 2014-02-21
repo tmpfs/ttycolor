@@ -136,7 +136,9 @@ function defs(styles, option, parser, force) {
   if(!initialized || force) {
     main(option, parser, force);
   }
-  return defaults(styles);
+  var revert = defaults(styles);
+  module.exports.revert = revert;
+  return revert;
 }
 
 /**
