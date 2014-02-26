@@ -18,3 +18,5 @@ console.warn('warn: %s',
   ansi('reverse').white.bg.black.reverse);
 console.error('error: %s',
   ansi('bright underline').underline.bright);
+console.error('error: %s',
+  ansi('bright underline').underline.bright);

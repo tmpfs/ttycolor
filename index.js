@@ -91,19 +91,25 @@ function proxy(options, format) {
   return method.apply(options.scope ? options.scope : console, replacements);
 }
 
-function isatty(tty, mode) {
-  if(mode == parse.always) return true;
-  if(mode == parse.never) return false;
+function isatty(tty) {
+  if(module.exports.mode == parse.always) return true;
+  if(module.exports.mode == parse.never) return false;
   return tty;
 }
 
-function initialize(mode, force) {
+function initialize(force) {
   if(initialized && !force) return false;
+
+  //console.log('mode override %s', module.exports.mode);
+  //if(typeof module.exports.mode === 'string'
+    //&& ~parse.modes.indexOf(module.exports.mode)) {
+    //console.log('setting mode to %s', module.exports.mode);
+  //}
 
   // stream write
   main.write = function(options) {
     options.proxy = proxy;
-    options.mode = mode;
+    options.mode = module.exports.mode;
     options.isatty = isatty;
     var args = [].slice.call(arguments, 1);
     args.unshift(options);
@@ -115,7 +121,7 @@ function initialize(mode, force) {
     var stream = (k == 'info' || k == 'log') ?
       process.stdout : process.stderr;
     console[k] = function(format) {
-      var tty = isatty(stream.isTTY, mode);
+      var tty = isatty(stream.isTTY, module.exports.mode);
       var args = [{tty: tty, method: stash[k]}];
       var rest = [].slice.call(arguments, 0);
       args = args.concat(rest);
@@ -183,15 +189,16 @@ function main(option, parser, force) {
   }
   option = option !== false ? (option || parse.option) : false;
   parser = option !== false ? (parser || parse) : false;
-  var mode = parse.auto;
+  //var mode = parse.auto;
   if(typeof parser == 'function') {
-    mode = parser(parse.modes, option, process.argv.slice(2));
+    module.exports.mode = parser(parse.modes, option, process.argv.slice(2));
   }
-  initialize(mode, force);
+  initialize(force);
   return module.exports;
 }
 
 module.exports = main;
+module.exports.mode = parse.auto;
 module.exports.console = stash;
 module.exports.keys = stash.keys;
 module.exports.cache = defaults.cache;
