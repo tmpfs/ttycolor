@@ -28,6 +28,16 @@ function proxy(options, format) {
   replacing = (typeof format == 'string')
     && re.test(format) && arguments.length > 2;
   replacements = [].slice.call(arguments, 2);
+  // debug
+  //console.dir('ttycolor format: ' + format);
+  //replacements.forEach(function(item) {
+    //console.dir('replacement type: ' + typeof(item));
+    //console.dir('is ansi: ' + (item instanceof AnsiColor));
+    //if(item instanceof AnsiColor) {
+      //console.dir('value type: ' + typeof(item.v));
+    //}
+    //console.dir(item instanceof AnsiColor ? item.v : item);
+  //})
   if(format instanceof AnsiColor) {
     replacing = true;
     if(!replacements.length) {
@@ -48,16 +58,34 @@ function proxy(options, format) {
       format = format.valueOf(tty);
     }
   }
+
+  //console.dir('is tty: ' + tty);
+  if(tty) {
+    var re = /(%[sdj])/g, fmt, result, j = 0;
+    while(result = re.exec(format)) {
+      if(j === replacements.length) break;
+      arg = replacements[j];
+      //console.dir('processing ansi replacement: ' + typeof(arg));
+      fmt = result[1];
+      start = format.substr(0, result.index);
+      end = format.substr(result.index + result[0].length);
+      //console.dir('re format: ' + fmt);
+      //console.dir('re start: ' + start);
+      //console.dir('re end: ' + end);
+      if((arg instanceof AnsiColor)) {
+        //console.dir('update arg value: ' + typeof(arg.v));
+        if(typeof(arg.v) !== 'string') {
+          arg.v = JSON.stringify(arg.v, circular());
+        }
+        format = start + '%s' + end;
+      }
+      j++;
+    }
+  }
+
   for(i = 0;i < replacements.length;i++) {
     arg = replacements[i];
     if(arg instanceof AnsiColor) {
-      if(tty) {
-        // we will coerce to strings
-        format = format.replace(/%[jd]/, '%s');
-        if(matches[i] == '%j') {
-          arg.v = JSON.stringify(arg.v, circular());
-        }
-      }
       replacements[i] = arg.valueOf(tty, tag);
     }
   }
