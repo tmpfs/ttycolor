@@ -74,9 +74,7 @@ function proxy(options, format) {
       //console.dir('re end: ' + end);
       if((arg instanceof AnsiColor)) {
         //console.dir('update arg value: ' + typeof(arg.v));
-        if(typeof(arg.v) !== 'string') {
-          arg.v = JSON.stringify(arg.v, circular());
-        }
+        if(fmt === '%j') arg.v = JSON.stringify(arg.v, circular());
         format = start + '%s' + end;
       }
       j++;
