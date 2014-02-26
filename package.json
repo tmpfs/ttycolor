@@ -1,7 +1,7 @@
 {
   "name": "ttycolor",
   "description": "Terminal colors that respect whether a stream is a tty",
-  "version": "0.8.6",
+  "version": "0.8.7",
   "author": "muji <noop@xpm.io>",
   "repository": {
     "type": "git",
@@ -14,10 +14,12 @@
     "terminal",
     "tty"
   ],
-  "licenses": [{
-    "type": "MIT",
-    "url": "https://github.com/freeformsystems/ttycolor/blob/master/LICENSE"
-  }],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/freeformsystems/ttycolor/blob/master/LICENSE"
+    }
+  ],
   "dependencies": {
     "circular": "~1.0.2"
   },
@@ -27,11 +29,13 @@
     "chai": "~1.9.0",
     "istanbul": "~0.2.4"
   },
-  "engine": [ "node >= 0.10.21" ],
+  "engine": [
+    "node >= 0.10.21"
+  ],
   "scripts": {
     "clean": "rm log/*.log",
     "exe": "_mocha -u bdd --recursive --reporter list -A test/exe/",
     "test": "istanbul cover _mocha -- -u bdd --recursive --reporter list --bail -A test/unit/"
   },
-  "config" : {}
+  "config": {}
 }
