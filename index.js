@@ -187,8 +187,10 @@ function main(option, parser, force) {
     parser = option;
     option = null;
   }
-  option = option !== false ? (option || parse.option) : false;
-  parser = option !== false ? (parser || parse) : false;
+  if(option !== false) {
+    option = option || parse.option;
+    parser = parser || parse;
+  }
   //var mode = parse.auto;
   if(typeof parser == 'function') {
     module.exports.mode = parser(parse.modes, option, process.argv.slice(2));
