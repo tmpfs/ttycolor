@@ -97,6 +97,12 @@ function isatty(tty) {
   return tty;
 }
 
+// allows redirecting all message to stderr
+var error = false;
+function stderr(err) {
+  error = err;
+}
+
 function initialize(force) {
   if(initialized && !force) return false;
 
@@ -120,9 +126,11 @@ function initialize(force) {
   stash.keys.forEach(function (k) {
     var stream = (k == 'info' || k == 'log') ?
       process.stdout : process.stderr;
+    //console.dir(error);
     console[k] = function(format) {
+      if(error) stream = process.stderr;
       var tty = isatty(stream.isTTY, module.exports.mode);
-      var args = [{tty: tty, method: stash[k]}];
+      var args = [{tty: tty, method: error ? stash.error : stash[k]}];
       var rest = [].slice.call(arguments, 0);
       args = args.concat(rest);
       proxy.apply(null, args);
@@ -168,6 +176,7 @@ function defs(styles, option, parser, force) {
   if(!initialized || force) {
     main(option, parser, force);
   }
+  if(typeof option === 'boolean') stderr(option);
   var revert = defaults(styles);
   module.exports.revert = revert;
   return revert;
@@ -215,3 +224,4 @@ module.exports.styles = styles;
 module.exports.modes = parse.modes;
 module.exports.parser = parse;
 module.exports.format = format;
+module.exports.stderr = stderr;

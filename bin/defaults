@@ -2,7 +2,8 @@
 
 var ttycolor = require('..')(),
   defaults = ttycolor.defaults, revert, styles, keys;
-revert = defaults(); keys = Object.keys(ttycolor.styles); ansi = ttycolor.ansi;
+revert = defaults(null, true);
+keys = Object.keys(ttycolor.styles); ansi = ttycolor.ansi;
 keys.forEach(function(method) {console[method]('%s: %s', method, 'message')})
 revert();
 keys.forEach(function(method) {console[method]('%s: %s', method, 'message')})
@@ -12,7 +13,7 @@ styles = {
   warn: {format: ['magenta'], parameters: ['magenta', 'underline']},
   error: {format: ['red'], parameters: ['red', 'underline']}
 }
-defaults(styles);
+defaults(styles, true);
 keys.forEach(function(method) {console[method](method + ': %s', 'message')})
 keys.forEach(function(method) {
   console[method]('[%s] %s', ansi(method).bright[styles[method].format],
