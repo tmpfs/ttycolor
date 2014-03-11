@@ -21,13 +21,13 @@
     }
   ],
   "dependencies": {
-    "circular": "~1.0.2"
+    "circular": "~1.0.3"
   },
   "devDependencies": {
     "cli-prompt": "~0.3.2",
-    "mocha": "~1.17.0",
+    "mocha": "~1.17.1",
     "chai": "~1.9.0",
-    "istanbul": "~0.2.4"
+    "istanbul": "~0.2.6"
   },
   "engine": [
     "node >= 0.10.21"
