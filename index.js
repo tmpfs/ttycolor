@@ -225,3 +225,10 @@ module.exports.modes = parse.modes;
 module.exports.parser = parse;
 module.exports.format = format;
 module.exports.stderr = stderr;
+
+var map = {};
+module.exports.colors.forEach(function(k) {
+  map[k] = k;
+})
+
+module.exports.map = map;
