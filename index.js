@@ -100,7 +100,9 @@ function isatty(tty) {
 // allows redirecting all message to stderr
 var error = false;
 function stderr(err) {
+  if(!arguments.length) return error;
   error = err;
+  return error;
 }
 
 function initialize(force) {
