@@ -35,7 +35,8 @@
   "scripts": {
     "clean": "rm log/*.log && rm -rf coverage",
     "exe": "_mocha -u bdd --recursive --reporter list -A test/exe/",
-    "test": "istanbul cover _mocha -- -u bdd --recursive --reporter list --bail -A test/unit/"
+    "test": "NODE_ENV=test mocha test/spec",
+    "cover": "NODE_ENV=test istanbul cover _mocha -- test/spec"
   },
   "config": {}
 }
