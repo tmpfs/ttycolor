@@ -22,7 +22,11 @@ var styles = defaults.styles;
  *  @param ... The format string arguments.
  */
 function proxy(options, format) {
-  var tty = options.tty, method = options.method, re = /(%[sdj])+/g;
+  var tty = options.tty
+    , method = options.method
+    , re = /(%[sdj])+/g
+    , start
+    , end;
   if(arguments.length == 1) return method.apply(console, []);
   var arg, i, replacing, replacements, matches, tag;
   replacing = (typeof format == 'string')

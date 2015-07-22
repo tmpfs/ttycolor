@@ -29,7 +29,7 @@ describe('ttycolor:', function() {
     var keys = Object.keys(def), v, result;
     keys.forEach(function(k) {
       v = def[k];
-      expected = '\u001b[' + v + ';'
+      var expected = '\u001b[' + v + ';'
         + ttycolor.foreground.normal + 'm' + k + '\u001b[0m';
       result = format('%s', ansi(k)[k]);
       expect(result).to.be.a('string').that.equals(expected);
@@ -80,7 +80,7 @@ describe('ttycolor:', function() {
     var keys = Object.keys(def), v, result;
     keys.forEach(function(k) {
       v = def[k];
-      expected = '\u001b[' + v + 'm' + k + '\u001b[0m';
+      var expected = '\u001b[' + v + 'm' + k + '\u001b[0m';
       result = format('%s', ansi(k)[k]);
       expect(result).to.be.a('string').that.equals(expected);
     });
@@ -91,7 +91,7 @@ describe('ttycolor:', function() {
     var keys = Object.keys(def), v, result;
     keys.forEach(function(k) {
       v = def[k];
-      expected = '\u001b[' + v + 'm' + k + '\u001b[0m';
+      var expected = '\u001b[' + v + 'm' + k + '\u001b[0m';
       result = format('%s', ansi(k).bg[k]);
       expect(result).to.be.a('string').that.equals(expected);
     });
@@ -104,7 +104,7 @@ describe('ttycolor:', function() {
     keys.forEach(function(k) {
       fg = fore[k];
       bg = back[k];
-      expected = '\u001b[' + bg + 'm' + '\u001b['
+      var expected = '\u001b[' + bg + 'm' + '\u001b['
         + fg + 'm' + k + '\u001b[0m' + '\u001b[0m';
       result = format('%s', ansi(k)[k].bg[k]);
       expect(result).to.be.a('string').that.equals(expected);
@@ -118,7 +118,7 @@ describe('ttycolor:', function() {
     keys.forEach(function(k) {
       fg = fore[k];
       bg = back[k];
-      expected = '\u001b[' + fg + 'm' + '\u001b['
+      var expected = '\u001b[' + fg + 'm' + '\u001b['
         + bg + 'm' + k + '\u001b[0m' + '\u001b[0m';
       result = format('%s', ansi(k).bg[k][k]);
       expect(result).to.be.a('string').that.equals(expected);
