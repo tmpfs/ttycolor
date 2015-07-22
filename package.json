@@ -33,7 +33,7 @@
     "node >= 0.10.21"
   ],
   "scripts": {
-    "clean": "rm log/*.log",
+    "clean": "rm log/*.log && rm -rf coverage",
     "exe": "_mocha -u bdd --recursive --reporter list -A test/exe/",
     "test": "istanbul cover _mocha -- -u bdd --recursive --reporter list --bail -A test/unit/"
   },
