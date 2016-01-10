@@ -3,9 +3,10 @@
   "description": "Terminal colors that respect whether a stream is a tty",
   "version": "0.8.17",
   "author": "muji <noop@xpm.io>",
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/freeformsystems/ttycolor.git"
+    "url": "git://github.com/tmpfs/ttycolor.git"
   },
   "keywords": [
     "ansi",
@@ -17,17 +18,18 @@
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/freeformsystems/ttycolor/blob/master/LICENSE"
+      "url": "https://github.com/tmpfs/ttycolor/blob/master/LICENSE"
     }
   ],
   "dependencies": {
     "circular": "~1.0.5"
   },
   "devDependencies": {
-    "chai": "~3.2.0",
+    "chai": "~3.4.1",
     "cli-prompt": "~0.4.1",
-    "istanbul": "~0.3.17",
-    "mocha": "~2.2.5"
+    "coveralls": "~2.11.6",
+    "istanbul": "~0.4.1",
+    "mocha": "~2.3.4"
   },
   "engine": [
     "node >= 0.10.21"
@@ -37,6 +39,5 @@
     "exe": "_mocha -u bdd --recursive --reporter list -A test/exe/",
     "test": "NODE_ENV=test mocha test/spec",
     "cover": "NODE_ENV=test istanbul cover _mocha -- test/spec"
-  },
-  "config": {}
+  }
 }

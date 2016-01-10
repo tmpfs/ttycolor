@@ -16,15 +16,15 @@ Terminal colors for [node][node] that respect whether the `stdout` and `stderr` 
 * 100% code coverage
 
 <p align="center">
-  <img src="https://raw.github.com/freeformsystems/ttycolor/master/img/colors.png" />
+  <img src="https://raw.github.com/tmpfs/ttycolor/master/img/colors.png" />
 </p>
 
 <p align="center">
-  <img src="https://raw.github.com/freeformsystems/ttycolor/master/img/cat.png" />
+  <img src="https://raw.github.com/tmpfs/ttycolor/master/img/cat.png" />
 </p>
 
 <p align="center">
-  <img src="https://raw.github.com/freeformsystems/ttycolor/master/img/source.png" />
+  <img src="https://raw.github.com/tmpfs/ttycolor/master/img/source.png" />
 </p>
 
 ## Installation
@@ -47,7 +47,7 @@ npm run exe
 
 ## Examples
 
-There are various example and test programs in the [bin](https://github.com/freeformsystems/ttycolor/tree/master/bin) directory. Note that these executables are not included when the package is distributed via npm.
+There are various example and test programs in the [bin](https://github.com/tmpfs/ttycolor/tree/master/bin) directory. Note that these executables are not included when the package is distributed via npm.
 
 ### Normal
 
@@ -318,7 +318,7 @@ To customise the styles when using `defaults()` create an object with the follow
 
 #### Example
 
-An example derived from the [defaults](https://github.com/freeformsystems/ttycolor/blob/master/bin/defaults) executable:
+An example derived from the [defaults](https://github.com/tmpfs/ttycolor/blob/master/bin/defaults) executable:
 
 ```javascript
 #!/usr/bin/env node
@@ -347,11 +347,11 @@ keys.forEach(function(method) {
 ```
 
 <p align="center">
-  <img src="https://raw.github.com/freeformsystems/ttycolor/master/img/defaults.png" />
+  <img src="https://raw.github.com/tmpfs/ttycolor/master/img/defaults.png" />
 </p>
 
 <p align="center">
-  <img src="https://raw.github.com/freeformsystems/ttycolor/master/img/defaults-cat.png" />
+  <img src="https://raw.github.com/tmpfs/ttycolor/master/img/defaults-cat.png" />
 </p>
 
 ### Arguments
