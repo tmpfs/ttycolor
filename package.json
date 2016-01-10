@@ -15,12 +15,6 @@
     "terminal",
     "tty"
   ],
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/tmpfs/ttycolor/blob/master/LICENSE"
-    }
-  ],
   "dependencies": {
     "circular": "~1.0.5"
   },
@@ -38,6 +32,7 @@
     "clean": "rm log/*.log && rm -rf coverage",
     "exe": "_mocha -u bdd --recursive --reporter list -A test/exe/",
     "test": "NODE_ENV=test mocha test/spec",
-    "cover": "NODE_ENV=test istanbul cover _mocha -- test/spec"
+    "cover": "NODE_ENV=test istanbul cover _mocha -- test/spec",
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   }
 }
