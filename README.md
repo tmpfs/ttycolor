@@ -1,6 +1,10 @@
 ttycolor
 ========
 
+[![Build Status](https://travis-ci.org/tmpfs/ttycolor.svg)](https://travis-ci.org/tmpfs/ttycolor)
+[![npm version](http://img.shields.io/npm/v/ttycolor.svg)](https://npmjs.org/package/ttycolor)
+[![Coverage Status](https://coveralls.io/repos/tmpfs/ttycolor/badge.svg?branch=master&service=github&v=1)](https://coveralls.io/github/tmpfs/ttycolor?branch=master)
+
 Terminal colors for [node][node] that respect whether the `stdout` and `stderr` streams are a `tty`.
 
 ## Features
