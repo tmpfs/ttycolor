@@ -40,8 +40,6 @@ describe('ttycolor:', function() {
     done();
   });
   it('should write using console.error (zero arguments)', function(done) {
-    var msg = 'mock %s message';
-    var param = 'error';
     var revert = ttycolor().defaults(null, null, null, true);
     process.stderr.write = function(){}
     error = console.error;

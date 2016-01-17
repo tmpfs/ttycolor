@@ -1,5 +1,6 @@
 var expect = require('chai').expect;
-var ttycolor = require('../..'), ansi = ttycolor.ansi;
+var ttycolor = require('../..')
+  , ansi = ttycolor.ansi;
 
 describe('ttycolor:', function() {
   var method;
@@ -28,7 +29,6 @@ describe('ttycolor:', function() {
     done();
   });
   it('should write to stream (no callback)', function(done) {
-    var expected = 'mock stream message';
     process.stderr.write = function(value, callback) {
       callback();
     }

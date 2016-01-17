@@ -1,6 +1,5 @@
 var fs = require('fs');
 var path = require('path');
-var util = require('util');
 var expect = require('chai').expect;
 
 var ttycolor = require('../..');
@@ -11,7 +10,7 @@ var file = null;
 describe('ttycolor:', function() {
   beforeEach(function(done) {
     file = fs.createWriteStream(log, {flags: 'w'});
-    file.on('open', function(fd) {
+    file.on('open', function() {
       done();
     });
   });

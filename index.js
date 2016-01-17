@@ -1,14 +1,13 @@
-var util = require('util');
-var circular = require('circular');
-
-var ansi = require('./lib/ansi'), AnsiColor = ansi.color;
-var definition = ansi.codes, stringify = ansi.stringify;
-var defaults = require('./lib/defaults');
-var parse = require('./lib/parse');
-var stream = require('./lib/stream');
-var stash = require('./lib/stash');
-var initialized = false;
-var styles = defaults.styles;
+var util = require('util')
+  , circular = require('circular')
+  , ansi = require('./lib/ansi'), AnsiColor = ansi.color
+  , definition = ansi.codes, stringify = ansi.stringify
+  , defaults = require('./lib/defaults')
+  , parse = require('./lib/parse')
+  , stream = require('./lib/stream')
+  , stash = require('./lib/stash')
+  , initialized = false
+  , styles = defaults.styles;
 
 /**
  *  Escapes replacement values.
@@ -27,9 +26,11 @@ function proxy(options, format) {
     , re = /(%[sdj])+/g
     , start
     , end;
-  if(arguments.length == 1) return method.apply(console, []);
+  if(arguments.length === 1) {
+    return method.apply(console, []);
+  }
   var arg, i, replacing, replacements, matches, tag;
-  replacing = (typeof format == 'string')
+  replacing = (typeof format === 'string')
     && re.test(format) && arguments.length > 2;
   replacements = [].slice.call(arguments, 2);
   // debug
@@ -52,7 +53,7 @@ function proxy(options, format) {
     replacements.unshift(format);
     return method.apply(console, replacements);
   }
-  matches = (format && (typeof format.match == 'function')) ?
+  matches = (format && (typeof format.match === 'function')) ?
     format.match(re) : [];
   if(format instanceof AnsiColor) {
     if(!tty) {
@@ -65,9 +66,12 @@ function proxy(options, format) {
 
   //console.dir('is tty: ' + tty);
   if(tty) {
-    var re = /(%[sdj])/g, fmt, result, j = 0;
-    while(result = re.exec(format)) {
-      if(j === replacements.length) break;
+    re = /(%[sdj])/g;
+    var fmt, result, j = 0;
+    while((result = re.exec(format))) {
+      if(j === replacements.length) {
+        break;
+      }
       arg = replacements[j];
       //console.dir('processing ansi replacement: ' + typeof(arg));
       fmt = result[1];
@@ -78,7 +82,9 @@ function proxy(options, format) {
       //console.dir('re end: ' + end);
       if((arg instanceof AnsiColor)) {
         //console.dir('update arg value: ' + typeof(arg.v));
-        if(fmt === '%j') arg.v = JSON.stringify(arg.v, circular());
+        if(fmt === '%j') {
+          arg.v = JSON.stringify(arg.v, circular());
+        }
         format = start + '%s' + end;
       }
       j++;
@@ -96,21 +102,29 @@ function proxy(options, format) {
 }
 
 function isatty(tty) {
-  if(module.exports.mode == parse.always) return true;
-  if(module.exports.mode == parse.never) return false;
+  if(module.exports.mode === parse.always) {
+    return true;
+  }
+  if(module.exports.mode === parse.never) {
+    return false;
+  }
   return tty;
 }
 
 // allows redirecting all message to stderr
 var error = false;
 function stderr(err) {
-  if(!arguments.length) return error;
+  if(!arguments.length) {
+    return error;
+  }
   error = err;
   return error;
 }
 
 function initialize(force) {
-  if(initialized && !force) return false;
+  if(initialized && !force) {
+    return false;
+  }
 
   //console.log('mode override %s', module.exports.mode);
   //if(typeof module.exports.mode === 'string'
@@ -130,11 +144,13 @@ function initialize(force) {
 
   // console functions
   stash.keys.forEach(function (k) {
-    var stream = (k == 'info' || k == 'log') ?
+    var stream = (k === 'info' || k === 'log') ?
       process.stdout : process.stderr;
     //console.dir(error);
-    console[k] = function(format) {
-      if(error) stream = process.stderr;
+    console[k] = function() {
+      if(error) {
+        stream = process.stderr;
+      }
       var tty = isatty(stream.isTTY, module.exports.mode);
       var args = [{tty: tty, method: error ? stash.error : stash[k]}];
       var rest = [].slice.call(arguments, 0);
@@ -148,10 +164,10 @@ function initialize(force) {
 /**
  *  Retrieve a formatted string.
  */
-function format(format) {
+function format(fmt) {
   var args = [].slice.call(arguments, 0);
   var tty = true;
-  var test = (typeof format == 'function') ? format : null;
+  var test = (typeof fmt === 'function') ? fmt : null;
   if(test) {
     tty = test();
     args.shift();
@@ -182,7 +198,9 @@ function defs(styles, option, parser, force) {
   if(!initialized || force) {
     main(option, parser, force);
   }
-  if(typeof option === 'boolean') stderr(option);
+  if(typeof option === 'boolean') {
+    stderr(option);
+  }
   var revert = defaults(styles);
   module.exports.revert = revert;
   return revert;
@@ -198,7 +216,7 @@ function defs(styles, option, parser, force) {
  *  @param force Force initialization.
  */
 function main(option, parser, force) {
-  if(typeof option == 'function') {
+  if(typeof option === 'function') {
     parser = option;
     option = null;
   }
@@ -207,7 +225,7 @@ function main(option, parser, force) {
     parser = parser || parse;
   }
   //var mode = parse.auto;
-  if(typeof parser == 'function') {
+  if(typeof parser === 'function') {
     module.exports.mode = parser(parse.modes, option, process.argv.slice(2));
   }
   initialize(force);
