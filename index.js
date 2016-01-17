@@ -33,16 +33,6 @@ function proxy(options, format) {
   replacing = (typeof format === 'string')
     && re.test(format) && arguments.length > 2;
   replacements = [].slice.call(arguments, 2);
-  // debug
-  //console.dir('ttycolor format: ' + format);
-  //replacements.forEach(function(item) {
-    //console.dir('replacement type: ' + typeof(item));
-    //console.dir('is ansi: ' + (item instanceof AnsiColor));
-    //if(item instanceof AnsiColor) {
-      //console.dir('value type: ' + typeof(item.v));
-    //}
-    //console.dir(item instanceof AnsiColor ? item.v : item);
-  //})
   if(format instanceof AnsiColor) {
     replacing = true;
     if(!replacements.length) {
@@ -126,12 +116,6 @@ function initialize(force) {
     return false;
   }
 
-  //console.log('mode override %s', module.exports.mode);
-  //if(typeof module.exports.mode === 'string'
-    //&& ~parse.modes.indexOf(module.exports.mode)) {
-    //console.log('setting mode to %s', module.exports.mode);
-  //}
-
   // stream write
   main.write = function(options) {
     options.proxy = proxy;
@@ -146,7 +130,6 @@ function initialize(force) {
   stash.keys.forEach(function (k) {
     var stream = (k === 'info' || k === 'log') ?
       process.stdout : process.stderr;
-    //console.dir(error);
     console[k] = function() {
       if(error) {
         stream = process.stderr;

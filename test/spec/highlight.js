@@ -14,7 +14,7 @@ describe('ttycolor:', function() {
       input,
       ttycolor.foreground.white,
       ttycolor.attributes.bright);
-      expect(result).to.be.a('string').that.equals(expected);
+    expect(result).to.be.a('string').that.equals(expected);
     done();
   });
   it('should handle format as ansi instance', function(done) {
