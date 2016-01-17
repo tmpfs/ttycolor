@@ -1,19 +1,20 @@
-var fs = require('fs');
-var path = require('path');
-var expect = require('chai').expect;
-
-var ttycolor = require('../..');
-var ansi = ttycolor.ansi;
-var log = path.join(__dirname, '..', '..', 'log', 'stream.log');
-var file = null;
+var fs = require('fs')
+  , path = require('path')
+  , expect = require('chai').expect
+  , ttycolor = require('../..')
+  , ansi = ttycolor.ansi
+  , log = path.join(__dirname, '..', '..', 'log', 'stream.log')
+  , file = null;
 
 describe('ttycolor:', function() {
+
   beforeEach(function(done) {
     file = fs.createWriteStream(log, {flags: 'w'});
     file.on('open', function() {
       done();
     });
   });
+
   it('should write to stream', function(done) {
     var input = 'value';
     function cb(value) {
@@ -26,4 +27,5 @@ describe('ttycolor:', function() {
     ttycolor.write(
       {stream: file, callback: cb}, '%s', ansi(input).white.underline);
   });
+
 })

@@ -1,12 +1,13 @@
-var expect = require('chai').expect;
-var ttycolor = require('../..');
-var ansi = ttycolor.ansi, format = ttycolor.format;
+var expect = require('chai').expect
+  , ttycolor = require('../..')
+  , ansi = ttycolor.ansi, format = ttycolor.format;
 
 function tty() {
   return false;
 }
 
 describe('ttycolor:', function() {
+
   it('should handle format as ansi instance', function(done) {
     var expected = '\u001b[1;39mmsg\u001b[0m';
     var fmt = ansi('msg').bright;
@@ -14,6 +15,7 @@ describe('ttycolor:', function() {
     expect(res).to.eql(expected);
     done();
   });
+
   it('should handle format as ansi with replacements', function(done) {
     var expected = '\u001b[1;39mmsg info\u001b[0m';
     var fmt = ansi('msg %s').bright;
@@ -21,6 +23,7 @@ describe('ttycolor:', function() {
     expect(res).to.eql(expected);
     done();
   });
+
   it('should handle format as ansi with replacements (-tty)', function(done) {
     var expected = 'msg info';
     var fmt = ansi('msg %s').bright;
@@ -28,6 +31,7 @@ describe('ttycolor:', function() {
     expect(res).to.eql(expected);
     done();
   });
+
   it('should use custom tty test on format', function(done) {
     var expected = 'msg';
     var fmt = ansi('msg').bright;
@@ -35,6 +39,7 @@ describe('ttycolor:', function() {
     expect(res).to.eql(expected);
     done();
   });
+
   it('should replace %s (plain)', function(done) {
     var expected = 'str info';
     var fmt = 'str %s';
@@ -42,6 +47,7 @@ describe('ttycolor:', function() {
     expect(res).to.eql(expected);
     done();
   });
+
   it('should replace %d (plain)', function(done) {
     var expected = 'int 128';
     var fmt = 'int %d';
@@ -49,6 +55,7 @@ describe('ttycolor:', function() {
     expect(res).to.eql(expected);
     done();
   });
+
   it('should replace %j (plain array)', function(done) {
     var expected = 'arr [1,2,3]';
     var fmt = 'arr %j';
@@ -56,6 +63,7 @@ describe('ttycolor:', function() {
     expect(res).to.eql(expected);
     done();
   });
+
   it('should replace %j (plain object)', function(done) {
     var obj = {foo: 'bar'};
     var expected = 'obj ' + JSON.stringify(obj);
@@ -64,6 +72,7 @@ describe('ttycolor:', function() {
     expect(res).to.eql(expected);
     done();
   });
+
   it('should respect trailing % (plain)', function(done) {
     var expected = 'progress 50%';
     var fmt = 'progress %d%';
@@ -71,6 +80,7 @@ describe('ttycolor:', function() {
     expect(res).to.eql(expected);
     done();
   });
+
   it('should mix plain and highlight parameters', function(done) {
     var expected = 'str: \u001b[1;39mstr\u001b[0m, int: '
     expected += '\u001b[1;39m128\u001b[0m, arr: \u001b[1;39m[1,2,3]\u001b[0m, '
@@ -85,6 +95,5 @@ describe('ttycolor:', function() {
     expect(res).to.eql(expected);
     done();
   });
-
 
 });

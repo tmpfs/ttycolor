@@ -1,16 +1,19 @@
-var expect = require('chai').expect;
-var ttycolor = require('../..');
+var expect = require('chai').expect
+  , ttycolor = require('../..');
 
 describe('ttycolor:', function() {
   var method, error;
+
   beforeEach(function(done) {
     method = process.stderr.write;
     done();
   })
+
   afterEach(function(done) {
     process.stderr.write = method;
     done();
   })
+
   it('should initialize module on defaults', function(done) {
     var revert = ttycolor.defaults();
     expect(revert).to.be.a('function');
@@ -20,10 +23,12 @@ describe('ttycolor:', function() {
     revert();
     done();
   });
+
   it('should intialize module with zero arguments', function(done) {
     ttycolor();
     done();
   });
+
   it('should disable parser with false argument', function(done) {
     ttycolor(false);
     done();
@@ -39,6 +44,7 @@ describe('ttycolor:', function() {
     revert();
     done();
   });
+
   it('should write using console.error (zero arguments)', function(done) {
     var revert = ttycolor().defaults(null, null, null, true);
     process.stderr.write = function(){}
@@ -51,6 +57,7 @@ describe('ttycolor:', function() {
     }
     console.error();
   });
+
   it('should write message using console.error', function(done) {
     var msg = 'mock %s message';
     var param = 'error';
@@ -66,6 +73,7 @@ describe('ttycolor:', function() {
     }
     console.error(msg, param);
   });
+
   it('should handle missing styles', function(done) {
     var styles = JSON.parse(JSON.stringify(ttycolor.styles));
     delete styles.error;
@@ -83,6 +91,7 @@ describe('ttycolor:', function() {
     }
     console.error(msg, param);
   });
+
   it('should handle invalid style property', function(done) {
     var styles = JSON.parse(JSON.stringify(ttycolor.styles));
     styles.error.format = null;
@@ -101,4 +110,5 @@ describe('ttycolor:', function() {
     }
     console.error(msg, param);
   });
+
 })
