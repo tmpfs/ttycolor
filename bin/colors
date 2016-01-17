@@ -19,7 +19,8 @@ console.warn('warn: %s',
 console.error('error: %s',
   ansi('bright underline').underline.bright);
 
+// NOTE: breaks exe test: `npm run exe`
 // disable using module mode
-ttycolor.mode = 'never';
-console.error('error: %s',
-  ansi('bright underline').underline.bright);
+//ttycolor.mode = 'never';
+//console.error('error: %s',
+  //ansi('bright underline').underline.bright);
