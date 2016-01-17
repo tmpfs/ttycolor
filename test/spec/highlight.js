@@ -1,6 +1,7 @@
 var expect = require('chai').expect
   , ttycolor = require('../..')
-  , ansi = ttycolor.ansi, format = ttycolor.format;
+  , ansi = ttycolor.ansi
+  , format = ttycolor.format;
 
 describe('ttycolor:', function() {
   var underline = ttycolor.attributes.underline
@@ -23,6 +24,15 @@ describe('ttycolor:', function() {
     var expected = '\u001b[1;37m' + input + '\u001b[0m';
     var result = format(ansi(input).white.bright);
     expect(result).to.be.a('string').that.equals(expected);
+    done();
+  });
+
+  it('should handle format as ansi in parameter', function(done) {
+    ttycolor.defaults();
+    var input = 'value';
+    // triggers code path, assertion very awkward
+    console.log('my %s', ansi(input));
+    ttycolor.revert();
     done();
   });
 
