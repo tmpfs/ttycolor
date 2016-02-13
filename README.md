@@ -320,7 +320,7 @@ To customise the styles when using `defaults()` create an object with the follow
 }
 ```
 
-If you need to format a particular parameter, declare a `params` object with the given index and assign a function that returns an ansi instanace, for example:
+If you need to format a particular parameter, declare a `params` object with the given index and assign a function that returns an ansi instance, for example:
 
 ```javascript
 {
