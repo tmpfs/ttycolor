@@ -1,5 +1,6 @@
 var expect = require('chai').expect
-  , ttycolor = require('../..');
+  , ttycolor = require('../..')
+  , ansi = ttycolor.ansi;
 
 describe('ttycolor:', function() {
   var method, error;
@@ -98,6 +99,32 @@ describe('ttycolor:', function() {
     styles.error.parameters = null;
     var msg = 'mock %s message';
     var param = 'error';
+    var revert = ttycolor().defaults(styles, null, null, true);
+    process.stderr.write = function(){}
+    error = console.error;
+    console.error = function() {
+      expect(arguments[0]).to.eql(msg);
+      expect(arguments[1]).to.eql(param);
+      error(msg, param);
+      revert();
+      done();
+    }
+    console.error(msg, param);
+  });
+
+  it('should handle style replacement function at index', function(done) {
+    var styles = JSON.parse(JSON.stringify(ttycolor.styles));
+    styles.error.replacements = [
+      function(arg, style, names, index) {
+        expect(arg).to.eql(param);
+        expect(style).to.eql(styles.error);
+        expect(names).to.eql(['red', 'bright']);
+        expect(index).to.eql(0);
+        return ansi(arg).red;
+      }
+    ]
+    var msg = 'mock %s message';
+    var param = 'replacement error';
     var revert = ttycolor().defaults(styles, null, null, true);
     process.stderr.write = function(){}
     error = console.error;
