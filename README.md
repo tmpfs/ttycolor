@@ -320,6 +320,28 @@ To customise the styles when using `defaults()` create an object with the follow
 }
 ```
 
+If you need to format a particular parameter, declare a `params` object with the given index and assign a function that returns an ansi instanace, for example:
+
+```javascript
+{
+  error: {
+    format: [
+      "red"
+    ],
+    parameters: [
+      "red",
+      "bright"
+    ],
+    params: {
+      '0': function(arg) {
+        // override the style for a parameter at index 0
+        return ansi(arg).magenta; 
+      }
+    }
+  }
+}
+```
+
 #### Example
 
 An example derived from the [defaults](https://github.com/tmpfs/ttycolor/blob/master/bin/defaults) executable:
