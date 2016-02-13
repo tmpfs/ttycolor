@@ -114,7 +114,7 @@ describe('ttycolor:', function() {
 
   it('should handle style replacement function at index', function(done) {
     var styles = JSON.parse(JSON.stringify(ttycolor.styles));
-    styles.error.replacements = [
+    styles.error.params = [
       function(arg, style, names, index) {
         expect(arg).to.eql(param);
         expect(style).to.eql(styles.error);
