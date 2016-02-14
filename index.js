@@ -7,7 +7,7 @@ var util = require('util')
   , stream = require('./lib/stream')
   , stash = require('./lib/stash')
   , initialized = false
-  , styles = defaults.styles;
+  , defaultStyles = defaults.defaultStyles;
 
 /**
  *  Escapes replacement values.
@@ -227,7 +227,7 @@ module.exports.foreground = definition.colors;
 module.exports.background = definition.bg.colors;
 module.exports.stringify = stringify;
 module.exports.defaults = defs;
-module.exports.styles = styles;
+module.exports.defaultStyles = defaultStyles;
 module.exports.modes = parse.modes;
 module.exports.parser = parse;
 module.exports.format = format;

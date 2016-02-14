@@ -76,7 +76,7 @@ describe('ttycolor:', function() {
   });
 
   it('should handle missing styles', function(done) {
-    var styles = JSON.parse(JSON.stringify(ttycolor.styles));
+    var styles = JSON.parse(JSON.stringify(ttycolor.defaultStyles));
     delete styles.error;
     var msg = 'mock %s message';
     var param = 'error';
@@ -94,7 +94,7 @@ describe('ttycolor:', function() {
   });
 
   it('should handle invalid style property', function(done) {
-    var styles = JSON.parse(JSON.stringify(ttycolor.styles));
+    var styles = JSON.parse(JSON.stringify(ttycolor.defaultStyles));
     styles.error.format = null;
     styles.error.parameters = null;
     var msg = 'mock %s message';
@@ -113,7 +113,7 @@ describe('ttycolor:', function() {
   });
 
   it('should handle style replacement function at index', function(done) {
-    var styles = JSON.parse(JSON.stringify(ttycolor.styles));
+    var styles = JSON.parse(JSON.stringify(ttycolor.defaultStyles));
     styles.error.params = [
       function(arg, style, names, index) {
         expect(arg).to.eql(param);

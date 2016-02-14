@@ -18,7 +18,7 @@ describe('ttycolor:', function() {
 
   it('should use error stream calling defaults', function(done) {
     expect(ttycolor.stderr()).to.eql(false);
-    ttycolor.defaults(ttycolor.styles, true);
+    ttycolor.defaults(ttycolor.defaultStyles, true);
     expect(ttycolor.stderr()).to.eql(true);
     ttycolor.revert();
     done();
