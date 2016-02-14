@@ -228,6 +228,7 @@ module.exports.background = definition.bg.colors;
 module.exports.stringify = stringify;
 module.exports.defaults = defs;
 module.exports.defaultStyles = defaultStyles;
+module.exports.styles = defaults.styles;
 module.exports.modes = parse.modes;
 module.exports.parser = parse;
 module.exports.format = format;
